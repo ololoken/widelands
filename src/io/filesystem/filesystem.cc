@@ -261,7 +261,7 @@ void FileSystem::do_sync_idbfs() {
 #ifdef __EMSCRIPTEN__
 	// clang-format off
 	EM_ASM({
-		 await new Promise((resolve, reject) => FS.syncfs(err => err ? reject(err) : resolve()))
+		Asyncify.handleSleep(wakeUp => FS.syncfs(err => err ? reject(err) : wakeUp()));
 	});
 	// clang-format on
 #endif
