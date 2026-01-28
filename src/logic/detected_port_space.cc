@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2025 by the Widelands Development Team
+ * Copyright (C) 2023-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -80,10 +80,10 @@ std::string DetectedPortSpace::to_long_string(const EditorGameBase& egbase) cons
 
 	if (owner == 0) {
 		if (direction.empty()) {
-			return format(_("Unowned port space discovered at %1$s by %2$s"),
+			return ::format(_("Unowned port space discovered at %1$s by %2$s"),
 			              gametimestring(time_discovered.get()), discovering_ship);
 		}
-		return format(
+		return ::format(
 		   /** TRANSLATORS: "Unowned port space discovered at 1:11 by Ship2 33 steps north of
 		       Port5" */
 		   ngettext("Unowned port space discovered at %1$s by %2$s %3$u step %4$s of %5$s",
@@ -93,11 +93,11 @@ std::string DetectedPortSpace::to_long_string(const EditorGameBase& egbase) cons
 		   nearest_portdock);
 	}
 	if (direction.empty()) {
-		return format(_("Port space of %1$s discovered at %2$s by %3$s"),
+		return ::format(_("Port space of %1$s discovered at %2$s by %3$s"),
 		              egbase.player(owner).get_name(), gametimestring(time_discovered.get()),
 		              discovering_ship);
 	}
-	return format(
+	return ::format(
 	   /** TRANSLATORS: "Port space of Player1 discovered at 2:22 by Ship3 44 steps north
 	       of Port6" */
 	   ngettext("Port space of %1$s discovered at %2$s by %3$s %4$u step %5$s of %6$s",
@@ -149,24 +149,24 @@ std::string DetectedPortSpace::to_short_string(const EditorGameBase& egbase) con
 	if (owner == 0) {
 		if (direction.empty()) {
 			/** TRANSLATORS: Placeholders are gametime and shipname. Keep this short. */
-			return format(pgettext("detected_port_space", "Unowned / %1$s / %2$s"),
+			return ::format(pgettext("detected_port_space", "Unowned / %1$s / %2$s"),
 			              gametimestring(time_discovered.get()), discovering_ship);
 		}
 		/** TRANSLATORS: Placeholders are gametime, shipname, and distance direction port_name.
 		 *  Keep this short. */
-		return format(pgettext("detected_port_space", "Unowned / %1$s / %2$s / %3$u %4$s %5$s"),
+		return ::format(pgettext("detected_port_space", "Unowned / %1$s / %2$s / %3$u %4$s %5$s"),
 		              gametimestring(time_discovered.get()), discovering_ship, distance_to_portdock,
 		              direction, nearest_portdock);
 	}
 	if (direction.empty()) {
 		/** TRANSLATORS: Placeholders are owner, gametime, and shipname. Keep this short. */
-		return format(pgettext("detected_port_space", "%1$s / %2$s / %3$s"),
+		return ::format(pgettext("detected_port_space", "%1$s / %2$s / %3$s"),
 		              egbase.player(owner).get_name(), gametimestring(time_discovered.get()),
 		              discovering_ship);
 	}
 	/** TRANSLATORS: Placeholders are owner, gametime, shipname, and "distance direction port_name.
 	 *  Keep this short. */
-	return format(pgettext("detected_port_space", "%1$s / %2$s / %3$s / %4$u %5$s %6$s"),
+	return ::format(pgettext("detected_port_space", "%1$s / %2$s / %3$s / %4$u %5$s %6$s"),
 	              egbase.player(owner).get_name(), gametimestring(time_discovered.get()),
 	              discovering_ship, distance_to_portdock, direction, nearest_portdock);
 }

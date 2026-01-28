@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2025 by the Widelands Development Team
+ * Copyright (C) 2023-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,24 +42,24 @@ std::string SoldierControl::get_status_string(const TribeDescr& tribe,
 	// military capacity strings
 	if (present == stationed || present >= soldier_capacity()) {
 		if (soldier_capacity() > stationed) {  // Soldiers are lacking
-			rv = format(
+			rv = ::format(
 			   tribe.get_soldiers_format_string(TribeDescr::CapacityStringIndex::kLacking, stationed),
 			   stationed,
 			   StyleManager::color_tag(as_string(soldier_capacity() - stationed), style.low_color()));
 		} else {  // Soldiers filled to capacity
-			rv = format(tribe.get_soldiers_format_string(
+			rv = ::format(tribe.get_soldiers_format_string(
 			               TribeDescr::CapacityStringIndex::kFull, soldier_capacity()),
 			            soldier_capacity());
 		}
 	} else {
 		if (soldier_capacity() > stationed) {  // Soldiers are lacking; others are outside
-			rv = format(
+			rv = ::format(
 			   tribe.get_soldiers_format_string(
 			      TribeDescr::CapacityStringIndex::kOutAndLacking, stationed),
 			   present, StyleManager::color_tag(as_string(stationed - present), style.high_color()),
 			   StyleManager::color_tag(as_string(soldier_capacity() - stationed), style.low_color()));
 		} else {  // Soldiers filled to capacity; some are outside
-			rv = format(
+			rv = ::format(
 			   tribe.get_soldiers_format_string(
 			      TribeDescr::CapacityStringIndex::kOut, soldier_capacity()),
 			   present,
@@ -68,7 +68,7 @@ std::string SoldierControl::get_status_string(const TribeDescr& tribe,
 	}
 
 	return StyleManager::color_tag(
-	   format("%s %s", soldier_preference_icon(pref), rv), style.medium_color());
+	   ::format("%s %s", soldier_preference_icon(pref), rv), style.medium_color());
 }
 
 }  // namespace Widelands

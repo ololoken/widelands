@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2025 by the Widelands Development Team
+ * Copyright (C) 2004-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -326,7 +326,7 @@ void InternetGaming::handle_metaserver_communication(bool relogin_on_error) {
 			}
 		}
 	} catch (const std::exception& e) {
-		logout(format(_("Something went wrong: %s"), e.what()));
+		logout(::format(_("Something went wrong: %s"), e.what()));
 		set_error();
 	}
 
@@ -422,7 +422,7 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 			const std::string assigned_name = packet.string();
 			if (clientname_ != assigned_name) {
 				format_and_add_chat("", "", true,
-				                    format(_("You have been logged in as ‘%s’ since your "
+				                    ::format(_("You have been logged in as ‘%s’ since your "
 				                             "requested name is already in use or reserved."),
 				                           assigned_name));
 			}
@@ -483,7 +483,7 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 			// Login specific commands but not in CONNECTING state...
 			log_err("InternetGaming: Received %s cmd although client is not in CONNECTING state.\n",
 			        cmd.c_str());
-			std::string temp = format(
+			std::string temp = ::format(
 			   _("WARNING: Received a %s command although we are not in CONNECTING state."), cmd);
 			format_and_add_chat("", "", true, temp);
 		}
@@ -492,7 +492,7 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 			// Client received the server time
 			time_offset_ = stoi(packet.string()) - time(nullptr);
 			verb_log_info("InternetGaming: Server time offset is %d second(s).", time_offset_);
-			std::string temp = format(ngettext("Server time offset is %d second.",
+			std::string temp = ::format(ngettext("Server time offset is %d second.",
 			                                   "Server time offset is %d seconds.", time_offset_),
 			                          time_offset_);
 			format_and_add_chat("", "", true, temp);
@@ -546,7 +546,7 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 				    (ing->build_id == build_id() || (ing->build_id.compare(0, 6, "build-") != 0 &&
 				                                     build_id().compare(0, 6, "build-") != 0))) {
 					format_and_add_chat(
-					   "", "", true, format(_("The game %s is now available"), ing->name));
+					   "", "", true, ::format(_("The game %s is now available"), ing->name));
 				}
 
 				delete ing;
@@ -556,7 +556,7 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 			for (InternetGame& old_game : old) {
 				if (!old_game.name.empty()) {
 					format_and_add_chat(
-					   "", "", true, format(_("The game %s has been closed"), old_game.name));
+					   "", "", true, ::format(_("The game %s has been closed"), old_game.name));
 				}
 			}
 
@@ -595,7 +595,7 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 					}
 				}
 				if (!found) {
-					format_and_add_chat("", "", true, format(_("%s joined the lobby"), inc.name));
+					format_and_add_chat("", "", true, ::format(_("%s joined the lobby"), inc.name));
 				}
 			}
 
@@ -606,7 +606,7 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 
 			for (InternetClient& client : old) {
 				if (!client.name.empty()) {
-					format_and_add_chat("", "", true, format(_("%s left the lobby"), client.name));
+					format_and_add_chat("", "", true, ::format(_("%s left the lobby"), client.name));
 				}
 			}
 			clientupdate_ = true;
@@ -665,14 +665,14 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 				// Something went wrong with the chat message the user sent.
 				message += _("Chat message could not be sent.");
 				if (reason == "NO_SUCH_USER") {
-					message = format("%s %s", message, InternetGamingMessages::get_message(reason));
+					message = ::format("%s %s", message, InternetGamingMessages::get_message(reason));
 				}
 			}
 
 			else if (subcmd == IGPCMD_CMD) {
 				// Something went wrong with the command
 				message += _("Command could not be executed.");
-				message = format("%s %s", message, InternetGamingMessages::get_message(reason));
+				message = ::format("%s %s", message, InternetGamingMessages::get_message(reason));
 			}
 
 			else if (subcmd == IGPCMD_GAME_OPEN) {
@@ -689,10 +689,10 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 				waitcmd_ = "";
 			}
 			if (!message.empty()) {
-				message = format(_("ERROR: %s"), message);
+				message = ::format(_("ERROR: %s"), message);
 			} else {
 				message =
-				   format(_("An unexpected error message has been received about command %1%: %2%"),
+				   ::format(_("An unexpected error message has been received about command %1%: %2%"),
 				          subcmd, reason);
 			}
 
@@ -703,7 +703,7 @@ void InternetGaming::handle_packet(RecvPacket& packet, bool relogin_on_error) {
 		else {
 			// Inform the client about the unknown command
 			format_and_add_chat(
-			   "", "", true, format(_("Received an unknown command from the metaserver: %s"), cmd));
+			   "", "", true, ::format(_("Received an unknown command from the metaserver: %s"), cmd));
 		}
 
 	} catch (WLWarning& e) {
@@ -1015,7 +1015,7 @@ void InternetGaming::format_and_add_chat(const std::string& from,
                                          const std::string& msg) {
 	ChatMessage c(msg);
 	if (!system && from.empty()) {
-		std::string unkown_string = format("<%s>", pgettext("chat_sender", "Unknown"));
+		std::string unkown_string = ::format("<%s>", pgettext("chat_sender", "Unknown"));
 		c.sender = unkown_string;
 	} else {
 		c.sender = from;

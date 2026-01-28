@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,7 +68,7 @@ LoginBox::LoginBox(MainMenu& parent, UI::UniqueWindow::Registry& r)
                        0,
                        180,
                        UI::PanelStyle::kFsMenu,
-                       format(_("In order to use a registered "
+                       ::format(_("In order to use a registered "
                                 "account, you need an account on the Widelands website. "
                                 "Please log in at %s and set an online "
                                 "gaming password on your profile page."),

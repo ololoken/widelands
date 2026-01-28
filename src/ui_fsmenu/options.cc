@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -586,7 +586,7 @@ void Options::add_displays(const OptionsCtrl::OptionsStruct& opt) {
 		if (SDL_GetDisplayBounds(i, &r) == 0) {
 			display_dropdown_.add(
 			   /** TRANSLATORS: Display index and virtual coordinates, e.g, '#0 (0, 0, 1920, 1080)'*/
-			   format(_("#%1% (%2%, %3%, %4%, %5%)"), i, r.x, r.y, r.w, r.h), i, nullptr,
+			   ::format(_("#%1% (%2%, %3%, %4%, %5%)"), i, r.x, r.y, r.w, r.h), i, nullptr,
 			   opt.display == i);
 		}
 	}
@@ -620,7 +620,7 @@ void Options::add_screen_resolutions(const OptionsCtrl::OptionsStruct& opt) {
 				const bool selected = !resolution_dropdown_.has_selection() && this_res == current_res;
 				resolution_dropdown_.add(
 				   /** TRANSLATORS: Screen resolution, e.g. 800 × 600 */
-				   format(_("%1% × %2%"), this_res.xres, this_res.yres), this_res, nullptr, selected);
+				   ::format(_("%1% × %2%"), this_res.xres, this_res.yres), this_res, nullptr, selected);
 			}
 		}
 	}
@@ -628,7 +628,7 @@ void Options::add_screen_resolutions(const OptionsCtrl::OptionsStruct& opt) {
 	if (!resolution_dropdown_.has_selection()) {
 		resolution_dropdown_.add(
 		   /** TRANSLATORS: Screen resolution, e.g. 800 × 600 */
-		   format(_("%1% × %2%"), current_res.xres, current_res.yres), current_res, nullptr, true);
+		   ::format(_("%1% × %2%"), current_res.xres, current_res.yres), current_res, nullptr, true);
 	}
 }
 
@@ -808,9 +808,9 @@ void Options::update_language_stats() {
 				if (percent == 100) {
 					message =
 					   /** TRANSLATORS: %s = language name */
-					   format(_("The translation into %s is complete."), entry.descname);
+					   ::format(_("The translation into %s is complete."), entry.descname);
 				} else {
-					message = format(
+					message = ::format(
 					   /** TRANSLATORS: %1% = language name, %2% = percentage */
 					   _("The translation into %1% is %2%%% complete."), entry.descname, percent);
 				}
@@ -824,7 +824,7 @@ void Options::update_language_stats() {
 	// will catch up with the work later.
 	if (percent <= 90) {
 		message = message + " " +
-		          format(_("If you wish to help us translate, please visit %s"),
+		          ::format(_("If you wish to help us translate, please visit %s"),
 		                 "<font underline=1>widelands.org/wiki/TranslatingWidelands</font>");
 	}
 

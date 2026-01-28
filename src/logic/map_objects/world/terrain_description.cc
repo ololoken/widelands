@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,7 +57,7 @@ TerrainDescription::Is terrain_type_from_string(const std::string& type) {
 	if (type == "unwalkable") {
 		return TerrainDescription::Is::kUnwalkable;
 	}
-	throw LuaError(format("Invalid terrain \"is\" value '%s'", type));
+	throw LuaError(::format("Invalid terrain \"is\" value '%s'", type));
 }
 
 }  // namespace

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -321,9 +321,9 @@ void BuildingStatisticsMenu::init(int last_selected_tab) {
 	for (int tab_index = 0; tab_index < kNoOfBuildingTabs; ++tab_index) {
 		int current_column = 0;
 		tabs_[tab_index] = new UI::Box(&tab_panel_, UI::PanelStyle::kWui,
-		                               format("tab_box_%d", tab_index), 0, 0, UI::Box::Vertical);
+		                               ::format("tab_box_%d", tab_index), 0, 0, UI::Box::Vertical);
 		UI::Box* row = new UI::Box(tabs_[tab_index], UI::PanelStyle::kWui,
-		                           format("row_box_%d", tab_index), 0, 0, UI::Box::Horizontal);
+		                           ::format("row_box_%d", tab_index), 0, 0, UI::Box::Horizontal);
 		row_counters[tab_index] = 0;
 
 		for (const Widelands::DescriptionIndex id : buildings_to_add[tab_index]) {
@@ -337,7 +337,7 @@ void BuildingStatisticsMenu::init(int last_selected_tab) {
 				tabs_[tab_index]->add(row, UI::Box::Resizing::kFullSize);
 				tabs_[tab_index]->add_space(6);
 				row = new UI::Box(tabs_[tab_index], UI::PanelStyle::kWui,
-				                  format("row_box_%d_%u", tab_index, id), 0, 0, UI::Box::Horizontal);
+				                  ::format("row_box_%d_%u", tab_index, id), 0, 0, UI::Box::Horizontal);
 				current_column = 0;
 			}
 		}
@@ -461,9 +461,9 @@ void BuildingStatisticsMenu::add_button(Widelands::DescriptionIndex id,
                                         const Widelands::BuildingDescr& descr,
                                         UI::Box* row) {
 	UI::Box* button_box = new UI::Box(
-	   row, UI::PanelStyle::kWui, format("buttons_box_%s", descr.name()), 0, 0, UI::Box::Vertical);
+	   row, UI::PanelStyle::kWui, ::format("buttons_box_%s", descr.name()), 0, 0, UI::Box::Vertical);
 	building_buttons_[id] =
-	   new UI::Button(button_box, format("building_button%d", id), 0, 0, kBuildGridCellWidth,
+	   new UI::Button(button_box, ::format("building_button%d", id), 0, 0, kBuildGridCellWidth,
 	                  kBuildGridCellHeight, UI::ButtonStyle::kWuiBuildingStats,
 	                  descr.representative_image(&iplayer().get_player()->get_playercolor()), "",
 	                  UI::Button::VisualState::kFlat);
@@ -472,14 +472,14 @@ void BuildingStatisticsMenu::add_button(Widelands::DescriptionIndex id,
 	button_box->add(building_buttons_[id]);
 
 	owned_labels_[id] = new UI::Textarea(
-	   button_box, UI::PanelStyle::kWui, format("label_%s", descr.name()), UI::FontStyle::kWuiLabel,
+	   button_box, UI::PanelStyle::kWui, ::format("label_%s", descr.name()), UI::FontStyle::kWuiLabel,
 	   0, 0, kBuildGridCellWidth, kLabelHeight, "", UI::Align::kCenter);
 	owned_labels_[id]->set_style_override(style_.building_statistics_button_font());
 	owned_labels_[id]->set_fixed_width(kBuildGridCellWidth);
 	button_box->add(owned_labels_[id]);
 
 	productivity_labels_[id] = new UI::Textarea(
-	   button_box, UI::PanelStyle::kWui, format("productivity_%s", descr.name()),
+	   button_box, UI::PanelStyle::kWui, ::format("productivity_%s", descr.name()),
 	   UI::FontStyle::kWuiLabel, 0, 0, kBuildGridCellWidth, kLabelHeight, "", UI::Align::kCenter);
 	productivity_labels_[id]->set_style_override(style_.building_statistics_button_font());
 	productivity_labels_[id]->set_fixed_width(kBuildGridCellWidth);
@@ -723,7 +723,7 @@ void BuildingStatisticsMenu::update() {
 
 				/** TRANSLATORS: Percent in building statistics window, e.g. 85% */
 				/** TRANSLATORS: If you wish to add a space, translate as '%i %%' */
-				const std::string perc_str = format(_("%i%%"), percent);
+				const std::string perc_str = ::format(_("%i%%"), percent);
 				set_labeltext(productivity_labels_[id], perc_str, color);
 			}
 			if (has_selection_ && id == current_building_type_) {
@@ -741,7 +741,7 @@ void BuildingStatisticsMenu::update() {
 				   (total_stationed_soldiers < total_soldier_capacity)     ? style_.medium_color() :
 				                                                             style_.high_color();
 				const std::string perc_str =
-				   format(_("%1%/%2%"), total_stationed_soldiers, total_soldier_capacity);
+				   ::format(_("%1%/%2%"), total_stationed_soldiers, total_soldier_capacity);
 				set_labeltext(productivity_labels_[id], perc_str, color);
 			}
 			if (has_selection_ && id == current_building_type_) {
@@ -760,9 +760,9 @@ void BuildingStatisticsMenu::update() {
 		   player.tribe().has_building(id) && (building.is_buildable() || building.is_enhanced());
 		if (can_construct_this_building) {
 			/** TRANSLATORS: Buildings: owned / under construction */
-			owned_text = format(_("%1%/%2%"), nr_owned, nr_build);
+			owned_text = ::format(_("%1%/%2%"), nr_owned, nr_build);
 		} else {
-			owned_text = format(_("%1%/%2%"), nr_owned, "–");
+			owned_text = ::format(_("%1%/%2%"), nr_owned, "–");
 		}
 		set_labeltext(
 		   owned_labels_[id], owned_text, style_.building_statistics_details_font().color());

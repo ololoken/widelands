@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 by the Widelands Development Team
+ * Copyright (C) 2021-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -232,7 +232,7 @@ KeymodAndDirBox::KeymodAndDirBox(UI::Panel* parent,
                  UI::PanelStyle::kFsMenu,
                  "title",
                  UI::FontStyle::kFsMenuLabel,
-                 format(_("%1%:"), title)),
+                 ::format(_("%1%:"), title)),
      keymod_dropdown_(this),
      dir_dropdown_(this, two_d),
      title_(title),
@@ -294,7 +294,7 @@ bool KeymodAndDirBox::check_available(uint16_t keymod, uint8_t dir) {
 			      /** TRANSLATORS: %1 is a modifier key combination, e.g. "Ctrl+", or
 			                         empty if none is used. %2 is scrolling direction.
 			                         %3 is the name of the conflicting function. */
-			      format(_("‘%1$s%2$s’ conflicts with ‘%3$s’. "
+			      ::format(_("‘%1$s%2$s’ conflicts with ‘%3$s’. "
 			               "Please select a different combination or "
 			               "change the conflicting setting first."),
 			             keymod_string_for(keymod), _(sd_names[dir]), other->get_title()),
@@ -564,7 +564,7 @@ void MousewheelOptionsDialog::set_touchpad() {
 		UI::WLMessageBox warning(
 		   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Scroll Settings Conflict"),
 		   as_richtext_paragraph(
-		      format(_("‘%1$s’, ‘%2$s’, or ‘%3$s’ conflicts with the recommended "
+		      ::format(_("‘%1$s’, ‘%2$s’, or ‘%3$s’ conflicts with the recommended "
 		               "settings. Change the conflicting setting(s) too?"),
 		             speed_box_.get_title(), toolsize_box_.get_title(), toolgap_box_.get_title()),
 		      UI::FontStyle::kFsMenuLabel, UI::Align::kCenter),

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -450,7 +450,7 @@ bool ProductionProgram::ActReturn::EconomyNeedsWare::evaluate(const ProductionSi
 }
 std::string ProductionProgram::ActReturn::EconomyNeedsWare::description(
    const Descriptions& descriptions) const {
-	std::string result = format(
+	std::string result = ::format(
 	   /** TRANSLATORS: e.g. Completed/Skipped/Did not start ... because the economy needs the ware
 	    * '%s' */
 	   _("the economy needs the ware ‘%s’"), descriptions.get_ware_descr(ware_type)->descname());
@@ -460,7 +460,7 @@ std::string ProductionProgram::ActReturn::EconomyNeedsWare::description_negation
    const Descriptions& descriptions) const {
 	/** TRANSLATORS: e.g. Completed/Skipped/Did not start ... because the economy doesn't need the
 	 * ware '%s' */
-	std::string result = format(_("the economy doesn’t need the ware ‘%s’"),
+	std::string result = ::format(_("the economy doesn’t need the ware ‘%s’"),
 	                            descriptions.get_ware_descr(ware_type)->descname());
 	return result;
 }
@@ -473,7 +473,7 @@ std::string ProductionProgram::ActReturn::EconomyNeedsWorker::description(
    const Descriptions& descriptions) const {
 	/** TRANSLATORS: e.g. Completed/Skipped/Did not start ... because the economy needs the worker
 	 * '%s' */
-	std::string result = format(_("the economy needs the worker ‘%s’"),
+	std::string result = ::format(_("the economy needs the worker ‘%s’"),
 	                            descriptions.get_worker_descr(worker_type)->descname());
 	return result;
 }
@@ -482,7 +482,7 @@ std::string ProductionProgram::ActReturn::EconomyNeedsWorker::description_negati
    const Descriptions& descriptions) const {
 	/** TRANSLATORS: e.g. Completed/Skipped/Did not start ... */
 	/** TRANSLATORS:      ... because the economy doesn’t need the worker '%s' */
-	std::string result = format(_("the economy doesn’t need the worker ‘%s’"),
+	std::string result = ::format(_("the economy doesn’t need the worker ‘%s’"),
 	                            descriptions.get_worker_descr(worker_type)->descname());
 	return result;
 }
@@ -532,12 +532,12 @@ ProductionProgram::ActReturn::SiteHas::description(const Descriptions& descripti
 		   /** TRANSLATORS: This is an item in a list of wares, e.g. "3x water": */
 		   /** TRANSLATORS:    %1$i = "3" */
 		   /** TRANSLATORS:    %2$s = "water" */
-		   format(_("%1$ix %2$s"), static_cast<unsigned int>(group.second), condition);
+		   ::format(_("%1$ix %2$s"), static_cast<unsigned int>(group.second), condition);
 	}
 
 	std::string result =
 	   /** TRANSLATORS: %s is a list of wares*/
-	   format(_("the building has the following wares: %s"), condition);
+	   ::format(_("the building has the following wares: %s"), condition);
 	return result;
 }
 
@@ -556,12 +556,12 @@ std::string ProductionProgram::ActReturn::SiteHas::description_negation(
 		   /** TRANSLATORS: This is an item in a list of wares, e.g. "3x water": */
 		   /** TRANSLATORS:    %1$i = "3" */
 		   /** TRANSLATORS:    %2$s = "water" */
-		   format(_("%1$ix %2$s"), static_cast<unsigned int>(group.second), condition);
+		   ::format(_("%1$ix %2$s"), static_cast<unsigned int>(group.second), condition);
 	}
 
 	std::string result =
 	   /** TRANSLATORS: %s is a list of wares*/
-	   format(_("the building doesn’t have the following wares: %s"), condition);
+	   ::format(_("the building doesn’t have the following wares: %s"), condition);
 	return result;
 }
 
@@ -768,18 +768,18 @@ void ProductionProgram::ActReturn::execute(Game& game, ProductionSite& ps) const
 		switch (result_) {
 		case ProgramResult::kFailed: {
 			/** TRANSLATORS: "Did not start working because the economy needs the ware '%s'" */
-			result_string = format(_("Did not start %1$s because %2$s"),
+			result_string = ::format(_("Did not start %1$s because %2$s"),
 			                       ps.top_state().program->descname(), condition_string);
 		} break;
 		case ProgramResult::kCompleted: {
-			result_string = format(
+			result_string = ::format(
 			   /** TRANSLATORS: "Completed working because the economy needs the ware '%s'" */
 			   _("Completed %1$s because %2$s"), ps.top_state().program->descname(), condition_string);
 		} break;
 		case ProgramResult::kSkipped:
 		case ProgramResult::kNone: {
 			// TODO(GunChleoc): kNone same as kSkipped - is this on purpose?
-			result_string = format(
+			result_string = ::format(
 			   /** TRANSLATORS: "Skipped working because the economy needs the ware '%s'" */
 			   _("Skipped %1$s because %2$s"), ps.top_state().program->descname(), condition_string);
 		} break;
@@ -1299,7 +1299,7 @@ void ProductionProgram::ActConsume::execute(Game& game, ProductionSite& ps) cons
 				   /** TRANSLATORS: For this example, this is what's in the place holders: */
 				   /** TRANSLATORS:    %1$i = "3" */
 				   /** TRANSLATORS:    %2$s = "water" */
-				   format(_("%1$ix %2$s"), static_cast<unsigned int>(count), ware_string);
+				   ::format(_("%1$ix %2$s"), static_cast<unsigned int>(count), ware_string);
 			}
 			group_list.push_back(ware_string);
 		}
@@ -1308,7 +1308,7 @@ void ProductionProgram::ActConsume::execute(Game& game, ProductionSite& ps) cons
 		   /** TRANSLATORS: e.g. 'Did not start working because 3x water and 3x wheat are missing' */
 		   /** TRANSLATORS: e.g. 'Did not start working because fish, meat or pitta bread is missing'
 		    */
-		   format(ngettext("%s is missing", "%s are missing", nr_missing_groups),
+		   ::format(ngettext("%s is missing", "%s are missing", nr_missing_groups),
 		          i18n::localize_list(group_list, i18n::ConcatenateWith::AND));
 
 		std::string result_string =
@@ -1321,7 +1321,7 @@ void ProductionProgram::ActConsume::execute(Game& game, ProductionSite& ps) cons
 		   /** TRANSLATORS: on a development build if you can, and let us know if there are any issues
 		    */
 		   /** TRANSLATORS: we need to address for your language. */
-		   format(_("Did not start %1$s because %2$s"), ps.top_state().program->descname(),
+		   ::format(_("Did not start %1$s because %2$s"), ps.top_state().program->descname(),
 		          is_missing_string);
 
 		if (ps.production_result() != ps.descr().out_of_resource_heading() ||
@@ -1400,7 +1400,7 @@ void ProductionProgram::ActProduce::execute(Game& game, ProductionSite& ps) cons
 		count += item_pair.second;
 		std::string ware_descname = tribe.get_ware_descr(item_pair.first)->descname();
 		if (1 < item_pair.second || 1 < produced_wares_.size()) {
-			ware_descname = format(
+			ware_descname = ::format(
 			   /** TRANSLATORS: This is an item in a list of wares, e.g. "Produced 2x Coal": */
 			   /** TRANSLATORS:    %1$i = "2" */
 			   /** TRANSLATORS:    %2$s = "Coal" */
@@ -1413,7 +1413,7 @@ void ProductionProgram::ActProduce::execute(Game& game, ProductionSite& ps) cons
 	const std::string result_string =
 	   /** TRANSLATORS: %s is a list of wares. String is fetched according to total amount of
 	      wares. */
-	   format(ngettext("Produced %s", "Produced %s", count), ware_list);
+	   ::format(ngettext("Produced %s", "Produced %s", count), ware_list);
 	if (ps.production_result() != ps.descr().out_of_resource_heading() ||
 	    ps.descr().out_of_resource_heading().empty()) {
 		ps.set_production_result(result_string);
@@ -1482,7 +1482,7 @@ void ProductionProgram::ActRecruit::execute(Game& game, ProductionSite& ps) cons
 		count += item_pair.second;
 		std::string worker_descname = tribe.get_worker_descr(item_pair.first)->descname();
 		if (1 < item_pair.second || 1 < recruited_workers_.size()) {
-			worker_descname = format(
+			worker_descname = ::format(
 			   /** TRANSLATORS: This is an item in a list of workers, e.g. "Recruited 2x Ox": */
 			   /** TRANSLATORS:    %1$i = "2" */
 			   /** TRANSLATORS:    %2$s = "Ox" */
@@ -1495,7 +1495,7 @@ void ProductionProgram::ActRecruit::execute(Game& game, ProductionSite& ps) cons
 	const std::string result_string =
 	   /** TRANSLATORS: %s is a list of workers. String is fetched according to total amount of
 	      workers. */
-	   format(ngettext("Recruited %s", "Recruited %s", count), unit_string);
+	   ::format(ngettext("Recruited %s", "Recruited %s", count), unit_string);
 	ps.set_production_result(result_string);
 }
 
@@ -1921,7 +1921,7 @@ void ProductionProgram::ActTrain::execute(Game& game, ProductionSite& ps) const 
 	ps.set_production_result(
 	   /** TRANSLATORS: Success message of a trainingsite '%s' stands for the description of the
 	    * training program, e.g. Completed upgrading soldier evade from level 0 to level 1 */
-	   format(_("Completed %s"), ps.top_state().program->descname()));
+	   ::format(_("Completed %s"), ps.top_state().program->descname()));
 
 	ts.training_successful(training_.attribute, current_level);
 

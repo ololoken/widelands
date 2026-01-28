@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -390,7 +390,7 @@ EnhanceConfirm::EnhanceConfirm(InteractivePlayer& parent,
         parent,
         _("Enhance building?"),
         building.descr().type() == Widelands::MapObjectType::MILITARYSITE ?
-           format(
+           ::format(
               "%s\n\n%s",
               _("Do you really want to enhance this building?"),
               /** TRANSLATORS: Warning message when player wants to enhance a military building */
@@ -460,7 +460,7 @@ ShipSinkConfirm::ShipSinkConfirm(InteractivePlayer& parent, Widelands::Ship& shi
    : ActionConfirm(parent,
                    _("Sink the ship?"),
                    /** TRANSLATORS: %s is a ship name */
-                   format(_("Do you really want to sink %s?"), ship.get_shipname()),
+                   ::format(_("Do you really want to sink %s?"), ship.get_shipname()),
                    &ship) {
 	// Nothing special to do
 }

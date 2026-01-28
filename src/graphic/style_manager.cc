@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2025 by the Widelands Development Team
+ * Copyright (C) 2017-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -137,7 +137,7 @@ std::unique_ptr<LuaTable> try_section_or_empty(LuaInterface& lua,
 		return table.get_table(section);
 	}
 
-	std::string name = parent.empty() ? section : format("%s.%s", parent, section);
+	std::string name = parent.empty() ? section : ::format("%s.%s", parent, section);
 	fail_if_doing_default_style("section", name);
 	return lua.empty_table();
 }
@@ -226,7 +226,7 @@ StyleManager::StyleManager() {
 	scrollbarstyles_.clear();
 
 	LuaInterface lua;
-	std::unique_ptr<LuaTable> table(lua.run_script(format("%1%init.lua", template_dir())));
+	std::unique_ptr<LuaTable> table(lua.run_script(::format("%1%init.lua", template_dir())));
 
 	std::string section;
 	std::string sub;
@@ -685,7 +685,7 @@ const RGBColor& StyleManager::minimap_icon_frame() const {
 }
 
 std::string StyleManager::color_tag(const std::string& text, const RGBColor& color) {
-	return format("<font color=%s>%s</font>", color.hex_value(), text);
+	return ::format("<font color=%s>%s</font>", color.hex_value(), text);
 }
 
 // Fill the maps
@@ -699,7 +699,7 @@ void StyleManager::add_button_style(UI::ButtonStyle style,
 		b_style = new UI::ButtonStyleInfo(read_text_panel_style(*(bst->get_table("enabled"))),
 		                                  read_text_panel_style(*(bst->get_table("disabled"))));
 	} else {
-		fail_if_doing_default_style("button style", format("%s.%s", parent, key));
+		fail_if_doing_default_style("button style", ::format("%s.%s", parent, key));
 		b_style = new UI::ButtonStyleInfo(default_style->button_style(style));
 	}
 	buttonstyles_.insert(std::make_pair(style, std::unique_ptr<const UI::ButtonStyleInfo>(b_style)));
@@ -713,7 +713,7 @@ void StyleManager::add_slider_style(UI::SliderStyle style,
 	if (table.has_key(key)) {
 		s_style = read_text_panel_style(*table.get_table(key));
 	} else {
-		fail_if_doing_default_style("slider style", format("%s.%s", parent, key));
+		fail_if_doing_default_style("slider style", ::format("%s.%s", parent, key));
 		s_style = new UI::TextPanelStyleInfo(default_style->slider_style(style));
 	}
 	sliderstyles_.insert(std::make_pair(style, std::unique_ptr<UI::TextPanelStyleInfo>(s_style)));
@@ -740,7 +740,7 @@ void StyleManager::add_tabpanel_style(UI::TabPanelStyle style,
 	if (table.has_key(key)) {
 		tp_style = read_panel_style(*table.get_table(key));
 	} else {
-		fail_if_doing_default_style("tabpanel style", format("%s.%s", parent, key));
+		fail_if_doing_default_style("tabpanel style", ::format("%s.%s", parent, key));
 		tp_style = new UI::PanelStyleInfo(*default_style->tabpanel_style(style));
 	}
 	tabpanelstyles_.insert(std::make_pair(style, std::unique_ptr<UI::PanelStyleInfo>(tp_style)));
@@ -941,7 +941,7 @@ void StyleManager::add_dropdown_style(UI::PanelStyle style,
 	if (table.has_key(key)) {
 		dd_style = read_panel_style(*table.get_table(key));
 	} else {
-		fail_if_doing_default_style("dropdown style", format("%s.%s", parent, key));
+		fail_if_doing_default_style("dropdown style", ::format("%s.%s", parent, key));
 		dd_style = new UI::PanelStyleInfo(*default_style->dropdown_style(style));
 	}
 	dropdownstyles_.insert(std::make_pair(style, std::unique_ptr<UI::PanelStyleInfo>(dd_style)));
@@ -955,7 +955,7 @@ void StyleManager::add_scrollbar_style(UI::PanelStyle style,
 	if (table.has_key(key)) {
 		sb_style = read_panel_style(*table.get_table(key));
 	} else {
-		fail_if_doing_default_style("scrollbar style", format("%s.%s", parent, key));
+		fail_if_doing_default_style("scrollbar style", ::format("%s.%s", parent, key));
 		sb_style = new UI::PanelStyleInfo(*default_style->scrollbar_style(style));
 	}
 	scrollbarstyles_.insert(std::make_pair(style, std::unique_ptr<UI::PanelStyleInfo>(sb_style)));

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -82,6 +82,6 @@ std::string EditorIncreaseResourcesTool::format_conf_description_impl(const Tool
 
 	/** TRANSLATORS: An entry in the tool history list. Inc. and dec. stand for increase and
 	 * decrease. */
-	return format(_("%1$s: inc./dec. %2$d, set to %3$d"), resource, conf.change_by,
+	return ::format(_("%1$s: inc./dec. %2$d, set to %3$d"), resource, conf.change_by,
 	              static_cast<int>(conf.set_to));
 }

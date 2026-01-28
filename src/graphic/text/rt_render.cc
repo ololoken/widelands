@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -290,7 +290,7 @@ protected:
 		const int maximum_size = g_gr->max_texture_size_for_font_rendering();
 		if (check_w > maximum_size || check_h > maximum_size) {
 			const std::string error_message =
-			   format("Texture (%d, %d) too big! Maximum size is %d.", check_w, check_h, maximum_size);
+			   ::format("Texture (%d, %d) too big! Maximum size is %d.", check_w, check_h, maximum_size);
 			log_err("%s\n", error_message.c_str());
 			throw TextureTooBig(error_message);
 		}
@@ -730,7 +730,7 @@ private:
 std::shared_ptr<UI::RenderedText> FillingTextNode::render(TextureCache* texture_cache) {
 	std::shared_ptr<UI::RenderedText> rendered_text(new UI::RenderedText());
 	const std::string hash =
-	   format("rt:fill:%s:%s:%i:%i:%i:%s", txt_, nodestyle_.font_color.hex_value(),
+	   ::format("rt:fill:%s:%s:%i:%i:%i:%s", txt_, nodestyle_.font_color.hex_value(),
 	          nodestyle_.font_style, width(), height(), (is_expanding_ ? "e" : "f"));
 
 	std::shared_ptr<const Image> rendered_image = texture_cache->get(hash);
@@ -770,7 +770,7 @@ public:
 	std::shared_ptr<UI::RenderedText> render(TextureCache* texture_cache) override {
 		if (show_spaces_) {
 			std::shared_ptr<UI::RenderedText> rendered_text(new UI::RenderedText());
-			const std::string hash = format("rt:wsp:%i:%i", width(), height());
+			const std::string hash = ::format("rt:wsp:%i:%i", width(), height());
 			std::shared_ptr<const Image> rendered_image = texture_cache->get(hash);
 			if (rendered_image == nullptr) {
 				auto texture = std::make_shared<Texture>(width(), height());
@@ -849,7 +849,7 @@ public:
 	std::shared_ptr<UI::RenderedText> render(TextureCache* texture_cache) override {
 		std::shared_ptr<UI::RenderedText> rendered_text(new UI::RenderedText());
 		const std::string hash =
-		   format("rt:sp:%s:%i:%i:%s", filename_, width(), height(), (is_expanding_ ? "e" : "f"));
+		   ::format("rt:sp:%s:%i:%i:%s", filename_, width(), height(), (is_expanding_ ? "e" : "f"));
 
 		std::shared_ptr<const Image> rendered_image = texture_cache->get(hash);
 		if (rendered_image == nullptr) {
@@ -1067,7 +1067,7 @@ std::shared_ptr<UI::RenderedText> ImgRenderNode::render(TextureCache* texture_ca
 		   std::unique_ptr<UI::RenderedRect>(new UI::RenderedRect(image_, click_target_)));
 	} else {
 		const std::string hash =
-		   format("rt:img:%s:%s:%i:%i", filename_, (use_playercolor_ ? color_.hex_value() : ""),
+		   ::format("rt:img:%s:%s:%i:%i", filename_, (use_playercolor_ ? color_.hex_value() : ""),
 		          width(), height());
 		std::shared_ptr<const Image> rendered_image = texture_cache->get(hash);
 		if (rendered_image == nullptr) {
@@ -1363,7 +1363,7 @@ public:
 			type_ = Type::kUI;
 			action_ = a["action"].get_string();
 		} else {
-			throw RenderError(format("Invalid link type '%s'", t));
+			throw RenderError(::format("Invalid link type '%s'", t));
 		}
 		target_ = a["target"].get_string();
 
@@ -1880,7 +1880,7 @@ TagHandler* create_taghandler(const TagHandler* p,
 	TagHandlerMap::iterator i = map.find(tag.name());
 	if (i == map.end()) {
 		throw RenderError(
-		   format("No Tag handler for %s. This is a bug, please submit a report.", tag.name()));
+		   ::format("No Tag handler for %s. This is a bug, please submit a report.", tag.name()));
 	}
 	return i->second(p, tag, fc, ns, image_cache, renderer_style, fontsets);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,10 +57,22 @@ public:
 		return tab_panel_;
 	}
 
+	void activate_tab_for_item(int item) {
+		tab_panel_.activate(tab_indices_.at(item));
+	}
+
 	// Update the label with the currently selected object names.
 	void update_label();
 	void set_descname_override(int32_t index, std::string name) {
 		descname_overrides_.emplace(index, name);
+	}
+
+	void notify_tab_added(const int tabpos) {
+		for (auto& pair : tab_indices_) {
+			if (pair.second >= tabpos) {
+				++pair.second;
+			}
+		}
 	}
 
 private:
@@ -74,6 +86,7 @@ private:
 	UI::TabPanel tab_panel_;
 	UI::MultilineTextarea current_selection_names_;
 	std::map<int, UI::Checkbox*> checkboxes_;
+	std::map<int, int> tab_indices_;
 	ToolType* const tool_;  // not owned
 };
 
@@ -107,9 +120,10 @@ CategorizedItemSelectionMenu<DescriptionType, ToolType>::CategorizedItemSelectio
      tool_(tool) {
 	add(&tab_panel_);
 
+	int category_index = 0;
 	for (const auto& category : categories) {
 		UI::Box* vertical = new UI::Box(&tab_panel_, UI::PanelStyle::kWui,
-		                                format("vbox_%s", category->name()), 0, 0, UI::Box::Vertical);
+		                                ::format("vbox_%s", category->name()), 0, 0, UI::Box::Vertical);
 		const int kSpacing = 5;
 		vertical->add_space(kSpacing);
 
@@ -119,7 +133,7 @@ CategorizedItemSelectionMenu<DescriptionType, ToolType>::CategorizedItemSelectio
 			if (nitems_handled % category->items_per_row() == 0) {
 				horizontal =
 				   new UI::Box(vertical, UI::PanelStyle::kWui,
-				               format("hbox_%s_%d", category->name(), i), 0, 0, UI::Box::Horizontal);
+				               ::format("hbox_%s_%d", category->name(), i), 0, 0, UI::Box::Horizontal);
 				horizontal->add_space(kSpacing);
 
 				vertical->add(horizontal);
@@ -131,11 +145,13 @@ CategorizedItemSelectionMenu<DescriptionType, ToolType>::CategorizedItemSelectio
 			cb->set_state(tool_->is_enabled(i));
 			cb->changedto.connect([this, i](bool b) { selected(i, b); });
 			checkboxes_[i] = cb;
+			tab_indices_[i] = category_index;
 			horizontal->add(cb, UI::Box::Resizing::kAlign, UI::Align::kBottom);
 			horizontal->add_space(kSpacing);
 			++nitems_handled;
 		}
 		tab_panel_.add(category->name(), category->picture(), vertical, category->descname());
+		++category_index;
 	}
 	add(&current_selection_names_, UI::Box::Resizing::kFullSize);
 	tab_panel_.sigclicked.connect([this]() { update_label(); });
@@ -189,13 +205,13 @@ void CategorizedItemSelectionMenu<DescriptionType, ToolType>::update_label() {
 	}
 	if (buf.size() > max_string_size) {
 		/** TRANSLATORS: %s are the currently selected items in an editor tool */
-		buf = format(_("Current: %s …"), buf);
+		buf = ::format(_("Current: %s …"), buf);
 	} else if (buf.empty()) {
 		/** TRANSLATORS: Help text in an editor tool */
 		buf = _("Click to select an item. Use the Ctrl key to select multiple items.");
 	} else {
 		/** TRANSLATORS: %s are the currently selected items in an editor tool */
-		buf = format(_("Current: %s"), buf);
+		buf = ::format(_("Current: %s"), buf);
 	}
 	current_selection_names_.set_text(buf);
 }

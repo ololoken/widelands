@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +60,7 @@ LaunchGame::LaunchGame(MenuCapsule& fsmm,
         10,
         10,
         UI::PanelStyle::kFsMenu,
-        format("<rt><p>%s</p></rt>",
+        ::format("<rt><p>%s</p></rt>",
                g_style_manager->font_style(UI::FontStyle::kWarning)
                   .as_font_tag(
                      _("An enabled add-on is known to cause desyncs. No replay will be written."))),
@@ -519,7 +519,7 @@ void LaunchGame::load_win_conditions(const std::set<std::string>& tags) {
 		}
 	} catch (const std::exception& e) {
 		const std::string error_message =
-		   format(_("Unable to determine valid win conditions because the map ‘%s’ "
+		   ::format(_("Unable to determine valid win conditions because the map ‘%s’ "
 		            "could not be loaded."),
 		          settings_.settings().mapfilename);
 		win_condition_dropdown_.set_errored(error_message);

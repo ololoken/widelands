@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -289,7 +289,7 @@ void MenuCapsule::add(BaseMenu& menu, const std::string& title) {
 	}
 
 	UI::Button* button = new UI::Button(&box_, title, 0, 0, 0, 0, UI::ButtonStyle::kFsMenuMenu,
-	                                    title, format(_("Back to ‘%s’"), title));
+	                                    title, ::format(_("Back to ‘%s’"), title));
 	UI::Panel* spacer1 = new UI::Panel(
 	   &box_, UI::PanelStyle::kFsMenu, "navigation_spacer_1", 0, 0, kPadding, kPadding);
 	UI::Panel* spacer2 = new UI::Panel(

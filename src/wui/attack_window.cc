@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -71,8 +71,8 @@ AttackWindow::AttackWindow(InteractivePlayer& parent,
    : UI::UniqueWindow(&parent,
                       UI::WindowStyle::kWui,
                       target_building_or_ship != nullptr ?
-                         format("attack_%u", target_building_or_ship->serial()) :
-                         format("attack_%d_%d", target_coords.x, target_coords.y),
+                         ::format("attack_%u", target_building_or_ship->serial()) :
+                         ::format("attack_%d_%d", target_coords.x, target_coords.y),
                       &reg,
                       0,
                       0,
@@ -285,7 +285,7 @@ void AttackWindow::think() {
 }
 
 static inline std::string slider_heading(const uint32_t num_attackers, const bool ship) {
-	return format(
+	return ::format(
 	   ship ?
 	      /** TRANSLATORS: Number of ships that should attack. Used in the attack window. */
 	      ngettext("%u ship", "%u ships", num_attackers) :
@@ -417,7 +417,7 @@ void AttackPanel::init_soldier_lists(
 		   add_text(*this, _("Attackers:"), UI::Align::kLeft, UI::FontStyle::kWuiLabel);
 		// Needed so we can get tooltips
 		txt.set_handle_mouse(true);
-		txt.set_tooltip(format(
+		txt.set_tooltip(::format(
 		   tooltip_format,
 		   g_style_manager->font_style(UI::FontStyle::kWuiTooltipHeader)
 		      .as_font_tag(attack_type_ == AttackType::kShip ?
@@ -439,7 +439,7 @@ void AttackPanel::init_soldier_lists(
 		UI::Textarea& txt =
 		   add_text(*this, _("Not attacking:"), UI::Align::kLeft, UI::FontStyle::kWuiLabel);
 		txt.set_handle_mouse(true);
-		txt.set_tooltip(format(
+		txt.set_tooltip(::format(
 		   tooltip_format,
 		   g_style_manager->font_style(UI::FontStyle::kWuiTooltipHeader)
 		      .as_font_tag(attack_type_ == AttackType::kShip ?
@@ -627,12 +627,12 @@ bool AttackPanel::ListOfSoldiers::handle_mousemove(
 	    mo != nullptr) {
 		if (mo->descr().type() == Widelands::MapObjectType::SHIP) {
 			upcast(const Widelands::Ship, ship, mo);
-			set_tooltip(format(_("%1$s  HP: %2$u/%3$u  AT: +%4$u%%"), ship->get_shipname(),
+			set_tooltip(::format(_("%1$s  HP: %2$u/%3$u  AT: +%4$u%%"), ship->get_shipname(),
 			                   ship->get_hitpoints(), ship->descr().max_hitpoints_,
 			                   ship->get_sea_attack_soldier_bonus(attack_box_->iplayer_.egbase())));
 		} else {
 			upcast(const Widelands::Soldier, soldier, mo);
-			set_tooltip(format(_("HP: %1$u/%2$u  AT: %3$u/%4$u  DE: %5$u/%6$u  EV: %7$u/%8$u"),
+			set_tooltip(::format(_("HP: %1$u/%2$u  AT: %3$u/%4$u  DE: %5$u/%6$u  EV: %7$u/%8$u"),
 			                   soldier->get_health_level(), soldier->descr().get_max_health_level(),
 			                   soldier->get_attack_level(), soldier->descr().get_max_attack_level(),
 			                   soldier->get_defense_level(), soldier->descr().get_max_defense_level(),

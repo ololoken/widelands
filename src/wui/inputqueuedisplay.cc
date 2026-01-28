@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2025 by the Widelands Development Team
+ * Copyright (C) 2010-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -132,7 +132,7 @@ InputQueueDisplay::InputQueueDisplay(UI::Panel* parent,
 }
 
 static inline std::string create_tooltip(const bool increase) {
-	return format(
+	return ::format(
 	   "<p>%s%s%s</p>",
 	   g_style_manager->font_style(UI::FontStyle::kWuiTooltipHeader)
 	      .as_font_tag(increase ?
@@ -171,7 +171,7 @@ InputQueueDisplay::InputQueueDisplay(UI::Panel* parent,
                                      uint32_t disambiguator_id)
    : UI::Box(parent,
              UI::PanelStyle::kWui,
-             format("inputqueuedisplay_%u_%u", static_cast<unsigned>(type), ware_or_worker_index),
+             ::format("inputqueuedisplay_%u_%u", static_cast<unsigned>(type), ware_or_worker_index),
              0,
              0,
              UI::Box::Horizontal),
@@ -290,7 +290,7 @@ InputQueueDisplay::InputQueueDisplay(UI::Panel* parent,
 
 	for (size_t i = 0; i < nr_icons_; ++i) {
 		icons_[i] = new UI::Icon(
-		   &hbox_, UI::PanelStyle::kWui, format("icon_%u", i), 0, 0, kButtonSize, kButtonSize,
+		   &hbox_, UI::PanelStyle::kWui, ::format("icon_%u", i), 0, 0, kButtonSize, kButtonSize,
 		   type_ == Widelands::wwWARE ? building.owner().tribe().get_ware_descr(index_)->icon() :
 		                                building.owner().tribe().get_worker_descr(index_)->icon());
 		hbox_.add(icons_[i]);

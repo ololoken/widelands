@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,7 +45,7 @@ BuildingHelpWindow::BuildingHelpWindow(InteractiveBase* const parent,
                       &reg,
                       width,
                       height,
-                      format(_("Help: %s"), building_description.descname())),
+                      ::format(_("Help: %s"), building_description.descname())),
      parent_(parent),
      height_(height),
      vbox_(this, UI::PanelStyle::kWui, "main_box", 0, 0, UI::Box::Vertical),

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 by the Widelands Development Team
+ * Copyright (C) 2021-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,12 +60,12 @@ std::string check_addon_filename_validity(const std::string& name) {
 
 	size_t pos = name.find_first_not_of(kValidAddOnFilenameChars);
 	if (pos != std::string::npos) {
-		return format(_("Invalid character ‘%c’"), name.at(pos));
+		return ::format(_("Invalid character ‘%c’"), name.at(pos));
 	}
 
 	for (const std::string& q : kInvalidAddOnFilenameSequences) {
 		if (name.find(q) != std::string::npos) {
-			return format(_("Filename may not contain ‘%s’"), q);
+			return ::format(_("Filename may not contain ‘%s’"), q);
 		}
 	}
 
@@ -275,26 +275,26 @@ void MapsAddOnsPackagerBox::load_addon(AddOns::MutableAddOn* a) {
 			}
 			my_maps_.add(
 			   entry.data.localized_name, entry.data.filenames.at(0), nullptr, false,
-			   format(
+			   ::format(
 			      "%s<br>%s<br>%s<br>%s<br>%s<br>%s",
 			      g_style_manager->font_style(UI::FontStyle::kFsTooltipHeader)
 			         .as_font_tag(entry.data.filenames.at(0)),
-			      format(_("Name: %s"),
+			      ::format(_("Name: %s"),
 			             g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
 			                .as_font_tag(entry.data.localized_name)),
-			      format(_("Size: %s"),
+			      ::format(_("Size: %s"),
 			             g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
-			                .as_font_tag(format(_("%1$u×%2$u"), entry.data.width, entry.data.height))),
-			      format(_("Players: %s"),
+			                .as_font_tag(::format(_("%1$u×%2$u"), entry.data.width, entry.data.height))),
+			      ::format(_("Players: %s"),
 			             g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
 			                .as_font_tag(std::to_string(entry.data.nrplayers))),
-			      format(_("Minimum Widelands Version: %s"),
+			      ::format(_("Minimum Widelands Version: %s"),
 			             g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
 			                .as_font_tag(entry.data.minimum_required_widelands_version.empty() ?
 			                                /** TRANSLATORS: No minimum required version */
 			                                pgettext("version", "(none)") :
 			                                entry.data.minimum_required_widelands_version)),
-			      format(_("Description: %s"),
+			      ::format(_("Description: %s"),
 			             g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
 			                .as_font_tag(entry.data.description))));
 		}
@@ -400,7 +400,7 @@ void MapsAddOnsPackagerBox::clicked_add_or_delete_map_or_dir(const ModifyAction 
 			if (!err.empty()) {
 				main_menu_.show_messagebox(
 				   _("Invalid Name"),
-				   format(
+				   ::format(
 				      _("This name is invalid. Reason: %s\n\nPlease choose a different name."), err));
 				continue;
 			}
@@ -408,7 +408,7 @@ void MapsAddOnsPackagerBox::clicked_add_or_delete_map_or_dir(const ModifyAction 
 			     {kWidelandsMapExtension, kS2MapExtension1, kS2MapExtension2}) {
 				if (name.size() >= ext.size() &&
 				    name.compare(name.size() - ext.size(), ext.size(), ext) == 0) {
-					err = format(_("Directories may not use the extension ‘%s’.\n\nPlease "
+					err = ::format(_("Directories may not use the extension ‘%s’.\n\nPlease "
 					               "choose a different name."),
 					             ext);
 					break;
@@ -437,9 +437,9 @@ void MapsAddOnsPackagerBox::clicked_add_or_delete_map_or_dir(const ModifyAction 
 		UI::WLMessageBox mbox(
 		   &main_menu_, UI::WindowStyle::kFsMenu, _("Delete"),
 		   selected_map.empty() ?
-		      format(_("Do you really want to delete the directory ‘%s’ and all its contents?"),
+		      ::format(_("Do you really want to delete the directory ‘%s’ and all its contents?"),
 		             select.back()) :
-		      format(_("Do you really want to delete the map ‘%s’?"), selected_map),
+		      ::format(_("Do you really want to delete the map ‘%s’?"), selected_map),
 		   UI::WLMessageBox::MBoxType::kOkCancel, UI::Align::kLeft);
 		if (mbox.run<UI::Panel::Returncodes>() != UI::Panel::Returncodes::kOk) {
 			return;

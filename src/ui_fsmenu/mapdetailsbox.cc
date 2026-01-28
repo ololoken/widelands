@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +37,7 @@ static std::string tribe_of(const GameSettings& game_settings, const PlayerSetti
 		}
 	}
 	return g_style_manager->font_style(UI::FontStyle::kDisabled)
-	   .as_font_tag(format(_("invalid tribe ‘%s’"), p.tribe));
+	   .as_font_tag(::format(_("invalid tribe ‘%s’"), p.tribe));
 }
 
 static std::string assemble_infotext_for_savegame(const GameSettings& game_settings) {
@@ -78,7 +78,7 @@ static std::string assemble_infotext_for_savegame(const GameSettings& game_setti
 
 		format_arg_strings.emplace_back(
 		   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
-		      .as_font_tag(format(
+		      .as_font_tag(::format(
 		         /** TRANSLATORS: "Player 1 (Barbarians): Playername" */
 		         _("Player %1$u (%2$s): %3$s"), (i + 1), tribe_of(game_settings, current_player),
 		         g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
@@ -92,7 +92,7 @@ static std::string assemble_infotext_for_savegame(const GameSettings& game_setti
 		arg.second.string_val = str.c_str();
 		fmt_args.emplace_back(arg);
 	}
-	return format(infotext_fmt, fmt_args);
+	return ::format(infotext_fmt, fmt_args);
 }
 
 static std::string assemble_infotext_for_map(const Widelands::Map& map,
@@ -111,26 +111,26 @@ static std::string assemble_infotext_for_map(const Widelands::Map& map,
 	format_arg_strings.emplace_back(
 	   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
 	      .as_font_tag(
-	         format(_("Size: %s"),
+	         ::format(_("Size: %s"),
 	                g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
-	                   .as_font_tag(format(_("%1$u×%2$u"), map.get_width(), map.get_height())))));
+	                   .as_font_tag(::format(_("%1$u×%2$u"), map.get_width(), map.get_height())))));
 
 	format_arg_strings.emplace_back(
 	   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
-	      .as_font_tag(format(
+	      .as_font_tag(::format(
 	         _("Players: %s"), g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
 	                              .as_font_tag(std::to_string(game_settings.players.size())))));
 
 	format_arg_strings.emplace_back(
 	   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
-	      .as_font_tag(format(_("Description: %s"),
+	      .as_font_tag(::format(_("Description: %s"),
 	                          g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
 	                             .as_font_tag(richtext_escape(map.get_description())))));
 
 	if (!map.get_hint().empty()) {
 		format_arg_strings.emplace_back(
 		   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
-		      .as_font_tag(format(
+		      .as_font_tag(::format(
 		         _("Hint: %s"), g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
 		                           .as_font_tag(map.get_hint()))));
 	}
@@ -142,7 +142,7 @@ static std::string assemble_infotext_for_map(const Widelands::Map& map,
 		arg.second.string_val = str.c_str();
 		fmt_args.emplace_back(arg);
 	}
-	return format(infotext_fmt, fmt_args);
+	return ::format(infotext_fmt, fmt_args);
 }
 
 // MapDetailsBox implementation

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -135,7 +135,7 @@ void Soldier::battle_update(Game& game, State& /* state */) {
 				BaseImmovable const* const immovable_position = get_position().field->get_immovable();
 				BaseImmovable const* const immovable_dest = map[dest].get_immovable();
 
-				const std::string messagetext = format(
+				const std::string messagetext = ::format(
 				   "The game engine has encountered a logic error. The %s "
 				   "#%u of player %u could not find a way from (%i, %i) "
 				   "(with %s immovable) to the opponent (%s #%u of player "

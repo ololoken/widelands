@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,7 +48,7 @@ void GameSaver::save() {
 	// We also don't want it for game objectives.
 	auto set_progress_message = [](std::string text, int step) {
 		Notifications::publish(UI::NoteLoadingMessage(
-		   step < 0 ? text : format(_("Saving game: %1$s (%2$d/%3$d)"), text, step, 6)));
+		   step < 0 ? text : ::format(_("Saving game: %1$s (%2$d/%3$d)"), text, step, 6)));
 	};
 	set_progress_message(_("Autosaving game…"), -1);
 

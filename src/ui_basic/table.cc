@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -160,7 +160,7 @@ void BaseTable::Column::update_tooltip(const bool sorted) const {
 	} else {
 		/** TRANSLATORS: Tooltip format for table headers: %1 is column description, %2 is
 		    "Click to sort ..." or "Click to reverse..." */
-		btn->set_tooltip(format(_("%1$s<br>(%2$s)"), user_tooltip, click_tooltip));
+		btn->set_tooltip(::format(_("%1$s<br>(%2$s)"), user_tooltip, click_tooltip));
 	}
 }
 

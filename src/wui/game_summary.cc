@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2025 by the Widelands Development Team
+ * Copyright (C) 2007-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -209,7 +209,7 @@ void GameSummaryScreen::fill_data() {
 		te.set_picture(0, player_image, p->get_name());
 		// Team
 		std::string teastr_ =
-		   p->team_number() == 0 ? "—" : format("%1$u", static_cast<unsigned int>(p->team_number()));
+		   p->team_number() == 0 ? "—" : ::format("%1$u", static_cast<unsigned int>(p->team_number()));
 		te.set_string(1, teastr_);
 		// Status
 		std::string stat_str;
@@ -254,9 +254,9 @@ void GameSummaryScreen::fill_data() {
 		}
 	} else {
 		if (team_won == 0) {
-			title_area_->set_text(format(_("%s won!"), won_name));
+			title_area_->set_text(::format(_("%s won!"), won_name));
 		} else {
-			title_area_->set_text(format(_("Team %u won!"), static_cast<unsigned int>(team_won)));
+			title_area_->set_text(::format(_("Team %u won!"), static_cast<unsigned int>(team_won)));
 		}
 	}
 	if (local_in_game) {
@@ -310,11 +310,11 @@ std::string GameSummaryScreen::parse_player_info(const std::string& info) {
 
 		const std::string key = pair.at(0);
 		if (key == "score") {
-			info_str += format("%1% : %2%\n", _("Score"), pair.at(1));
+			info_str += ::format("%1% : %2%\n", _("Score"), pair.at(1));
 		} else if (key == "team_score") {
-			info_str += format("%1% : %2%\n", _("Team Score"), pair.at(1));
+			info_str += ::format("%1% : %2%\n", _("Team Score"), pair.at(1));
 		} else if (key == "resign_reason") {
-			info_str += format("%1%\n", pair.at(1));
+			info_str += ::format("%1%\n", pair.at(1));
 		}
 	}
 

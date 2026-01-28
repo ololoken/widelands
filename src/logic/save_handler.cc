@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +40,7 @@ bool SaveHandler::roll_save_files(const std::string& filename, std::string* cons
 
 	// Only roll the smallest necessary number of files.
 	while (rolls < number_of_rolls_) {
-		filename_previous = create_file_name(kSaveDir, format("%s_%02d", filename, rolls));
+		filename_previous = create_file_name(kSaveDir, ::format("%s_%02d", filename, rolls));
 		if (!g_fs->file_exists(filename_previous)) {
 			break;
 		}
@@ -53,7 +53,7 @@ bool SaveHandler::roll_save_files(const std::string& filename, std::string* cons
 	} else {
 		verb_log_info("Autosave: Rolling savefiles (count): %d\n", rolls);
 		rolls--;
-		filename_previous = create_file_name(kSaveDir, format("%s_%02d", filename, rolls));
+		filename_previous = create_file_name(kSaveDir, ::format("%s_%02d", filename, rolls));
 		if (rolls > 0) {
 			try {
 				g_fs->fs_unlink(filename_previous);  // Delete last of the rolling files
@@ -73,7 +73,7 @@ bool SaveHandler::roll_save_files(const std::string& filename, std::string* cons
 	rolls--;
 	while (rolls >= 0) {
 		const std::string filename_next =
-		   create_file_name(kSaveDir, format("%s_%02d", filename, rolls));
+		   create_file_name(kSaveDir, ::format("%s_%02d", filename, rolls));
 		try {
 			g_fs->fs_rename(
 			   filename_next, filename_previous);  // e.g. wl_autosave_08 -> wl_autosave_09
@@ -153,7 +153,7 @@ void SaveHandler::think(Widelands::Game& game) {
 			} else {
 				save_success = roll_save_files(filename, &error);
 				if (save_success) {
-					filename = format("%s_00", autosave_filename_);
+					filename = ::format("%s_00", autosave_filename_);
 					verb_log_info_time(
 					   game.get_gametime(), "Autosave: saving as %s\n", filename.c_str());
 				}

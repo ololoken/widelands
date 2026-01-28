@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -56,11 +56,11 @@ std::string format_as_richtext(const ChatMessage& chat_message, const ChatColorF
 		// Personal message handling
 		if (sanitized.compare(0, 3, "/me") != 0) {
 			message = as_playercolor(fn, chat_message.playern,
-			                         format("%s @%s: ", sender_escaped, recipient_escaped)) +
+			                         ::format("%s @%s: ", sender_escaped, recipient_escaped)) +
 			          g_style_manager->font_style(UI::FontStyle::kChatWhisper).as_font_tag(sanitized);
 		} else {
 			message = as_playercolor(fn, chat_message.playern,
-			                         (format("@%s: %s", recipient_escaped, sender_escaped))) +
+			                         (::format("@%s: %s", recipient_escaped, sender_escaped))) +
 			          g_style_manager->font_style(UI::FontStyle::kChatWhisper)
 			             .as_font_tag(sanitized.substr(3));
 		}
@@ -73,9 +73,9 @@ std::string format_as_richtext(const ChatMessage& chat_message, const ChatColorF
 			             .as_font_tag(sanitized.substr(3));
 		} else if (!chat_message.sender.empty()) {
 			const std::string sender_formatted =
-			   as_playercolor(fn, chat_message.playern, format("%s:", sender_escaped));
+			   as_playercolor(fn, chat_message.playern, ::format("%s:", sender_escaped));
 			message =
-			   format("%s %s", sender_formatted,
+			   ::format("%s %s", sender_formatted,
 			          g_style_manager->font_style(UI::FontStyle::kChatMessage).as_font_tag(sanitized));
 		} else {
 			message =
@@ -86,7 +86,7 @@ std::string format_as_richtext(const ChatMessage& chat_message, const ChatColorF
 	char ts[12];
 	strftime(ts, sizeof(ts), "[%H:%M]", localtime(&chat_message.time));
 
-	return format("<p>%s %s</p>",
+	return ::format("<p>%s %s</p>",
 	              g_style_manager->font_style(UI::FontStyle::kChatTimestamp).as_font_tag(ts),
 	              message);
 }

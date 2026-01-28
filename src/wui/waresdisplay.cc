@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2025 by the Widelands Development Team
+ * Copyright (C) 2003-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -643,7 +643,7 @@ std::string StockMenuWaresDisplay::info_for_ware(const Widelands::DescriptionInd
 	      StyleManager::color_tag(_("="), colors.alternative_medium_color());
 	/** TRANSLATORS: The first placeholder is the stock amount of a ware/worker, and the second is an
 	 * icon indicating a trend. Very little space is available. */
-	return format(_("%1$s%2$s"), text, indicator);
+	return ::format(_("%1$s%2$s"), text, indicator);
 }
 
 RGBAColor
@@ -691,7 +691,7 @@ std::string get_amount_string(uint32_t amount, bool cutoff1k) {
 		amount /= 1000;
 		size++;
 	}
-	return format(_(unit_suffixes[size]), amount);
+	return ::format(_(unit_suffixes[size]), amount);
 }
 
 uint32_t StockMenuWaresDisplay::amount_of(const Widelands::DescriptionIndex ware) {

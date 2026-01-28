@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2025 by the Widelands Development Team
+ * Copyright (C) 2017-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -145,7 +145,7 @@ SeafaringStatisticsMenu::SeafaringStatisticsMenu(InteractivePlayer& plr,
         kButtonSize,
         UI::ButtonStyle::kWuiPrimary,
         g_image_cache->get("images/ui_basic/fsel.png"),
-        format("<rt><p>%s %s<br>%s</p></rt>",
+        ::format("<rt><p>%s %s<br>%s</p></rt>",
                g_style_manager->font_style(UI::FontStyle::kWuiTooltip)
                   .as_font_tag(
                      /** TRANSLATORS: Tooltip in the seafaring statistics window */
@@ -159,7 +159,7 @@ SeafaringStatisticsMenu::SeafaringStatisticsMenu(InteractivePlayer& plr,
                   .as_font_tag(
                      /** TRANSLATORS: Tooltip in the seafaring statistics window, placeholder is a
                          hotkey */
-                     format(_("(You can use %s to go to the selected ship and open its window.)"),
+                     ::format(_("(You can use %s to go to the selected ship and open its window.)"),
                             g_style_manager->font_style(UI::FontStyle::kWuiTooltipHotkey)
                                .as_font_tag(shortcut_string_for(
                                   KeyboardShortcut::kInGameSeafaringstatsOpenShipWindowAndGoto,
@@ -430,7 +430,7 @@ void SeafaringStatisticsMenu::update_button_states() {
 	openwindowbtn_.set_enabled(table_.has_selection());
 	watchbtn_.set_enabled(table_.has_selection());
 
-	set_title(format(ngettext("Seafaring Statistics (%u Ship)", "Seafaring Statistics (%u Ships)",
+	set_title(::format(ngettext("Seafaring Statistics (%u Ship)", "Seafaring Statistics (%u Ships)",
 	                          iplayer().player().ships().size()),
 	                 iplayer().player().ships().size()));
 }

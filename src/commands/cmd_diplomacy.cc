@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2025 by the Widelands Development Team
+ * Copyright (C) 2004-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -53,7 +53,7 @@ void CmdDiplomacy::execute(Game& game) {
 			// Ignore if the player lost a moment ago
 			return;
 		}
-		broadcast_message(_("Player Resigned"), format(_("%s has resigned and is now a spectator."),
+		broadcast_message(_("Player Resigned"), ::format(_("%s has resigned and is now a spectator."),
 		                                               sending_player.get_name()));
 		game.game_controller()->report_result(sender(), PlayerEndResult::kResigned, "");
 		// TODO(Nordfriese): Making the player a spectator is currently left to the win condition.
@@ -66,7 +66,7 @@ void CmdDiplomacy::execute(Game& game) {
 		}
 		broadcast_message(
 		   _("Player Leaves Team"),
-		   format(_("%1$s has left team %2$u and is now teamless."), sending_player.get_name(),
+		   ::format(_("%1$s has left team %2$u and is now teamless."), sending_player.get_name(),
 		          static_cast<unsigned>(sending_player.team_number())));
 		sending_player.set_team_number(0);
 		break;
@@ -76,7 +76,7 @@ void CmdDiplomacy::execute(Game& game) {
 		broadcast_message(
 		   action_ == DiplomacyAction::kJoin ? _("Team Joining Request") :
 		                                       _("Team Joining Invitation"),
-		   format(action_ == DiplomacyAction::kJoin ?
+		   ::format(action_ == DiplomacyAction::kJoin ?
 		             _("%1$s has requested to join the team of %2$s.") :
 		             _("%1$s has invited %2$s to join their team."),
 		          sending_player.get_name(), game.get_safe_player(other_player_)->get_name()));
@@ -136,7 +136,7 @@ void CmdDiplomacy::execute(Game& game) {
 				}
 				broadcast_message(
 				   accept ? _("Team Change Accepted") : _("Team Change Rejected"),
-				   format(fmt_message, sending_player.get_name(),
+				   ::format(fmt_message, sending_player.get_name(),
 				          game.get_safe_player(retract ? cmd_sender : other_player_)->get_name()));
 
 				if (accept) {

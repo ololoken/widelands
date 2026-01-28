@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2025 by the Widelands Development Team
+ * Copyright (C) 2011-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -64,7 +64,7 @@ constexpr int kButtonSize = 34;
 ShipWindow::ShipWindow(InteractiveBase& ib, UniqueWindow::Registry& reg, Widelands::Ship* ship)
    : UniqueWindow(&ib,
                   UI::WindowStyle::kWui,
-                  format("shipwindow_%u", ship->serial()),
+                  ::format("shipwindow_%u", ship->serial()),
                   &reg,
                   0,
                   0,
@@ -89,7 +89,7 @@ ShipWindow::ShipWindow(InteractiveBase& ib, UniqueWindow::Registry& reg, Widelan
 	}
 
 	warship_health_.set_tooltip(
-	   format(ngettext("Damaged warships regain %u hitpoint per second when anchored in a port.",
+	   ::format(ngettext("Damaged warships regain %u hitpoint per second when anchored in a port.",
 	                   "Damaged warships regain %u hitpoints per second when anchored in a port.",
 	                   ship->descr().heal_per_second_),
 	          ship->descr().heal_per_second_));
@@ -431,17 +431,17 @@ void ShipWindow::update_destination_buttons(const Widelands::Ship* ship) {
 	if (dest_dock != nullptr) {
 		btn_destination_->set_enabled(true);
 		btn_destination_->set_tooltip(
-		   format(_("Go to destination (%s)"), dest_dock->get_warehouse()->get_warehouse_name()));
+		   ::format(_("Go to destination (%s)"), dest_dock->get_warehouse()->get_warehouse_name()));
 		return;
 	}
 	if (dest_ship != nullptr) {
 		btn_destination_->set_enabled(true);
-		btn_destination_->set_tooltip(format(_("Go to destination (%s)"), dest_ship->get_shipname()));
+		btn_destination_->set_tooltip(::format(_("Go to destination (%s)"), dest_ship->get_shipname()));
 		return;
 	}
 	if (dest_note != nullptr) {
 		btn_destination_->set_enabled(true);
-		btn_destination_->set_tooltip(format(_("Go to destination (%s)"), dest_note->get_text()));
+		btn_destination_->set_tooltip(::format(_("Go to destination (%s)"), dest_note->get_text()));
 		return;
 	}
 
@@ -496,7 +496,7 @@ void ShipWindow::think() {
 	const uint32_t cur_hitpoints = ship->get_hitpoints();
 	warship_health_.set_visible(cur_hitpoints < max_hitpoints ||
 	                            ship->get_ship_type() == Widelands::ShipType::kWarship);
-	warship_health_.set_text(format(_("HP: %1$u/%2$u"), cur_hitpoints, max_hitpoints));
+	warship_health_.set_text(::format(_("HP: %1$u/%2$u"), cur_hitpoints, max_hitpoints));
 
 	Widelands::ShipStates state = ship->get_ship_state();
 	if (ship->state_is_expedition()) {

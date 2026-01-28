@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -540,6 +540,13 @@ WLApplication::WLApplication(int const argc, char const* const* const argv)
 	// register it once.
 	UI::Panel::register_click();
 
+	// Mark playlist config values as used to prevent errors with the options system
+	// for these auto-generated config keys
+	Section* sec = get_config_section_ptr("songs");
+	if (sec != nullptr) {
+		sec->mark_values();
+	}
+
 	// Make sure we didn't forget to read any global option
 	check_config_used();
 
@@ -820,6 +827,8 @@ void WLApplication::init_and_run_game_from_template(FsMenu::MainMenu& mainmenu) 
 		return;
 	}
 
+	const uint32_t random_seed = section.get_natural("random_seed", RNG::static_rand());
+
 	std::unique_ptr<GameSettingsProvider> settings;
 	std::shared_ptr<GameController> ctrl;
 	GameHost* host = nullptr;  // will be deleted by ctrl
@@ -900,6 +909,7 @@ void WLApplication::init_and_run_game_from_template(FsMenu::MainMenu& mainmenu) 
 	}
 
 	Widelands::Game game;
+	game.logic_rand_seed(random_seed);
 	std::vector<std::string> tipstexts{"general_game", "singleplayer"};
 	if (settings->has_players_tribe()) {
 		tipstexts.push_back(settings->get_players_tribe());
@@ -1003,7 +1013,7 @@ void WLApplication::run() {
 				game.run_load_game(filename_, script_to_run_);
 			}
 		} catch (const FileNotFoundError& e) {
-			message = format(_("Widelands could not find the file \"%s\"."), filename_.c_str());
+			message = ::format(_("Widelands could not find the file \"%s\"."), filename_.c_str());
 			message = message + "\n\n" + _("Error message:") + "\n" + e.what();
 			title = _("File system error");
 		} catch (const std::exception& e) {
@@ -1122,7 +1132,7 @@ bool WLApplication::handle_key(bool down, const SDL_Keycode& keycode, const int 
 		} else {
 			g_fs->ensure_directory_exists(kScreenshotsDir);
 			for (uint32_t nr = 0; nr < 10000; ++nr) {
-				const std::string filename = format("%s/shot%04u.png", kScreenshotsDir, nr);
+				const std::string filename = ::format("%s/shot%04u.png", kScreenshotsDir, nr);
 				if (g_fs->file_exists(filename)) {
 					continue;
 				}
@@ -1566,18 +1576,18 @@ namespace {
 
 void throw_extra_value(const std::string& opt) {
 	throw ParameterError(
-	   CmdLineVerbosity::None, format(_("Command line parameter --%s can not use a value"), opt));
+	   CmdLineVerbosity::None, ::format(_("Command line parameter --%s can not use a value"), opt));
 }
 
 void throw_empty_value(const std::string& opt) {
 	throw ParameterError(
-	   CmdLineVerbosity::None, format(_("Empty value of command line parameter --%s"), opt));
+	   CmdLineVerbosity::None, ::format(_("Empty value of command line parameter --%s"), opt));
 }
 
 void throw_exclusive(const std::string& opt, const std::string& other) {
 	throw ParameterError(
 	   CmdLineVerbosity::None,
-	   format(_("Command line parameters --%1$s and --%2$s can not be combined"), opt, other));
+	   ::format(_("Command line parameters --%1$s and --%2$s can not be combined"), opt, other));
 }
 
 }  // namespace
@@ -1763,7 +1773,7 @@ void WLApplication::handle_commandline_parameters() {
 	if (OptionalParameter err = get_commandline_option_value("error"); err.has_value()) {
 		throw ParameterError(
 		   CmdLineVerbosity::Normal,
-		   format(_("Unknown command line parameter: %s\nMaybe a '=' is missing?"), *err));
+		   ::format(_("Unknown command line parameter: %s\nMaybe a '=' is missing?"), *err));
 	}
 
 	// TODO(tothxa): These were checked before datadir and locale were set up, but don't seem to be
@@ -1782,7 +1792,7 @@ void WLApplication::handle_commandline_parameters() {
 		if (!to_long(msg_timeout.value(), &t)) {
 			throw ParameterError(
 			   CmdLineVerbosity::None,
-			   format(_("Non-integer value for command line parameter --messagebox-timeout=%s"),
+			   ::format(_("Non-integer value for command line parameter --messagebox-timeout=%s"),
 			          msg_timeout.value()));
 		}
 		if (t <= 0) {
@@ -1796,7 +1806,7 @@ void WLApplication::handle_commandline_parameters() {
 			g_message_box_timeout = 0;
 			throw ParameterError(
 			   CmdLineVerbosity::None,
-			   format(_("Value is out of range for command line parameter --messagebox-timeout=%s"),
+			   ::format(_("Value is out of range for command line parameter --messagebox-timeout=%s"),
 			          msg_timeout.value()));
 		}
 	}
@@ -1864,7 +1874,7 @@ void WLApplication::handle_commandline_parameters() {
 		if (!to_long(difficulty.value(), &d)) {
 			throw ParameterError(
 			   CmdLineVerbosity::None,
-			   format(_("Non-integer value for command line parameter --difficulty=%s"),
+			   ::format(_("Non-integer value for command line parameter --difficulty=%s"),
 			          difficulty.value()));
 		}
 		if (d <= 0) {
@@ -1961,7 +1971,7 @@ void WLApplication::handle_commandline_parameters() {
 			}
 		} else {
 			throw ParameterError(
-			   CmdLineVerbosity::Normal, format(_("Unknown command line parameter: %s"), pair.first));
+			   CmdLineVerbosity::Normal, ::format(_("Unknown command line parameter: %s"), pair.first));
 		}
 	}
 
@@ -2021,7 +2031,7 @@ void WLApplication::emergency_save(UI::Panel* panel,
 		}
 		UI::WLMessageBox m(
 		   panel, UI::WindowStyle::kFsMenu, _("Error"),
-		   format(
+		   ::format(
 		      _("An error has occured. The error message is:\n\n%1$s\n\nPlease report "
 		        "this problem to help us improve Widelands. You will find related messages in the "
 		        "standard output (stdout.txt on Windows). You are using version %2$s.\n"
@@ -2037,7 +2047,7 @@ void WLApplication::emergency_save(UI::Panel* panel,
 		   panel, UI::WindowStyle::kFsMenu,
 		   ask_for_bug_report ? _("Unexpected error during the game") : _("Game ended unexpectedly"),
 		   ask_for_bug_report ?
-		      format(
+		      ::format(
 		         _("An error occured during the game. The error message is:\n\n%1$s\n\nPlease report "
 		           "this problem to help us improve Widelands. You will find related messages in the "
 		           "standard output (stdout.txt on Windows). You are using version %2$s.\n\n"
@@ -2046,7 +2056,7 @@ void WLApplication::emergency_save(UI::Panel* panel,
 		           "to attempt to create an emergency savegame? It is often – though not always – "
 		           "possible to load it and continue playing."),
 		         error, build_ver_details()) :
-		      format(
+		      ::format(
 		         _("The game ended unexpectedly for the following reason:\n\n%s\n\nWould you like "
 		           "Widelands to attempt to create an emergency savegame? It is often – though not "
 		           "always – possible to load it and continue playing."),
@@ -2082,7 +2092,7 @@ void WLApplication::emergency_save(UI::Panel* panel,
 		if (panel != nullptr) {
 			UI::WLMessageBox m(
 			   panel, UI::WindowStyle::kFsMenu, _("Emergency save failed"),
-			   format(_("We are sorry, but Widelands was unable to create an emergency "
+			   ::format(_("We are sorry, but Widelands was unable to create an emergency "
 			            "savegame for the following reason:\n\n%s"),
 			          e.what()),
 			   UI::WLMessageBox::MBoxType::kOk);

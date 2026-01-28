@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -169,7 +169,7 @@ static int L_string_bformat(lua_State* L) {
 			}
 		}
 
-		lua_pushstring(L, format(luaL_checkstring(L, 1), fmt_args));
+		lua_pushstring(L, ::format(luaL_checkstring(L, 1), fmt_args));
 		return 1;
 	} catch (const std::exception& err) {
 		report_error(L, "Error in bformat: %s", err.what());
@@ -510,7 +510,7 @@ static int L_print(lua_State* L) {
 			message += luaL_checkstring(L, i);
 			break;
 		default:
-			message += as_string(format("[%s @ %p]", luaL_typename(L, i), lua_topointer(L, i)));
+			message += as_string(::format("[%s @ %p]", luaL_typename(L, i), lua_topointer(L, i)));
 			break;
 		}
 	}

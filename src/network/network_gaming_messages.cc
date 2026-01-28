@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2025 by the Widelands Development Team
+ * Copyright (C) 2012-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -98,7 +98,7 @@ const std::string NetworkGamingMessages::get_message(const std::string& code,
 
 	if (ngmessages.find(code) == ngmessages.end()) {
 		return (
-		   format("%s, %s, %s, %s", code, get_message(arg1), get_message(arg2), get_message(arg3)));
+		   ::format("%s, %s, %s, %s", code, get_message(arg1), get_message(arg2), get_message(arg3)));
 	}
 
 	// clang-tidy says this shouldn't be const because it may be returned directly in case 0 below
@@ -111,11 +111,11 @@ const std::string NetworkGamingMessages::get_message(const std::string& code,
 	case 0:
 		return msg_translated;
 	case 1:
-		return format(msg_translated, arg1);
+		return ::format(msg_translated, arg1);
 	case 2:
-		return format(msg_translated, arg1, arg2);
+		return ::format(msg_translated, arg1, arg2);
 	case 3:
-		return format(msg_translated, arg1, arg2, arg3);
+		return ::format(msg_translated, arg1, arg2, arg3);
 	default:
 		NEVER_HERE();
 	}

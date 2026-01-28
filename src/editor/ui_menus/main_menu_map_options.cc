@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -470,7 +470,7 @@ MainMenuMapOptions::MainMenuMapOptions(EditorInteractive& parent, Registry& regi
 	const unsigned nr_players = eia().egbase().map().get_nrplayers();
 	teams_box_.add(new UI::Textarea(
 	   &teams_box_, UI::PanelStyle::kWui, "label_players", UI::FontStyle::kWuiLabel, 0, 0, max_w_,
-	   labelh_, format(ngettext("%u Player", "%u Players", nr_players), nr_players)));
+	   labelh_, ::format(ngettext("%u Player", "%u Players", nr_players), nr_players)));
 	teams_box_.add_space(padding_);
 	teams_box_.add(new UI::Textarea(&teams_box_, UI::PanelStyle::kWui, "label_suggested_teams",
 	                                UI::FontStyle::kWuiLabel, 0, 0, max_w_, labelh_,
@@ -535,7 +535,7 @@ void MainMenuMapOptions::update_waterway_length_warning() {
 	if (len > kMaxRecommendedWaterwayLengthLimit) {
 		waterway_length_warning_->set_icon(g_image_cache->get("images/ui_basic/stop.png"));
 		waterway_length_warning_->set_tooltip(
-		   format(_("It is not recommended to permit waterway lengths greater than %u"),
+		   ::format(_("It is not recommended to permit waterway lengths greater than %u"),
 		          kMaxRecommendedWaterwayLengthLimit));
 	} else {
 		waterway_length_warning_->set_icon(nullptr);
@@ -551,7 +551,7 @@ void MainMenuMapOptions::update() {
 	const Widelands::Map& map = eia().egbase().map();
 	author_.set_text(map.get_author());
 	name_.set_text(map.get_name());
-	size_.set_text(format(_("Size: %1% x %2%"), map.get_width(), map.get_height()));
+	size_.set_text(::format(_("Size: %1% x %2%"), map.get_width(), map.get_height()));
 	descr_->set_text(map.get_description());
 	hint_->set_text(map.get_hint());
 	waterway_length_box_->set_value(map.get_waterway_max_length());
@@ -622,11 +622,11 @@ bool MainMenuMapOptions::handle_key(bool down, SDL_Keysym code) {
  * Add a tag to the checkboxes
  */
 void MainMenuMapOptions::add_tag_checkbox(UI::Box* parent, const std::string& tag) {
-	UI::Box* box = new UI::Box(parent, UI::PanelStyle::kWui, format("label_tag_%s", tag), 0, 0,
+	UI::Box* box = new UI::Box(parent, UI::PanelStyle::kWui, ::format("label_tag_%s", tag), 0, 0,
 	                           UI::Box::Horizontal, max_w_, checkbox_space_, 0);
 	TagTexts l = localize_tag(tag);
 	UI::Checkbox* cb = new UI::Checkbox(
-	   box, UI::PanelStyle::kWui, format("checkbox_tag_%s", tag), Vector2i::zero(), l.displayname);
+	   box, UI::PanelStyle::kWui, ::format("checkbox_tag_%s", tag), Vector2i::zero(), l.displayname);
 	cb->set_tooltip(l.tooltip);
 	box->add(cb, UI::Box::Resizing::kFullSize);
 	box->add_space(checkbox_space_);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 by the Widelands Development Team
+ * Copyright (C) 2022-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,30 +78,30 @@ GameDiplomacyMenu::GameDiplomacyMenu(InteractiveGameBase& parent,
 		}
 
 		UI::Icon* icon_flag = new UI::Icon(
-		   &vbox_flag_, UI::PanelStyle::kWui, format("flag_icon_%u", p), 0, 0, kRowSize, kRowSize,
+		   &vbox_flag_, UI::PanelStyle::kWui, ::format("flag_icon_%u", p), 0, 0, kRowSize, kRowSize,
 		   THREADSAFE_T(const Image*, const Image* (*)(const RGBColor&, const std::string&),
 		                playercolor_image, player->get_playercolor(),
 		                "images/players/genstats_player.png"));
 		UI::Icon* icon_team =
-		   new UI::Icon(&vbox_team_, UI::PanelStyle::kWui, format("team_icon_%u", p), 0, 0, kRowSize,
+		   new UI::Icon(&vbox_team_, UI::PanelStyle::kWui, ::format("team_icon_%u", p), 0, 0, kRowSize,
 		                kRowSize, nullptr);
 		UI::Textarea* txt_name = new UI::Textarea(
-		   &vbox_name_, UI::PanelStyle::kWui, format("name_%u", p), UI::FontStyle::kWuiLabel,
+		   &vbox_name_, UI::PanelStyle::kWui, ::format("name_%u", p), UI::FontStyle::kWuiLabel,
 		   player->get_name(), UI::mirror_alignment(UI::Align::kLeft, rtl));
 		UI::Textarea* txt_status = new UI::Textarea(&vbox_status_, UI::PanelStyle::kWui,
-		                                            format("status_%u", p), UI::FontStyle::kWuiLabel,
+		                                            ::format("status_%u", p), UI::FontStyle::kWuiLabel,
 		                                            "", UI::mirror_alignment(UI::Align::kRight, rtl));
 
 		icon_team->set_handle_mouse(true);
 		icon_flag->set_handle_mouse(true);
-		icon_flag->set_tooltip(format(_("Player %u"), static_cast<unsigned>(p)));
+		icon_flag->set_tooltip(::format(_("Player %u"), static_cast<unsigned>(p)));
 		txt_status->set_fixed_width(230);
 
 		if (iplayer_ != nullptr) {
 			UI::Button* b1 = nullptr;
 			UI::Button* b2 = nullptr;
 			UI::Box* buttonsbox = new UI::Box(&vbox_action_, UI::PanelStyle::kWui,
-			                                  format("buttons_box_%u", p), 0, 0, UI::Box::Horizontal);
+			                                  ::format("buttons_box_%u", p), 0, 0, UI::Box::Horizontal);
 			if (p == iplayer_->player_number()) {
 				b1 = new UI::Button(buttonsbox, "leave", 0, 0, kButtonWidth, kRowSize,
 				                    UI::ButtonStyle::kWuiSecondary, _("Leave"),
@@ -243,7 +243,7 @@ void GameDiplomacyMenu::update_diplomacy_details() {
 		   THREADSAFE_T(const Image*, const Image* (*)(const RGBColor&, const std::string&),
 		                playercolor_image, kTeamColors[t /* it's 1-based, 0 means No Team */],
 		                t == 0 ? "images/players/no_team.png" : "images/players/team.png"));
-		pair.second->set_tooltip(t == 0 ? _("No team") : format(_("Team %u"), t));
+		pair.second->set_tooltip(t == 0 ? _("No team") : ::format(_("Team %u"), t));
 	}
 
 	std::set<Widelands::PlayerNumber> players_with_result;
@@ -258,13 +258,13 @@ void GameDiplomacyMenu::update_diplomacy_details() {
 		std::string str;
 		switch (p->result) {
 		case Widelands::PlayerEndResult::kWon:
-			str = format(_("Won at %s"), gametimestring(p->time.get()));
+			str = ::format(_("Won at %s"), gametimestring(p->time.get()));
 			break;
 		case Widelands::PlayerEndResult::kLost:
-			str = format(_("Lost at %s"), gametimestring(p->time.get()));
+			str = ::format(_("Lost at %s"), gametimestring(p->time.get()));
 			break;
 		case Widelands::PlayerEndResult::kResigned:
-			str = format(_("Resigned at %s"), gametimestring(p->time.get()));
+			str = ::format(_("Resigned at %s"), gametimestring(p->time.get()));
 			break;
 		default:
 			break;
@@ -317,14 +317,14 @@ void GameDiplomacyMenu::update_diplomacy_details() {
 		std::string deny_string;
 		switch (pda.action) {
 		case Widelands::DiplomacyAction::kJoin:
-			descr = format(_("%1$s has requested to join the team of %2$s."),
+			descr = ::format(_("%1$s has requested to join the team of %2$s."),
 			               igbase_.egbase().player(pda.sender).get_name(),
 			               igbase_.egbase().player(pda.other).get_name());
 			approve_string = _("Approve");
 			deny_string = _("Reject");
 			break;
 		case Widelands::DiplomacyAction::kInvite:
-			descr = format(_("%1$s has invited %2$s to join their team."),
+			descr = ::format(_("%1$s has invited %2$s to join their team."),
 			               igbase_.egbase().player(pda.sender).get_name(),
 			               igbase_.egbase().player(pda.other).get_name());
 			approve_string = _("Accept");
@@ -336,13 +336,13 @@ void GameDiplomacyMenu::update_diplomacy_details() {
 
 		actions_vbox_descr_.add_inf_space();
 		actions_vbox_descr_.add(new UI::Textarea(&actions_vbox_descr_, UI::PanelStyle::kWui,
-		                                         format("description_%u", index),
+		                                         ::format("description_%u", index),
 		                                         UI::FontStyle::kWuiInfoPanelParagraph, descr),
 		                        UI::Box::Resizing::kFullSize);
 		actions_vbox_descr_.add_inf_space();
 		if (iplayer_ != nullptr && iplayer_->player_number() == pda.sender) {
 			UI::Button* b =
-			   new UI::Button(&actions_vbox_no_, format("retract_%u", index), 0, 0, kRowSize, kRowSize,
+			   new UI::Button(&actions_vbox_no_, ::format("retract_%u", index), 0, 0, kRowSize, kRowSize,
 			                  UI::ButtonStyle::kWuiSecondary,
 			                  g_image_cache->get("images/wui/menu_abort.png"), _("Retract"));
 			b->sigclicked.connect([this, pda]() {
@@ -358,11 +358,11 @@ void GameDiplomacyMenu::update_diplomacy_details() {
 		} else if (iplayer_ != nullptr &&
 		           iplayer_->player().may_approve_request(pda.action, pda.sender, pda.other)) {
 			UI::Button* b1 =
-			   new UI::Button(&actions_vbox_yes_, format("approve_%u", index), 0, 0, kRowSize,
+			   new UI::Button(&actions_vbox_yes_, ::format("approve_%u", index), 0, 0, kRowSize,
 			                  kRowSize, UI::ButtonStyle::kWuiSecondary,
 			                  g_image_cache->get("images/wui/menu_okay.png"), approve_string);
 			UI::Button* b2 =
-			   new UI::Button(&actions_vbox_no_, format("reject_%u", index), 0, 0, kRowSize, kRowSize,
+			   new UI::Button(&actions_vbox_no_, ::format("reject_%u", index), 0, 0, kRowSize, kRowSize,
 			                  UI::ButtonStyle::kWuiSecondary,
 			                  g_image_cache->get("images/wui/menu_abort.png"), deny_string);
 			b1->sigclicked.connect([this, pda]() {
@@ -400,7 +400,7 @@ void GameDiplomacyMenu::update_trades_offers(bool always) {
 		return;
 	}
 
-	trades_tabs_.tabs()[0]->set_title(format(_("Trade Offers (%u)"), trades.size()));
+	trades_tabs_.tabs()[0]->set_title(::format(_("Trade Offers (%u)"), trades.size()));
 
 	cached_trades_offers_ = trades;
 	trades_box_offers_.delete_all_children();
@@ -426,7 +426,7 @@ void GameDiplomacyMenu::update_trades_offers(bool always) {
 		}
 
 		UI::Box* box = new UI::Box(&trades_box_offers_, UI::PanelStyle::kWui,
-		                           format("offer_%u", trade_id), 0, 0, UI::Box::Horizontal);
+		                           ::format("offer_%u", trade_id), 0, 0, UI::Box::Horizontal);
 		UI::Box* buttons =
 		   new UI::Box(box, UI::PanelStyle::kWui, "buttons", 0, 0, UI::Box::Horizontal);
 
@@ -495,7 +495,7 @@ void GameDiplomacyMenu::update_trades_proposed(bool always) {
 		return;
 	}
 
-	trades_tabs_.tabs()[1]->set_title(format(_("Proposed Trades (%u)"), trades.size()));
+	trades_tabs_.tabs()[1]->set_title(::format(_("Proposed Trades (%u)"), trades.size()));
 
 	cached_trades_proposed_ = trades;
 	trades_box_proposed_.delete_all_children();
@@ -524,7 +524,7 @@ void GameDiplomacyMenu::update_trades_proposed(bool always) {
 		const Widelands::Serial market_serial = own_market->serial();
 
 		UI::Box* box = new UI::Box(&trades_box_proposed_, UI::PanelStyle::kWui,
-		                           format("proposal_%u", trade_id), 0, 0, UI::Box::Horizontal);
+		                           ::format("proposal_%u", trade_id), 0, 0, UI::Box::Horizontal);
 		UI::Box* buttons =
 		   new UI::Box(box, UI::PanelStyle::kWui, "buttons", 0, 0, UI::Box::Horizontal);
 
@@ -595,7 +595,7 @@ void GameDiplomacyMenu::update_trades_active(bool always) {
 		return;
 	}
 
-	trades_tabs_.tabs()[2]->set_title(format(_("Active Trades (%u)"), trades.size()));
+	trades_tabs_.tabs()[2]->set_title(::format(_("Active Trades (%u)"), trades.size()));
 
 	cached_trades_active_ = trades;
 	trades_box_active_.delete_all_children();
@@ -631,7 +631,7 @@ void GameDiplomacyMenu::update_trades_active(bool always) {
 		const bool can_extend = trade.num_batches != Widelands::kInfiniteTrade;
 
 		UI::Box* trade_box = new UI::Box(&trades_box_active_, UI::PanelStyle::kWui,
-		                                 format("active_%u", trade_id), 0, 0, UI::Box::Vertical);
+		                                 ::format("active_%u", trade_id), 0, 0, UI::Box::Vertical);
 		UI::Box* inner_box =
 		   new UI::Box(trade_box, UI::PanelStyle::kWui, "inner_box", 0, 0, UI::Box::Horizontal);
 		UI::Box* buttons =
@@ -644,10 +644,10 @@ void GameDiplomacyMenu::update_trades_active(bool always) {
 		   buttons, "extend", 0, 0, kRowSize, kRowSize, UI::ButtonStyle::kWuiSecondary,
 		   g_image_cache->get("images/wui/buildings/menu_tab_trade.png"),
 		   can_extend ?
-		      format("<p>%s%s%s</p>",
+		      ::format("<p>%s%s%s</p>",
 		             g_style_manager->font_style(UI::FontStyle::kWuiTooltipHeader)
 		                .as_font_tag(_("Propose extending this trade")),
-		             as_listitem(format(ngettext("Hold down Ctrl to extend it by %d batch",
+		             as_listitem(::format(ngettext("Hold down Ctrl to extend it by %d batch",
 		                                         "Hold down Ctrl to extend it by %d batches",
 		                                         trade.num_batches),
 		                                trade.num_batches),
@@ -734,9 +734,9 @@ void GameDiplomacyMenu::update_trades_active(bool always) {
 			   new UI::Textarea(
 			      hbox, UI::PanelStyle::kWui, "description", UI::FontStyle::kWuiInfoPanelHeading,
 			      te.batches == Widelands::kInfiniteTrade ?
-			         format(_("%1$s proposed to extend this trade indefinitely."),
+			         ::format(_("%1$s proposed to extend this trade indefinitely."),
 			                iplayer_->egbase().player(te.proposer).get_name()) :
-			         format(
+			         ::format(
 			            ngettext("%1$s proposed to extend this trade by %2$d batch.",
 			                     "%1$s proposed to extend this trade by %2$d batches.", te.batches),
 			            iplayer_->egbase().player(te.proposer).get_name(), te.batches),
@@ -781,7 +781,7 @@ void GameDiplomacyMenu::update_trades_active(bool always) {
 			      hbox, UI::PanelStyle::kWui, "description", UI::FontStyle::kWuiInfoPanelHeading,
 			      te.batches == Widelands::kInfiniteTrade ?
 			         _("You proposed to extend this trade indefinitely.") :
-			         format(ngettext("You proposed to extend this trade by %d batch.",
+			         ::format(ngettext("You proposed to extend this trade by %d batch.",
 			                         "You proposed to extend this trade by %d batches.", te.batches),
 			                te.batches),
 			      UI::mirror_alignment(UI::Align::kLeft, UI::g_fh->fontset()->is_rtl())),

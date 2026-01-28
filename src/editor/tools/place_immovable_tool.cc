@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -145,7 +145,7 @@ std::string EditorPlaceImmovableTool::format_conf_description_impl(const ToolCon
 	}
 
 	/** TRANSLATORS: An entry in the tool history list. */
-	return format(_("Immovable: %1$s"), mapobj_names);
+	return ::format(_("Immovable: %1$s"), mapobj_names);
 }
 
 bool EditorPlaceImmovableTool::save_configuration_impl(ToolConf& conf) {

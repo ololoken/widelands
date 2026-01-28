@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 by the Widelands Development Team
+ * Copyright (C) 2021-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +38,7 @@ ScreenshotUploadWindow::ScreenshotUploadWindow(AddOnsCtrl& ctrl,
                 0,
                 100,
                 100,
-                format(_("Upload Screenshot for ‘%s’"), info->internal_name)),
+                ::format(_("Upload Screenshot for ‘%s’"), info->internal_name)),
      box_(this, UI::PanelStyle::kFsMenu, "main_box", 0, 0, UI::Box::Vertical),
      hbox_(&box_, UI::PanelStyle::kFsMenu, "hbox", 0, 0, UI::Box::Horizontal),
      vbox_(&hbox_, UI::PanelStyle::kFsMenu, "vbox", 0, 0, UI::Box::Vertical),
@@ -123,7 +123,7 @@ ScreenshotUploadWindow::ScreenshotUploadWindow(AddOnsCtrl& ctrl,
 			progress_.set_text("");
 			UI::WLMessageBox m(
 			   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Error"),
-			   format(_("The screenshot ‘%1$s’ for the add-on ‘%2$s’ could not be uploaded "
+			   ::format(_("The screenshot ‘%1$s’ for the add-on ‘%2$s’ could not be uploaded "
 			            "to the server.\n\nError Message:\n%3$s"),
 			          sel, info->internal_name, e.what()),
 			   UI::WLMessageBox::MBoxType::kOk);

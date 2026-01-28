@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 by the Widelands Development Team
+ * Copyright (C) 2022-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,12 +57,12 @@ InvertedScrollFeedbackWindow::InvertedScrollFeedbackWindow(UI::Panel* parent)
         kReportWindowWidth,
         0,
         UI::PanelStyle::kFsMenu,
-        format(
+        ::format(
            "<rt><p>%1$s</p></rt>",
            g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
               .as_font_tag(
                  /** TRANSLATORS: %s is a URL */
-                 format(_("Please help us improve the detection of inverted horizontal scrolling."
+                 ::format(_("Please help us improve the detection of inverted horizontal scrolling."
                           " To do so, please report at %s that horizontal scroll direction is"
                           " wrong with your configuration. Please include the below technical"
                           " information."),

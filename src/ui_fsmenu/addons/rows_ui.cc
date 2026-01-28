@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 by the Widelands Development Team
+ * Copyright (C) 2021-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,7 +46,7 @@ void uninstall(AddOnsCtrl* ctrl, std::shared_ptr<AddOns::AddOnInfo> info, const 
 		   &ctrl->get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Uninstall"),
 		   is_map ?
 		      safe_richtext_message(
-		         format(local ? _("Are you certain that you want to uninstall this map?\n\n"
+		         ::format(local ? _("Are you certain that you want to uninstall this map?\n\n"
 		                          "%1$s\n"
 		                          "by %2$s\n"
 		                          "%3$s\n\n"
@@ -56,7 +56,7 @@ void uninstall(AddOnsCtrl* ctrl, std::shared_ptr<AddOns::AddOnInfo> info, const 
 		                          "by %2$s\n"
 		                          "%3$s"),
 		                info->descname(), info->author(), info->description())) :
-		      safe_richtext_message(format(
+		      safe_richtext_message(::format(
 		         local ? _("Are you certain that you want to uninstall this add-on?\n\n"
 		                   "%1$s\n"
 		                   "by %2$s\n"
@@ -133,11 +133,11 @@ std::string required_wl_version_and_sync_safety_string(std::shared_ptr<AddOns::A
 		result += "<br>";
 		std::string str;
 		if (info->max_wl_version.empty()) {
-			str += format(_("Requires a Widelands version of at least %s."), info->min_wl_version);
+			str += ::format(_("Requires a Widelands version of at least %s."), info->min_wl_version);
 		} else if (info->min_wl_version.empty()) {
-			str += format(_("Requires a Widelands version of at most %s."), info->max_wl_version);
+			str += ::format(_("Requires a Widelands version of at most %s."), info->max_wl_version);
 		} else {
-			str += format(_("Requires a Widelands version of at least %1$s and at most %2$s."),
+			str += ::format(_("Requires a Widelands version of at least %1$s and at most %2$s."),
 			              info->min_wl_version, info->max_wl_version);
 		}
 		result += g_style_manager
@@ -154,7 +154,7 @@ std::string assemble_map_description_text(const std::string& descr,
 	std::string result;
 
 	if (!descr.empty()) {
-		result += format(
+		result += ::format(
 		   "<vspace gap=%d><p>%s<br>%s</p>", kRowButtonSpacing,
 		   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
 		      .as_font_tag(_("Description:")),
@@ -162,7 +162,7 @@ std::string assemble_map_description_text(const std::string& descr,
 	}
 
 	if (!hint.empty()) {
-		result += format(
+		result += ::format(
 		   "<vspace gap=%d><p>%s<br>%s</p>", kRowButtonSpacing,
 		   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
 		      .as_font_tag(_("Hint:")),
@@ -170,7 +170,7 @@ std::string assemble_map_description_text(const std::string& descr,
 	}
 
 	if (!comment.empty()) {
-		result += format("<vspace gap=%d><p>%s<br>%s</p>", kRowButtonSpacing,
+		result += ::format("<vspace gap=%d><p>%s<br>%s</p>", kRowButtonSpacing,
 		                 g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
 		                    .as_font_tag(_("Comment by uploader:")),
 		                 g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
@@ -188,7 +188,7 @@ InstalledAddOnRow::InstalledAddOnRow(Panel* parent,
                                      bool enabled)
    : UI::Panel(parent,
                UI::PanelStyle::kFsMenu,
-               format("installed_addon_row_%s", info->internal_name),
+               ::format("installed_addon_row_%s", info->internal_name),
                0,
                0,
                3 * kRowButtonSize,
@@ -229,7 +229,7 @@ InstalledAddOnRow::InstalledAddOnRow(Panel* parent,
               0,
               0,
               /** TRANSLATORS: (MajorVersion)+(MinorVersion) */
-              format(_("%1$s+%2$u"), AddOns::version_to_string(info->version), info->i18n_version),
+              ::format(_("%1$s+%2$u"), AddOns::version_to_string(info->version), info->i18n_version),
               UI::Align::kCenter),
      txt_(
         this,
@@ -239,17 +239,17 @@ InstalledAddOnRow::InstalledAddOnRow(Panel* parent,
         24,
         24,
         UI::PanelStyle::kFsMenu,
-        format(
+        ::format(
            "<rt><p>%s</p><p>%s%s</p><p>%s</p></rt>",
-           format(
+           ::format(
               /** TRANSLATORS: Add-On localized name as header (Add-On internal name in italics) */
               _("%1$s %2$s"),
               g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
                  .as_font_tag(info->descname()),
               g_style_manager->font_style(UI::FontStyle::kItalic)
-                 .as_font_tag(format(_("(%s)"), info->internal_name))),
+                 .as_font_tag(::format(_("(%s)"), info->internal_name))),
            g_style_manager->font_style(UI::FontStyle::kItalic)
-              .as_font_tag(format(_("by %s"), info->author())),
+              .as_font_tag(::format(_("by %s"), info->author())),
            required_wl_version_and_sync_safety_string(info),
            g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
               .as_font_tag(info->description()))) {
@@ -286,9 +286,9 @@ InstalledAddOnRow::InstalledAddOnRow(Panel* parent,
 	toggle_enabled_.set_enabled(info->matches_widelands_version());
 	category_.set_handle_mouse(true);
 	category_.set_tooltip(
-	   format(_("Category: %s"), AddOns::kAddOnCategories.at(info->category).descname()));
+	   ::format(_("Category: %s"), AddOns::kAddOnCategories.at(info->category).descname()));
 	version_.set_handle_mouse(true);
-	version_.set_tooltip(format(
+	version_.set_tooltip(::format(
 	   /** TRANSLATORS: (MajorVersion)+(MinorVersion) */
 	   _("Version: %1$s+%2$u"), AddOns::version_to_string(info->version), info->i18n_version));
 	set_can_focus(true);
@@ -344,7 +344,7 @@ RemoteAddOnRow::RemoteAddOnRow(Panel* parent,
                                uint32_t installed_i18n_version)
    : UI::Panel(parent,
                UI::PanelStyle::kFsMenu,
-               format("remote_addon_row_%s", info->internal_name),
+               ::format("remote_addon_row_%s", info->internal_name),
                0,
                0,
                3 * kRowButtonSize,
@@ -409,7 +409,7 @@ RemoteAddOnRow::RemoteAddOnRow(Panel* parent,
               0,
               0,
               /** TRANSLATORS: (MajorVersion)+(MinorVersion) */
-              format(_("%1$s+%2$u"), AddOns::version_to_string(info->version), info->i18n_version),
+              ::format(_("%1$s+%2$u"), AddOns::version_to_string(info->version), info->i18n_version),
               UI::Align::kCenter),
      bottom_row_left_(this,
                       UI::PanelStyle::kFsMenu,
@@ -432,7 +432,7 @@ RemoteAddOnRow::RemoteAddOnRow(Panel* parent,
         0,
         info->internal_name.empty() ?
            "" :
-           format(
+           ::format(
               /** TRANSLATORS: Filesize • Download count • Average rating • Number of comments •
                  Number of screenshots */
               _("%1$s   ⬇ %2$u   ★ %3$s   “” %4$u   ▣ %5$u"),
@@ -450,20 +450,20 @@ RemoteAddOnRow::RemoteAddOnRow(Panel* parent,
         24,
         24,
         UI::PanelStyle::kFsMenu,
-        format(
+        ::format(
            "<rt><p>%s</p><p>%s%s</p><p>%s</p></rt>",
-           format(
+           ::format(
               /** TRANSLATORS: Add-On localized name as header (Add-On internal name in italics) */
               _("%1$s %2$s"),
               g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
                  .as_font_tag(info->descname()),
               g_style_manager->font_style(UI::FontStyle::kItalic)
-                 .as_font_tag(format(_("(%s)"), info->internal_name))),
+                 .as_font_tag(::format(_("(%s)"), info->internal_name))),
            g_style_manager->font_style(UI::FontStyle::kItalic)
               .as_font_tag(
                  info->author() == info->upload_username ?
-                    format(_("by %s"), info->author()) :
-                    format(_("by %1$s (uploaded by %2$s)"), info->author(), info->upload_username)),
+                    ::format(_("by %s"), info->author()) :
+                    ::format(_("by %1$s (uploaded by %2$s)"), info->author(), info->upload_username)),
            required_wl_version_and_sync_safety_string(info),
            g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
               .as_font_tag(info->description()))),
@@ -479,7 +479,7 @@ RemoteAddOnRow::RemoteAddOnRow(Panel* parent,
 		if (!info_->verified || !matches_keymod(SDL_GetModState(), KMOD_CTRL)) {
 			UI::WLMessageBox w(
 			   &ctrl->get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Install"),
-			   safe_richtext_message(format(
+			   safe_richtext_message(::format(
 			      _("Are you certain that you want to install this add-on?\n\n"
 			        "%1$s\n"
 			        "by %2$s\n"
@@ -513,7 +513,7 @@ RemoteAddOnRow::RemoteAddOnRow(Panel* parent,
 			UI::WLMessageBox w(
 			   &ctrl->get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Upgrade"),
 			   safe_richtext_message(
-			      format(_("Are you certain that you want to upgrade this add-on?\n\n"
+			      ::format(_("Are you certain that you want to upgrade this add-on?\n\n"
 			               "%1$s\n"
 			               "by %2$s\n"
 			               "%3$s\n"
@@ -560,8 +560,8 @@ RemoteAddOnRow::RemoteAddOnRow(Panel* parent,
 		p->set_handle_mouse(true);
 	}
 	category_.set_tooltip(
-	   format(_("Category: %s"), AddOns::kAddOnCategories.at(info->category).descname()));
-	version_.set_tooltip(format(
+	   ::format(_("Category: %s"), AddOns::kAddOnCategories.at(info->category).descname()));
+	version_.set_tooltip(::format(
 	   /** TRANSLATORS: (MajorVersion)+(MinorVersion) */
 	   _("Version: %1$s+%2$u"), AddOns::version_to_string(info->version), info->i18n_version));
 	verified_.set_tooltip(
@@ -577,20 +577,20 @@ RemoteAddOnRow::RemoteAddOnRow(Panel* parent,
 	bottom_row_right_.set_tooltip(
 	   info->internal_name.empty() ?
 	      "" :
-	      format(
+	      ::format(
 	         "%s<br>%s<br>%s<br>%s<br>%s",
-	         format(ngettext("Total size: %u byte", "Total size: %u bytes", info->total_file_size),
+	         ::format(ngettext("Total size: %u byte", "Total size: %u bytes", info->total_file_size),
 	                info->total_file_size),
-	         format(
+	         ::format(
 	            ngettext("%u download", "%u downloads", info->download_count), info->download_count),
 	         (info->number_of_votes() != 0u ?
 	             format_l(ngettext("Average rating: %1$.3f (%2$u vote)",
 	                               "Average rating: %1$.3f (%2$u votes)", info->number_of_votes()),
 	                      info->average_rating(), info->number_of_votes()) :
 	             _("No votes yet")),
-	         format(ngettext("%u comment", "%u comments", info->user_comments.size()),
+	         ::format(ngettext("%u comment", "%u comments", info->user_comments.size()),
 	                info->user_comments.size()),
-	         format(ngettext("%u screenshot", "%u screenshots", info->screenshots.size()),
+	         ::format(ngettext("%u screenshot", "%u screenshots", info->screenshots.size()),
 	                info->screenshots.size())));
 
 	layout();
@@ -642,7 +642,7 @@ MapRow::MapRow(Panel* parent,
                bool installed)
    : UI::Panel(parent,
                UI::PanelStyle::kFsMenu,
-               format("map_row_%s", info->internal_name),
+               ::format("map_row_%s", info->internal_name),
                0,
                0,
                kRowButtonSize,
@@ -683,21 +683,21 @@ MapRow::MapRow(Panel* parent,
           24,
           24,
           UI::PanelStyle::kFsMenu,
-          format("<rt><p>%s</p><p>%s%s</p><p>%s</p>%s</rt>",
-                 format(_("%1$s %2$s"),
+          ::format("<rt><p>%s</p><p>%s%s</p><p>%s</p>%s</rt>",
+                 ::format(_("%1$s %2$s"),
                         g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
                            .as_font_tag(info->descname()),
                         g_style_manager->font_style(UI::FontStyle::kItalic)
-                           .as_font_tag(format(_("(%s)"), info->internal_name))),
+                           .as_font_tag(::format(_("(%s)"), info->internal_name))),
                  g_style_manager->font_style(UI::FontStyle::kItalic)
                     .as_font_tag(info->author() == info->upload_username ?
-                                    format(_("by %s"), info->author()) :
-                                    format(_("by %1$s (uploaded by %2$s)"),
+                                    ::format(_("by %s"), info->author()) :
+                                    ::format(_("by %1$s (uploaded by %2$s)"),
                                            info->author(),
                                            info->upload_username)),
                  required_wl_version_and_sync_safety_string(info),
                  g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
-                    .as_font_tag(format(_("Size: %1$u×%2$u • Max Players: %3$u • %4$s"),
+                    .as_font_tag(::format(_("Size: %1$u×%2$u • Max Players: %3$u • %4$s"),
                                         info->map_width,
                                         info->map_height,
                                         info->map_nr_players,
@@ -715,7 +715,7 @@ MapRow::MapRow(Panel* parent,
         0,
         0,
         0,
-        format(
+        ::format(
            /** TRANSLATORS: Timestamp · Filesize · Download count · Average rating ·
               Number of comments */
            _("%1$s   %2$s   ⬇ %3$u   ★ %4$s   “” %5$u"),
@@ -749,17 +749,17 @@ MapRow::MapRow(Panel* parent,
 	}
 
 	bottom_row_.set_handle_mouse(true);
-	bottom_row_.set_tooltip(format(
+	bottom_row_.set_tooltip(::format(
 	   "%s<br>%s<br>%s<br>%s",
-	   format(ngettext("Total size: %u byte", "Total size: %u bytes", info->total_file_size),
+	   ::format(ngettext("Total size: %u byte", "Total size: %u bytes", info->total_file_size),
 	          info->total_file_size),
-	   format(ngettext("%u download", "%u downloads", info->download_count), info->download_count),
+	   ::format(ngettext("%u download", "%u downloads", info->download_count), info->download_count),
 	   (info->number_of_votes() != 0u ?
 	       format_l(ngettext("Average rating: %1$.3f (%2$u vote)",
 	                         "Average rating: %1$.3f (%2$u votes)", info->number_of_votes()),
 	                info->average_rating(), info->number_of_votes()) :
 	       _("No votes yet")),
-	   format(ngettext("%u comment", "%u comments", info->user_comments.size()),
+	   ::format(ngettext("%u comment", "%u comments", info->user_comments.size()),
 	          info->user_comments.size())));
 	set_can_focus(true);
 	layout();

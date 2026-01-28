@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,7 +57,7 @@ BuildingWindow::BuildingWindow(InteractiveBase& parent,
                                bool avoid_fastclick)
    : UI::UniqueWindow(&parent,
                       UI::WindowStyle::kWui,
-                      format("building_window_%u", b.serial()),
+                      ::format("building_window_%u", b.serial()),
                       &reg,
                       Width,
                       0,
@@ -331,7 +331,7 @@ void BuildingWindow::create_capsbuttons(UI::Box* capsbuttons, Widelands::Buildin
 			    owner.tribe().has_building(enhancement)) {
 				const Widelands::BuildingDescr& building_descr = *tribe.get_building_descr(enhancement);
 				std::string enhance_tooltip =
-				   format(_("Enhance to %s"), building_descr.descname()) + "<br>" +
+				   ::format(_("Enhance to %s"), building_descr.descname()) + "<br>" +
 				   g_style_manager->ware_info_style(UI::WareInfoStyle::kNormal)
 				      .header_font()
 				      .as_font_tag(_("Construction costs:")) +

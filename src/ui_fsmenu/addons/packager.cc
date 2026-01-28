@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 by the Widelands Development Team
+ * Copyright (C) 2021-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -378,7 +378,7 @@ void AddOnsPackager::clicked_new_addon() {
 		if (!err.empty()) {
 			main_menu_.show_messagebox(
 			   _("Invalid Name"),
-			   format(_("This name is invalid. Reason: %s\n\nPlease choose a different name."), err));
+			   ::format(_("This name is invalid. Reason: %s\n\nPlease choose a different name."), err));
 			continue;
 		}
 
@@ -425,7 +425,7 @@ void AddOnsPackager::clicked_delete_addon() {
 	const std::string& name = addons_.get_selected();
 	UI::WLMessageBox m(
 	   get_parent(), UI::WindowStyle::kFsMenu, _("Delete Add-on"),
-	   format(ctrl_.is_remote(name) ?
+	   ::format(ctrl_.is_remote(name) ?
 	             _("Do you really want to delete the add-on ‘%s’?") :
 	             _("Do you really want to delete the local add-on ‘%s’?\n\nNote that this "
 	               "add-on can not be downloaded again from the server."),
@@ -446,7 +446,7 @@ void AddOnsPackager::clicked_delete_addon() {
 void AddOnsPackager::die() {
 	if (!addons_with_changes_.empty()) {
 		std::string msg =
-		   format(ngettext(
+		   ::format(ngettext(
 		             // Comments to fix codecheck false-positive
 		             "If you quit the packager now, all changes to the following %u add-on "
 		             "will be discarded.",
@@ -457,7 +457,7 @@ void AddOnsPackager::die() {
 		             addons_with_changes_.size()),
 		          addons_with_changes_.size());
 		for (const auto& str : addons_with_changes_) {
-			msg = format(_("%1$s\n• %2$s"), msg, str.first);
+			msg = ::format(_("%1$s\n• %2$s"), msg, str.first);
 		}
 
 		UI::WLMessageBox m(get_parent(), UI::WindowStyle::kFsMenu, _("Quit Packager"), msg,
@@ -475,16 +475,16 @@ void AddOnsPackager::clicked_discard_changes() {
 
 	std::string msg;
 	if (addons_with_changes_.size() == 1) {
-		msg = format(_("Do you really want to discard all changes to the add-on ‘%s’?"),
+		msg = ::format(_("Do you really want to discard all changes to the add-on ‘%s’?"),
 		             addons_with_changes_.begin()->first);
 	} else {
 		msg =
-		   format(ngettext("Do you really want to discard all changes to the following %u add-on?",
+		   ::format(ngettext("Do you really want to discard all changes to the following %u add-on?",
 		                   "Do you really want to discard all changes to the following %u add-ons?",
 		                   addons_with_changes_.size()),
 		          addons_with_changes_.size());
 		for (const auto& str : addons_with_changes_) {
-			msg = format(_("%1$s\n• %2$s"), msg, str.first);
+			msg = ::format(_("%1$s\n• %2$s"), msg, str.first);
 		}
 	}
 
@@ -500,16 +500,16 @@ void AddOnsPackager::clicked_write_changes() {
 
 	std::string msg;
 	if (addons_with_changes_.size() == 1) {
-		msg = format(_("Do you really want to commit all changes to the add-on ‘%s’ to disk?"),
+		msg = ::format(_("Do you really want to commit all changes to the add-on ‘%s’ to disk?"),
 		             addons_with_changes_.begin()->first);
 	} else {
-		msg = format(
+		msg = ::format(
 		   ngettext("Do you really want to commit all changes to the following %u add-on to disk?",
 		            "Do you really want to commit all changes to the following %u add-ons to disk?",
 		            addons_with_changes_.size()),
 		   addons_with_changes_.size());
 		for (const auto& str : addons_with_changes_) {
-			msg = format(_("%1$s\n• %2$s"), msg, str.first);
+			msg = ::format(_("%1$s\n• %2$s"), msg, str.first);
 		}
 	}
 	msg += "\n\n";
@@ -588,7 +588,7 @@ bool AddOnsPackager::do_write_addon_to_disk(const std::string& addon) {
 		if (!min_wl_v.empty() && !max_wl_v.empty() && AddOns::is_newer_version(max_wl_v, min_wl_v)) {
 			main_menu_.show_messagebox(
 			   _("Invalid Version Requirement"),
-			   format(_("The minimum Widelands version ‘%1$s’ may not be newer than the maximum "
+			   ::format(_("The minimum Widelands version ‘%1$s’ may not be newer than the maximum "
 			            "Widelands version ‘%2$s’. The add-on ‘%3$s’ will not be saved."),
 			          m->get_min_wl_version(), m->get_max_wl_version(), addon));
 			return false;
@@ -596,7 +596,7 @@ bool AddOnsPackager::do_write_addon_to_disk(const std::string& addon) {
 	} catch (...) {
 		main_menu_.show_messagebox(
 		   _("Invalid Version"),
-		   format(_("‘%1$s’ is not a valid version string. The add-on ‘%2$s’ will not be saved."),
+		   ::format(_("‘%1$s’ is not a valid version string. The add-on ‘%2$s’ will not be saved."),
 		          currently_checking, addon));
 		return false;
 	}
@@ -611,12 +611,12 @@ bool AddOnsPackager::do_write_addon_to_disk(const std::string& addon) {
 			UI::WLMessageBox mbox(
 			   get_parent(), UI::WindowStyle::kFsMenu, _("Version Requirement"),
 			   nominal_min.empty() ?
-			      format(_("The add-on ‘%1$s’ does not specify a minimum Widelands version. "
+			      ::format(_("The add-on ‘%1$s’ does not specify a minimum Widelands version. "
 			               "None of the contained maps can be loaded with a Widelands version older "
 			               "than %2$s. "
 			               "The minimum version requirement will automatically be set accordingly."),
 			             addon, AddOns::version_to_string(actual_min)) :
-			      format(_("The add-on ‘%1$s’ specifies a minimum Widelands version of %2$s. "
+			      ::format(_("The add-on ‘%1$s’ specifies a minimum Widelands version of %2$s. "
 			               "However, none of the contained maps can be loaded with a Widelands "
 			               "version older than %3$s. "
 			               "The version requirement will automatically be changed accordingly."),
@@ -639,7 +639,7 @@ bool AddOnsPackager::do_write_addon_to_disk(const std::string& addon) {
 	} catch (const WLWarning& e) {
 		main_menu_.show_messagebox(
 		   _("Error Writing Addon"),
-		   format(_("The add-on ‘%1$s’ can not be saved to disk:\n%2$s"), addon, e.what()));
+		   ::format(_("The add-on ‘%1$s’ can not be saved to disk:\n%2$s"), addon, e.what()));
 		return false;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +60,7 @@ enum class Units {
 };
 
 std::string ytick_text_style(const std::string& text, const UI::FontStyleInfo& style) {
-	return format("<rt keep_spaces=1><p>%s</p></rt>", style.as_font_tag(text));
+	return ::format("<rt keep_spaces=1><p>%s</p></rt>", style.as_font_tag(text));
 }
 
 std::string xtick_text_style(const std::string& text) {
@@ -99,13 +99,13 @@ std::string get_value_with_unit(Units unit, int value) {
 	switch (unit) {
 	case Units::kDayNarrow:
 		/** TRANSLATORS: day(s). Keep this as short as possible. Used in statistics. */
-		return format(npgettext("unit_narrow", "%1%d", "%1%d", value), value);
+		return ::format(npgettext("unit_narrow", "%1%d", "%1%d", value), value);
 	case Units::kHourNarrow:
 		/** TRANSLATORS: hour(s). Keep this as short as possible. Used in statistics. */
-		return format(npgettext("unit_narrow", "%1%h", "%1%h", value), value);
+		return ::format(npgettext("unit_narrow", "%1%h", "%1%h", value), value);
 	case Units::kMinutesNarrow:
 		/** TRANSLATORS: minute(s). Keep this as short as possible. Used in statistics. */
-		return format(npgettext("unit_narrow", "%1%m", "%1%m", value), value);
+		return ::format(npgettext("unit_narrow", "%1%m", "%1%m", value), value);
 	case Units::kMinutesGeneric:
 	case Units::kHourGeneric:
 	case Units::kDayGeneric:
@@ -264,7 +264,7 @@ void draw_diagram(uint32_t time_ms,
 		// over the number, not to the left
 		if (how_many_ticks != 0 && i != 0) {
 			std::shared_ptr<const UI::RenderedText> xtick =
-			   UI::g_fh->render(xtick_text_style(format("-%u ", (max_x / how_many_ticks * i))));
+			   UI::g_fh->render(xtick_text_style(::format("-%u ", (max_x / how_many_ticks * i))));
 			Vector2i pos(posx, inner_h - kSpaceBottom + 10);
 			UI::center_vertically(xtick->height(), &pos);
 			xtick->draw(dst, pos, UI::Align::kCenter);
@@ -728,7 +728,7 @@ void DifferentialPlotArea::draw(RenderTarget& dst) {
 	// Draw data and diagram
 	draw_plot(dst, yoffset, std::to_string(highest_scale_), 2 * highest_scale_);
 	// Print the min value
-	draw_value(format("-%u", (highest_scale_)),
+	draw_value(::format("-%u", (highest_scale_)),
 	           g_style_manager->statistics_plot_style().y_min_value_font(),
 	           Vector2i(get_inner_w() - kSpaceRight + 3, get_inner_h() - kSpaceBottom + 10), dst);
 }

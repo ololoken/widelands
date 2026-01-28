@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2025 by the Widelands Development Team
+ * Copyright (C) 2008-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -114,7 +114,7 @@ struct HostChatProvider : public ChatProvider {
 
 			// Help
 			if (cmd == "help") {
-				c.msg = format(
+				c.msg = ::format(
 				   "<br>%s<br>%s<br>%s<br>%s<br>%s<br>%s<br>%s", _("Available host commands are:"),
 				   /** TRANSLATORS: Available host command */
 				   _("/help  -  Shows this help"),
@@ -149,9 +149,9 @@ struct HostChatProvider : public ChatProvider {
 				} else {
 					int32_t num = h->check_client(arg1);
 					if (num == -1) {
-						c.msg = format(_("The client %s could not be found."), arg1);
+						c.msg = ::format(_("The client %s could not be found."), arg1);
 					} else {
-						c.msg = format("HOST WARNING FOR %s: ", arg1);
+						c.msg = ::format("HOST WARNING FOR %s: ", arg1);
 						c.msg += arg2;
 					}
 				}
@@ -173,12 +173,12 @@ struct HostChatProvider : public ChatProvider {
 					if (num == -2) {
 						c.msg = _("You can not kick yourself!");
 					} else if (num == -1) {
-						c.msg = format(_("The client %s could not be found."), arg1);
+						c.msg = ::format(_("The client %s could not be found."), arg1);
 					} else {
 						kickClient = num;
-						c.msg = format(_("Are you sure you want to kick %s?"), arg1) + "<br>";
-						c.msg += format(_("The stated reason was: %s"), kickReason) + "<br>";
-						c.msg += format(_("If yes, type: /ack_kick %s"), arg1);
+						c.msg = ::format(_("Are you sure you want to kick %s?"), arg1) + "<br>";
+						c.msg += ::format(_("The stated reason was: %s"), kickReason) + "<br>";
+						c.msg += ::format(_("If yes, type: /ack_kick %s"), arg1);
 					}
 				}
 			}
@@ -406,6 +406,12 @@ GameHost::~GameHost() {
 	d->net.reset();
 	d->promoter.reset();
 	delete d;
+
+	// delete pointers from pending_player_commands_
+	for (Widelands::PlayerCommand* pc : pending_player_commands_) {
+		delete pc;
+	}
+	pending_player_commands_.clear();
 }
 
 const std::string& GameHost::get_local_playername() const {
@@ -577,7 +583,7 @@ void GameHost::run_callback() {
 		game_->set_game_controller(pointer_);
 		InteractiveGameBase* igb;
 		player_number = d->settings.playernum + 1;
-		game_->save_handler().set_autosave_filename(format("%s_nethost", kAutosavePrefix));
+		game_->save_handler().set_autosave_filename(::format("%s_nethost", kAutosavePrefix));
 
 		if (d->settings.savegame) {
 			// Read and broadcast original win condition
@@ -1672,7 +1678,7 @@ std::string GameHost::get_computer_player_name(uint8_t const playernum) {
 	std::string name;
 	uint32_t suffix = playernum;
 	do {
-		name = format(_("Computer %u"), static_cast<unsigned int>(++suffix));
+		name = ::format(_("Computer %u"), static_cast<unsigned int>(++suffix));
 	} while (has_user_name(name, playernum));
 	return name;
 }
@@ -1748,7 +1754,7 @@ void GameHost::welcome_client(uint32_t const number, std::string& playername) {
 	if (has_user_name(effective_name, client.usernum)) {
 		uint32_t i = 1;
 		do {
-			effective_name = format("%s%u", playername, i++);
+			effective_name = ::format("%s%u", playername, i++);
 		} while (has_user_name(effective_name, client.usernum));
 	}
 
@@ -1931,7 +1937,7 @@ void GameHost::check_hung_clients() {
 					// inform the other clients about the problem regulary
 					if (deltanow - d->clients.at(i).lastdelta > 30) {
 						std::string seconds =
-						   format(ngettext("%li second", "%li seconds", deltanow), deltanow);
+						   ::format(ngettext("%li second", "%li seconds", deltanow), deltanow);
 						send_system_message_code(
 						   "CLIENT_HUNG", d->settings.users.at(d->clients.at(i).usernum).name, seconds);
 						d->clients.at(i).lastdelta = deltanow;

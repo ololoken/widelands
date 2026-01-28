@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -158,9 +158,9 @@ void FontSet::set_font_group(const LuaTable& table,
                              std::string* italic,
                              std::string* bold_italic) {
 	*basic = get_string_with_default(table, key, fallback);
-	*bold = get_string_with_default(table, format("%s_bold", key), *basic);
-	*italic = get_string_with_default(table, format("%s_italic", key), *basic);
-	*bold_italic = get_string_with_default(table, format("%s_bold_italic", key), *bold);
+	*bold = get_string_with_default(table, ::format("%s_bold", key), *basic);
+	*italic = get_string_with_default(table, ::format("%s_italic", key), *basic);
+	*bold_italic = get_string_with_default(table, ::format("%s_bold_italic", key), *bold);
 }
 
 FontSets::FontSets() {

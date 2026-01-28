@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@ static const char pic_tab_workers_warehouse[] = "images/wui/stats/menu_tab_worke
 
 static inline std::string
 color_tag(const RGBColor& c, const std::string& text1, const std::string& text2) {
-	return format(_("%1$s %2$s"), StyleManager::color_tag(text1, c), text2);
+	return ::format(_("%1$s %2$s"), StyleManager::color_tag(text1, c), text2);
 }
 
 StockMenu::StockMenu(InteractivePlayer& plr, Registry& registry)
@@ -50,7 +50,7 @@ StockMenu::StockMenu(InteractivePlayer& plr, Registry& registry)
            different background colors; each icon's color indicates whether the stock is higher or
            lower than the economy target setting. Very little space is available. */
         _("Evaluate"),
-        format(
+        ::format(
            "<rt><p>%s</p><p>%s<br>%s<br>%s</p></rt>",
            g_style_manager->font_style(UI::FontStyle::kWuiTooltipHeader)
               .as_font_tag(_("Compare stocked amounts to economy target quantities")),

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,7 +49,7 @@ IFont* load_font(const std::string& face, int ptsize) {
 
 	TTF_Font* font = TTF_OpenFontIndexRW(ops, 1, ptsize, 0);
 	if (font == nullptr) {
-		throw BadFont(format("Font loading error for %s, %i pts: %s", face, ptsize, TTF_GetError()));
+		throw BadFont(::format("Font loading error for %s, %i pts: %s", face, ptsize, TTF_GetError()));
 	}
 
 	return new SdlTtfFont(font, face, ptsize, memory.release());

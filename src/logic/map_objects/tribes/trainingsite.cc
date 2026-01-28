@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1013,7 +1013,7 @@ void TrainingSite::start_upgrade(Game& game, Upgrade& upgrade) {
 	upgrade.lastattempt = level;
 	upgrade.lastsuccess = false;
 
-	return program_start(game, format("%s%i", upgrade.prefix, level));
+	return program_start(game, ::format("%s%i", upgrade.prefix, level));
 }
 
 TrainingSite::Upgrade* TrainingSite::get_upgrade(TrainingAttribute const atr) {

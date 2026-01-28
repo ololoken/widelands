@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2025 by the Widelands Development Team
+ * Copyright (C) 2004-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -3616,7 +3616,7 @@ void DefaultAI::diplomacy_actions(const Time& gametime) {
 
 	const int32_t my_team_score =
 	   me_alone ? 0 : player_statistics.get_team_average_score(mytn, mypn);
-	const std::string myts_s = me_alone ? "" : format(" with team score %d", my_team_score);
+	const std::string myts_s = me_alone ? "" : ::format(" with team score %d", my_team_score);
 
 	// Check desirability of current team
 	if (planned_action == kNoAction && !me_alone && my_team_score < 0 &&
@@ -3650,7 +3650,7 @@ void DefaultAI::diplomacy_actions(const Time& gametime) {
 			plan_priority = std::max(0, -team_vs_worst);
 			if (g_verbose) {
 				planned_log_append_text =
-				   format("%s because of player (%d) with diploscore %d", myts_s,
+				   ::format("%s because of player (%d) with diploscore %d", myts_s,
 				          static_cast<unsigned int>(player_statistics.get_worst_ally()),
 				          player_statistics.get_worst_ally_score());
 				/* verb_ */ log_dbg_time(
@@ -3695,7 +3695,7 @@ void DefaultAI::diplomacy_actions(const Time& gametime) {
 				const int32_t ots = other_alone ? diploscore - RNG::static_rand(10) :
 				                                  player_statistics.get_team_average_score(other_tn);
 				if (!other_alone && g_verbose) {
-					other_team_score_str = format(" and team score %d", ots);
+					other_team_score_str = ::format(" and team score %d", ots);
 				}
 				const int32_t my_effective_ts = plan_to_leave ? 0 : my_team_score;
 				accept = ots > my_effective_ts;

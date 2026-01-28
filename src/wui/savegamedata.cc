@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -134,13 +134,13 @@ const std::string as_filename_list(const std::vector<SavegameData>& savefiles) {
 	std::string message;
 	for (const SavegameData& gamedata : savefiles) {
 		if (gamedata.is_directory() || !gamedata.errormessage.empty()) {
-			message = format("%s\n%s", message, richtext_escape(gamedata.filename));
+			message = ::format("%s\n%s", message, richtext_escape(gamedata.filename));
 		} else if (gamedata.errormessage.empty()) {
 			std::vector<std::string> listme;
 			listme.push_back(richtext_escape(gamedata.mapname));
 			listme.push_back(gamedata.savedonstring);
 			message =
-			   format("%s\n%s", message, i18n::localize_list(listme, i18n::ConcatenateWith::COMMA));
+			   ::format("%s\n%s", message, i18n::localize_list(listme, i18n::ConcatenateWith::COMMA));
 		}
 	}
 	return message;

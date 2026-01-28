@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2025 by the Widelands Development Team
+ * Copyright (C) 2017-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,7 +43,7 @@ CampaignDetails::CampaignDetails(Panel* parent)
 }
 
 void CampaignDetails::update(const CampaignData& campaigndata) {
-	name_label_.set_text(format("<rt>%s%s</rt>",
+	name_label_.set_text(::format("<rt>%s%s</rt>",
 	                            /** TRANSLATORS: Header for campaign name */
 	                            as_heading(_("Campaign"), UI::PanelStyle::kFsMenu, true),
 	                            as_content(campaigndata.descname, UI::PanelStyle::kFsMenu)));
@@ -51,25 +51,25 @@ void CampaignDetails::update(const CampaignData& campaigndata) {
 	std::string description;
 
 	if (campaigndata.visible) {
-		description = format("%s%s",
+		description = ::format("%s%s",
 		                     /** TRANSLATORS: Header for campaign tribe */
 		                     as_heading(_("Tribe"), UI::PanelStyle::kFsMenu),
 		                     as_content(campaigndata.tribename, UI::PanelStyle::kFsMenu));
-		description = format("%s%s", description,
+		description = ::format("%s%s", description,
 		                     /** TRANSLATORS: Header for campaign difficulty */
 		                     as_heading(_("Difficulty"), UI::PanelStyle::kFsMenu));
 		description =
-		   format("%s%s", description,
+		   ::format("%s%s", description,
 		          as_content(campaigndata.difficulty_description, UI::PanelStyle::kFsMenu));
 
-		description = format("%s%s", description,
+		description = ::format("%s%s", description,
 		                     /** TRANSLATORS: Header for campaign description */
 		                     as_heading(_("Description"), UI::PanelStyle::kFsMenu));
 		description =
-		   format("%s%s", description, as_content(campaigndata.description, UI::PanelStyle::kFsMenu));
+		   ::format("%s%s", description, as_content(campaigndata.description, UI::PanelStyle::kFsMenu));
 	}
 
-	description = format("<rt>%s</rt>", description);
+	description = ::format("<rt>%s</rt>", description);
 	descr_.set_text(description);
 	descr_.scroll_to_top();
 }

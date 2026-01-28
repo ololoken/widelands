@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 by the Widelands Development Team
+ * Copyright (C) 2020-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -115,7 +115,7 @@ protected:
 	                               const std::string& selection,
 	                               const Widelands::TribeDescr* tribe) {
 		UI::Box* hbox = new UI::Box(
-		   &box_, UI::PanelStyle::kFsMenu, format("fp_box_%s", tribename), 0, 0, UI::Box::Horizontal);
+		   &box_, UI::PanelStyle::kFsMenu, ::format("fp_box_%s", tribename), 0, 0, UI::Box::Horizontal);
 		box_.add(hbox, UI::Box::Resizing::kFullSize);
 
 		UI::Icon* icon =
@@ -234,7 +234,7 @@ KeyboardOptions::KeyboardOptions(Panel& parent)
 
 	auto generate_title = [](const KeyboardShortcut key) {
 		const std::string shortcut = shortcut_string_for(key, false);
-		return format(
+		return ::format(
 		   /** TRANSLATORS: This is a button label for a keyboard shortcut in the form
 		      "Action: Key" */
 		   _("%1$s: %2$s"), to_string(key), shortcut);
@@ -264,7 +264,7 @@ KeyboardOptions::KeyboardOptions(Panel& parent)
 				UI::WLMessageBox warning(
 				   get_parent(), UI::WindowStyle::kFsMenu, _("Keyboard Shortcut Conflict"),
 				   as_richtext_paragraph(
-				      format(_("The shortcut you selected (‘%1$s’) is already in use for the "
+				      ::format(_("The shortcut you selected (‘%1$s’) is already in use for the "
 				               "following action: ‘%2$s’. Please select a different shortcut "
 				               "or change the conflicting shortcut first."),
 				             shortcut_string_for(c.key, true), to_string(conflict)),

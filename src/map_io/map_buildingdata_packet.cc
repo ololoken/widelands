@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -992,7 +992,7 @@ void MapBuildingdataPacket::read_productionsite(ProductionSite& productionsite,
 				static const std::string paragraph_separator("</p><vspace gap=8><p>");
 
 				std::string body("<p>");
-				body += format(
+				body += ::format(
 				   /** TRANSLATORS: The argument is the buiding name */
 				   _("%s: the building’s inputs have changed."), productionsite.descr().descname());
 				if (!deleted_wares.empty() || deleted_unknown > 0) {
@@ -1002,15 +1002,15 @@ void MapBuildingdataPacket::read_productionsite(ProductionSite& productionsite,
 
 					static const std::string list_entry("<space gap=8>• %s</p><p>");  // ugly, but simple
 					for (const WareAmount& deleted : deleted_wares) {
-						body += format(
+						body += ::format(
 						   list_entry,
-						   format(ngettext("%1$u piece of %2$s", "%1$u pieces of %2$s", deleted.second),
+						   ::format(ngettext("%1$u piece of %2$s", "%1$u pieces of %2$s", deleted.second),
 						          deleted.second,
 						          game.descriptions().get_ware_descr(deleted.first)->descname()));
 					}
 					if (deleted_unknown > 0) {
-						body += format(
-						   list_entry, format(ngettext("%1$u piece of an unknown ware",
+						body += ::format(
+						   list_entry, ::format(ngettext("%1$u piece of an unknown ware",
 						                               "%1$u pieces of unknown wares", deleted_unknown),
 						                      deleted_unknown));
 					}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +38,7 @@
 
 namespace {
 inline std::string as_editorfont(const std::string& text, int ptsize, const RGBColor& clr) {
-	return format(
+	return ::format(
 	   "<rt keep_spaces=1><p><font face=sans size=%i shadow=1 color=%s>%s</font></p></rt>", ptsize,
 	   clr.hex_value(), richtext_escape(text));
 }

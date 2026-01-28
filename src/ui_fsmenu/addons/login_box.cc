@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 by the Widelands Development Team
+ * Copyright (C) 2021-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -77,7 +77,7 @@ AddOnsLoginBox::AddOnsLoginBox(UI::Panel& parent, UI::WindowStyle style)
 	   g_style_manager
 	      ->font_style(style == UI::WindowStyle::kFsMenu ? UI::FontStyle::kFsMenuInfoPanelParagraph :
 	                                                       UI::FontStyle::kWuiInfoPanelParagraph)
-	      .as_font_tag(format(
+	      .as_font_tag(::format(
 	         _("In order to use a registered account, you need an account on the Widelands website. "
 	           "Please log in at %s and set an online gaming password on your profile page."),
 	         g_style_manager

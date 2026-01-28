@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025 by the Widelands Development Team
+ * Copyright (C) 2018-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -77,7 +77,7 @@ FontStyleInfo::Face FontStyleInfo::string_to_face(const std::string& init_face) 
 }
 
 std::string FontStyleInfo::as_font_tag(const std::string& text) const {
-	return format("%s%s</font>", as_font_open(), text);
+	return ::format("%s%s</font>", as_font_open(), text);
 }
 
 std::string FontStyleInfo::as_font_open() const {
@@ -94,7 +94,7 @@ std::string FontStyleInfo::as_font_open() const {
 	if (underline_) {
 		optionals += " underline=1";
 	}
-	return format(
+	return ::format(
 	   "<font face=%s size=%d color=%s%s>", face_to_string(), size_, color_.hex_value(), optionals);
 }
 

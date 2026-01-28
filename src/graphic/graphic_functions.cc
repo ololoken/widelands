@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,7 +62,7 @@ void draw_splashscreen(RenderTarget& rt, const std::string& footer_message, cons
 		std::string intro_font = get_config_string(
 		   "intro_font", g_style_manager->font_style(UI::FontStyle::kFsMenuIntro).as_font_open());
 		std::shared_ptr<const UI::RenderedText> footer = UI::g_fh->render(
-		   format("<rt><p align=center>%s%s</font></p></rt>", intro_font, footer_message));
+		   ::format("<rt><p align=center>%s%s</font></p></rt>", intro_font, footer_message));
 		Vector2i footer_pos(rt.width() / 2, rt.height() - 3 * footer->height());
 		footer->draw(rt, footer_pos, UI::Align::kCenter);
 	}

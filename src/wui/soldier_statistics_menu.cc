@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 by the Widelands Development Team
+ * Copyright (C) 2020-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,13 +39,13 @@ SoldierStatisticsPanel::SoldierStatisticsPanel(UI::Panel& parent,
 	for (unsigned health = 0; health <= max_health_; ++health) {
 		for (unsigned defense = 0; defense <= max_defense_; ++defense) {
 			UI::Box* hbox1 =
-			   new UI::Box(this, UI::PanelStyle::kWui, format("hbox1_%u_%u", health, defense), 0, 0,
+			   new UI::Box(this, UI::PanelStyle::kWui, ::format("hbox1_%u_%u", health, defense), 0, 0,
 			               UI::Box::Horizontal);
 			UI::Box* hbox2 =
-			   new UI::Box(this, UI::PanelStyle::kWui, format("hbox2_%u_%u", health, defense), 0, 0,
+			   new UI::Box(this, UI::PanelStyle::kWui, ::format("hbox2_%u_%u", health, defense), 0, 0,
 			               UI::Box::Horizontal);
 			UI::Box* hbox3 =
-			   new UI::Box(this, UI::PanelStyle::kWui, format("hbox3_%u_%u", health, defense), 0, 0,
+			   new UI::Box(this, UI::PanelStyle::kWui, ::format("hbox3_%u_%u", health, defense), 0, 0,
 			               UI::Box::Horizontal);
 			for (unsigned attack = 0; attack <= max_attack_; ++attack) {
 				for (unsigned evade = 0; evade <= max_evade_; ++evade) {
@@ -56,23 +56,23 @@ SoldierStatisticsPanel::SoldierStatisticsPanel(UI::Panel& parent,
 					}
 					UI::Icon* icon1 =
 					   new UI::Icon(hbox1, UI::PanelStyle::kWui,
-					                format("icon1_%u_%u_%u_%u", health, defense, attack, evade),
+					                ::format("icon1_%u_%u_%u_%u", health, defense, attack, evade),
 					                soldier.get_attack_level_pic(attack));
 					UI::Icon* icon2 =
 					   new UI::Icon(hbox1, UI::PanelStyle::kWui,
-					                format("icon2_%u_%u_%u_%u", health, defense, attack, evade),
+					                ::format("icon2_%u_%u_%u_%u", health, defense, attack, evade),
 					                soldier.get_defense_level_pic(defense));
 					UI::Icon* icon3 =
 					   new UI::Icon(hbox2, UI::PanelStyle::kWui,
-					                format("icon3_%u_%u_%u_%u", health, defense, attack, evade),
+					                ::format("icon3_%u_%u_%u_%u", health, defense, attack, evade),
 					                soldier.get_health_level_pic(health));
 					UI::Icon* icon4 =
 					   new UI::Icon(hbox2, UI::PanelStyle::kWui,
-					                format("icon4_%u_%u_%u_%u", health, defense, attack, evade),
+					                ::format("icon4_%u_%u_%u_%u", health, defense, attack, evade),
 					                soldier.get_evade_level_pic(evade));
 					UI::Textarea* txt =
 					   new UI::Textarea(hbox3, UI::PanelStyle::kWui,
-					                    format("label_%u_%u_%u_%u", health, defense, attack, evade),
+					                    ::format("label_%u_%u_%u_%u", health, defense, attack, evade),
 					                    UI::FontStyle::kWuiLabel, "", UI::Align::kCenter);
 					txt->set_fixed_width(2 * icon1->get_w());
 					hbox1->add(icon1, UI::Box::Resizing::kAlign);
@@ -85,11 +85,11 @@ SoldierStatisticsPanel::SoldierStatisticsPanel(UI::Panel& parent,
 					icons_all_.push_back(icon3);
 					icons_all_.push_back(icon4);
 					labels_all_.push_back(txt);
-					const std::string tt = format("%s<br>%s<br>%s<br>%s",             //
-					                              format(_("Health: %u"), health),    //
-					                              format(_("Attack: %u"), attack),    //
-					                              format(_("Defense: %u"), defense),  //
-					                              format(_("Evade: %u"), evade));
+					const std::string tt = ::format("%s<br>%s<br>%s<br>%s",             //
+					                              ::format(_("Health: %u"), health),    //
+					                              ::format(_("Attack: %u"), attack),    //
+					                              ::format(_("Defense: %u"), defense),  //
+					                              ::format(_("Evade: %u"), evade));
 					txt->set_handle_mouse(true);
 					icon1->set_tooltip(tt);
 					icon2->set_tooltip(tt);
@@ -171,8 +171,8 @@ SoldierStatisticsMenu::SoldierStatisticsMenu(InteractivePlayer& parent,
 
 	for (unsigned h = 0; h <= max_health_; ++h) {
 		UI::Icon* i = new UI::Icon(
-		   hbox1, UI::PanelStyle::kWui, format("icon_h%u", h), soldier.get_health_level_pic(h));
-		UI::Textarea* txt = new UI::Textarea(hbox1, UI::PanelStyle::kWui, format("label_h%u", h),
+		   hbox1, UI::PanelStyle::kWui, ::format("icon_h%u", h), soldier.get_health_level_pic(h));
+		UI::Textarea* txt = new UI::Textarea(hbox1, UI::PanelStyle::kWui, ::format("label_h%u", h),
 		                                     UI::FontStyle::kWuiLabel, "", UI::Align::kLeft);
 		txt->set_fixed_width(8 * i->get_w());
 		hbox1->add(i, UI::Box::Resizing::kAlign);
@@ -187,8 +187,8 @@ SoldierStatisticsMenu::SoldierStatisticsMenu(InteractivePlayer& parent,
 	}
 	for (unsigned a = 0; a <= max_attack_; ++a) {
 		UI::Icon* i = new UI::Icon(
-		   hbox2, UI::PanelStyle::kWui, format("icon_a%u", a), soldier.get_attack_level_pic(a));
-		UI::Textarea* txt = new UI::Textarea(hbox2, UI::PanelStyle::kWui, format("label_a%u", a),
+		   hbox2, UI::PanelStyle::kWui, ::format("icon_a%u", a), soldier.get_attack_level_pic(a));
+		UI::Textarea* txt = new UI::Textarea(hbox2, UI::PanelStyle::kWui, ::format("label_a%u", a),
 		                                     UI::FontStyle::kWuiLabel, "", UI::Align::kLeft);
 		txt->set_fixed_width(8 * i->get_w());
 		hbox2->add(i, UI::Box::Resizing::kAlign);
@@ -203,15 +203,15 @@ SoldierStatisticsMenu::SoldierStatisticsMenu(InteractivePlayer& parent,
 	}
 	for (unsigned d = 0; d <= max_defense_; ++d) {
 		UI::Icon* i = new UI::Icon(
-		   hbox3, UI::PanelStyle::kWui, format("icon_d%u", d), soldier.get_defense_level_pic(d));
-		UI::Textarea* txt = new UI::Textarea(hbox3, UI::PanelStyle::kWui, format("label_d%u", d),
+		   hbox3, UI::PanelStyle::kWui, ::format("icon_d%u", d), soldier.get_defense_level_pic(d));
+		UI::Textarea* txt = new UI::Textarea(hbox3, UI::PanelStyle::kWui, ::format("label_d%u", d),
 		                                     UI::FontStyle::kWuiLabel, "", UI::Align::kLeft);
 		txt->set_fixed_width(8 * i->get_w());
 		hbox3->add(i, UI::Box::Resizing::kAlign);
 		hbox3->add(txt, UI::Box::Resizing::kAlign);
 		icons_detail_.push_back(i);
 		labels_detail_.push_back(txt);
-		const std::string tt = format(_("Defense: %u"), d);
+		const std::string tt = ::format(_("Defense: %u"), d);
 		i->set_handle_mouse(true);
 		txt->set_handle_mouse(true);
 		i->set_tooltip(tt);
@@ -219,15 +219,15 @@ SoldierStatisticsMenu::SoldierStatisticsMenu(InteractivePlayer& parent,
 	}
 	for (unsigned e = 0; e <= max_evade_; ++e) {
 		UI::Icon* i = new UI::Icon(
-		   hbox4, UI::PanelStyle::kWui, format("icon_e%u", e), soldier.get_evade_level_pic(e));
-		UI::Textarea* txt = new UI::Textarea(hbox4, UI::PanelStyle::kWui, format("label_e%u", e),
+		   hbox4, UI::PanelStyle::kWui, ::format("icon_e%u", e), soldier.get_evade_level_pic(e));
+		UI::Textarea* txt = new UI::Textarea(hbox4, UI::PanelStyle::kWui, ::format("label_e%u", e),
 		                                     UI::FontStyle::kWuiLabel, "", UI::Align::kLeft);
 		txt->set_fixed_width(8 * i->get_w());
 		hbox4->add(i, UI::Box::Resizing::kAlign);
 		hbox4->add(txt, UI::Box::Resizing::kAlign);
 		icons_detail_.push_back(i);
 		labels_detail_.push_back(txt);
-		const std::string tt = format(_("Evade: %u"), e);
+		const std::string tt = ::format(_("Evade: %u"), e);
 		i->set_handle_mouse(true);
 		txt->set_handle_mouse(true);
 		i->set_tooltip(tt);
@@ -252,30 +252,30 @@ void SoldierStatisticsMenu::think() {
 }
 
 void SoldierStatisticsMenu::update() {
-	tabs_.tabs()[0]->set_title(format(_("Overview (%u)"), player_.count_soldiers()));
+	tabs_.tabs()[0]->set_title(::format(_("Overview (%u)"), player_.count_soldiers()));
 	unsigned index = 0;
 	for (unsigned h = 0; h <= max_health_; ++h) {
 		const uint32_t nr = player_.count_soldiers_h(h);
 		icons_detail_[index]->set_grey_out(nr == 0);
-		labels_detail_[index]->set_text(format(_("×%u"), nr));
+		labels_detail_[index]->set_text(::format(_("×%u"), nr));
 		++index;
 	}
 	for (unsigned a = 0; a <= max_attack_; ++a) {
 		const uint32_t nr = player_.count_soldiers_a(a);
 		icons_detail_[index]->set_grey_out(nr == 0);
-		labels_detail_[index]->set_text(format(_("×%u"), nr));
+		labels_detail_[index]->set_text(::format(_("×%u"), nr));
 		++index;
 	}
 	for (unsigned d = 0; d <= max_defense_; ++d) {
 		const uint32_t nr = player_.count_soldiers_d(d);
 		icons_detail_[index]->set_grey_out(nr == 0);
-		labels_detail_[index]->set_text(format(_("×%u"), nr));
+		labels_detail_[index]->set_text(::format(_("×%u"), nr));
 		++index;
 	}
 	for (unsigned e = 0; e <= max_evade_; ++e) {
 		const uint32_t nr = player_.count_soldiers_e(e);
 		icons_detail_[index]->set_grey_out(nr == 0);
-		labels_detail_[index]->set_text(format(_("×%u"), nr));
+		labels_detail_[index]->set_text(::format(_("×%u"), nr));
 		++index;
 	}
 }

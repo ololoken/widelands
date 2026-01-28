@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -157,7 +157,7 @@ TribeDescr::TribeDescr(const Widelands::TribeBasicInfo& info,
 	auto set_progress_message = [this](const std::string& str, int i) {
 		Notifications::publish(UI::NoteLoadingMessage(
 		   /** TRANSLATORS: Example: Loading Barbarians: Buildings (2/6) */
-		   format(_("Loading %1%: %2% (%3%/%4%)"), descname(), str, i, 6)));
+		   ::format(_("Loading %1%: %2% (%3%/%4%)"), descname(), str, i, 6)));
 	};
 
 	try {

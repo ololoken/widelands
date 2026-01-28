@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -190,7 +190,7 @@ MainMenuNewRandomMapPanel::MainMenuNewRandomMapPanel(UI::Panel& parent,
                 0,
                 inner_w / 3,
                 mountains_label_.get_h(),
-                format(_("%i %%"), mountainsval_),
+                ::format(_("%i %%"), mountainsval_),
                 UI::Align::kCenter),
      island_mode_(this, panel_style_, "island_mode", Vector2i::zero(), _("Island mode")),
      // Geeky stuff
@@ -506,7 +506,7 @@ void MainMenuNewRandomMapPanel::normalize_landmass(ButtonId clicked_button) {
 	water_.set_value(waterval_);
 	land_.set_value(landval_);
 	wasteland_.set_value(wastelandval_);
-	mountains_.set_text(format(_("%i %%"), mountainsval_));
+	mountains_.set_text(::format(_("%i %%"), mountainsval_));
 }
 
 void MainMenuNewRandomMapPanel::select_terrains_distribution() {
@@ -668,15 +668,15 @@ bool MainMenuNewRandomMapPanel::do_generate_map(Widelands::EditorGameBase& egbas
 	} else {
 		try {
 			LuaInterface& lua = egbase.lua();
-			lua.interpret_string(format("kClimate = \"%s\"", map_info.world_name));
+			lua.interpret_string(::format("kClimate = \"%s\"", map_info.world_name));
 			lua.interpret_string(
-			   format("kResourceAmount = %d", static_cast<int>(map_info.resource_amount)));
-			lua.interpret_string(format("kWater = %d", map_info.waterRatio * 100));
-			lua.interpret_string(format("kLand = %d", map_info.landRatio * 100));
-			lua.interpret_string(format("kWasteland = %d", map_info.wastelandRatio * 100));
-			lua.interpret_string(format("kIslandMode = %b", map_info.islandMode));
-			lua.interpret_string(format("kRandomNumber = %d", map_info.mapNumber));
-			lua.interpret_string(format("kMapID = \"%s\"", map_id_edit_.get_text()));
+			   ::format("kResourceAmount = %d", static_cast<int>(map_info.resource_amount)));
+			lua.interpret_string(::format("kWater = %d", map_info.waterRatio * 100));
+			lua.interpret_string(::format("kLand = %d", map_info.landRatio * 100));
+			lua.interpret_string(::format("kWasteland = %d", map_info.wastelandRatio * 100));
+			lua.interpret_string(::format("kIslandMode = %b", map_info.islandMode));
+			lua.interpret_string(::format("kRandomNumber = %d", map_info.mapNumber));
+			lua.interpret_string(::format("kMapID = \"%s\"", map_id_edit_.get_text()));
 			lua.run_script(kAddOnDir + FileSystem::file_separator() +
 			               generator_.get_selected()->internal_name + FileSystem::file_separator() +
 			               "init.lua");
@@ -744,7 +744,7 @@ bool MainMenuNewRandomMapPanel::do_generate_map(Widelands::EditorGameBase& egbas
 
 			for (unsigned p = 0; p < nr_players; ++p) {
 				sp->set_player_name(
-				   p, p == plnum ? _("Player") : format(_("Computer %u"), (p > plnum ? p : p + 1)));
+				   p, p == plnum ? _("Player") : ::format(_("Computer %u"), (p > plnum ? p : p + 1)));
 				sp->set_player_tribe(p, "", true);
 				sp->set_player_team(p, p == plnum ? 0 : 1);
 				sp->set_player_init(p, 0);

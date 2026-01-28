@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -679,7 +679,9 @@ void EditorInteractive::map_clicked(const Widelands::NodeAndTriangle<>& node_and
 		}
 	}
 
-	tool_settings_changed_ = false;
+	if (&tools_->current() == &current_tool) {
+		tool_settings_changed_ = false;
+	}
 }
 
 void EditorInteractive::update_tool_history_window() {
@@ -1275,7 +1277,7 @@ bool EditorInteractive::run_editor(UI::Panel* error_message_parent,
 		// during winter time freeze. We can consider rephrasing it after v1.0.
 		UI::WLMessageBox m(
 		   error_message_parent, UI::WindowStyle::kFsMenu, _("Error"),
-		   format(
+		   ::format(
 		      _("An error has occured. The error message is:\n\n%1$s\n\nPlease report "
 		        "this problem to help us improve Widelands. You will find related messages in the "
 		        "standard output (stdout.txt on Windows). You are using version %2$s.\n"
@@ -1312,7 +1314,7 @@ void EditorInteractive::do_run_editor(const EditorInteractive::Init init,
 			throw wexception("EditorInteractive::run_editor: Empty map file name");
 		}
 
-		Notifications::publish(UI::NoteLoadingMessage(format(_("Loading map “%s”…"), filename)));
+		Notifications::publish(UI::NoteLoadingMessage(::format(_("Loading map “%s”…"), filename)));
 		eia.load(filename);
 
 		egbase.postload();
@@ -1543,7 +1545,7 @@ void EditorInteractive::set_sel_radius(uint32_t radius, uint16_t gap) {
 	InteractiveBase::set_sel_radius(radius);
 	InteractiveBase::set_sel_gap_percent(gap);
 	tool_settings_changed_ = true;
-	set_tooltip(gap > 0 ? format(_("Tool gaps: %u%%"), gap) : "");
+	set_tooltip(gap > 0 ? ::format(_("Tool gaps: %u%%"), gap) : "");
 }
 
 void EditorInteractive::publish_map() {
@@ -1566,7 +1568,7 @@ void EditorInteractive::publish_map() {
 	/* Ask for confirmation. */
 	if ((SDL_GetModState() & KMOD_CTRL) == 0) {
 		std::string temp = richtext_escape(
-		   format(_("Are you certain that you want to publish this map online?\n\n"
+		   ::format(_("Are you certain that you want to publish this map online?\n\n"
 		            "Name: %1$s\n"
 		            "Internal name: %2$s\n"
 		            "Author: %3$s\n"
@@ -1578,11 +1580,11 @@ void EditorInteractive::publish_map() {
 
 		UI::WLMessageBox w(
 		   this, UI::WindowStyle::kWui, _("Publish Map"),
-		   format("<rt><p>%s</p><p>%s</p></rt>",
+		   ::format("<rt><p>%s</p><p>%s</p></rt>",
 		          g_style_manager->font_style(UI::FontStyle::kWuiLabel).as_font_tag(temp),
 		          g_style_manager->font_style(UI::FontStyle::kWuiInfoPanelParagraph)
 		             .as_font_tag(
-		                format(_("By uploading, you agree to publish the map under the terms of the "
+		                ::format(_("By uploading, you agree to publish the map under the terms of the "
 		                         "GNU General Public License (GPL) version 2 or any later version "
 		                         "(the same license under which Widelands itself is distributed). "
 		                         "For more information, see %s."),

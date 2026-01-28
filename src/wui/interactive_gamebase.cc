@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2025 by the Widelands Development Team
+ * Copyright (C) 2007-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -55,7 +55,7 @@ namespace {
 std::string speed_string(int const speed) {
 	if (speed != 0) {
 		/** TRANSLATORS: This is a game speed value */
-		return format(_("%1$u.%2$u×"), (speed / 1000), (speed / 100 % 10));
+		return ::format(_("%1$u.%2$u×"), (speed / 1000), (speed / 100 % 10));
 	}
 	return _("PAUSE");
 }
@@ -621,11 +621,11 @@ void InteractiveGameBase::draw_overlay(RenderTarget& dst) {
 				game_speed = speed_string(actual);
 			}
 		} else if (desired == computed_target || actual == computed_target) {
-			game_speed = format
+			game_speed = ::format
 			   /** TRANSLATORS: actual_speed (desired_speed) */
 			   (_("%1$s (%2$s)"), speed_string(actual), speed_string(desired));
 		} else {
-			game_speed = format
+			game_speed = ::format
 			   /** TRANSLATORS: actual_speed (target_speed) (desired_speed) */
 			   (_("%1$s (%2$s) (%3$s)"), speed_string(actual), speed_string(computed_target),
 			    speed_string(desired));

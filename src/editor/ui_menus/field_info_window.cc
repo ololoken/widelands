@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 by the Widelands Development Team
+ * Copyright (C) 2021-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -74,7 +74,7 @@ void FieldInfoWindow::update() {
 void FieldInfoWindow::add_node_info(std::string& buf) const {
 	buf += as_heading(_("Node"), UI::PanelStyle::kWui, true);
 	buf += as_listitem(
-	   format(_("Coordinates: (%1$i, %2$i)"), center_.node.x, center_.node.y), font_style);
+	   ::format(_("Coordinates: (%1$i, %2$i)"), center_.node.x, center_.node.y), font_style);
 }
 
 void FieldInfoWindow::add_caps_info(std::string& buf) const {
@@ -121,14 +121,14 @@ void FieldInfoWindow::add_caps_info(std::string& buf) const {
 	}
 
 	buf += as_listitem(
-	   format(_("Caps: %s"), i18n::localize_list(caps_strings, i18n::ConcatenateWith::COMMA)),
+	   ::format(_("Caps: %s"), i18n::localize_list(caps_strings, i18n::ConcatenateWith::COMMA)),
 	   font_style);
 }
 
 void FieldInfoWindow::add_owner_info(std::string& buf) const {
 	if (f_.get_owned_by() > 0) {
 		buf +=
-		   as_listitem(format(_("Owned by: Player %u"), static_cast<unsigned int>(f_.get_owned_by())),
+		   as_listitem(::format(_("Owned by: Player %u"), static_cast<unsigned int>(f_.get_owned_by())),
 		               font_style);
 	} else {
 		buf += as_listitem(_("Owned by: —"), font_style);
@@ -141,7 +141,7 @@ void FieldInfoWindow::add_terrain_info(std::string& buf) const {
 	const Widelands::TerrainDescription* ter = parent_.egbase().descriptions().get_terrain_descr(
 	   center_.triangle.t == Widelands::TriangleIndex::D ? tf_.terrain_d() : tf_.terrain_r());
 
-	buf += as_listitem(format(pgettext("terrain_name", "Name: %s"), ter->descname()), font_style);
+	buf += as_listitem(::format(pgettext("terrain_name", "Name: %s"), ter->descname()), font_style);
 
 	std::vector<std::string> terrain_is_strings;
 	for (const Widelands::TerrainDescription::Type& terrain_type : ter->get_types()) {
@@ -149,7 +149,7 @@ void FieldInfoWindow::add_terrain_info(std::string& buf) const {
 	}
 
 	buf += as_listitem(
-	   format(
+	   ::format(
 	      /** TRANSLATORS: "Is" is a list of terrain properties, e.g. "arable, unreachable and
 	       * unwalkable". You can also translate this as "Category: %s" or "Property: %s" */
 	      _("Is: %s"), i18n::localize_list(terrain_is_strings, i18n::ConcatenateWith::AMPERSAND)),
@@ -163,7 +163,7 @@ void FieldInfoWindow::add_mapobject_info(std::string& buf) const {
 		/** TRANSLATORS: Heading for immovables and animals in editor info tool */
 		buf += as_heading(_("Objects"), UI::PanelStyle::kWui);
 		if (immovable != nullptr) {
-			buf += as_listitem(format(_("Immovable: %s"), immovable->descr().descname()), font_style);
+			buf += as_listitem(::format(_("Immovable: %s"), immovable->descr().descname()), font_style);
 		}
 
 		if (bob != nullptr) {
@@ -195,19 +195,19 @@ void FieldInfoWindow::add_mapobject_info(std::string& buf) const {
 			// Add bobs
 			if (!critternames.empty()) {
 				buf +=
-				   as_listitem(format(_("Animals: %s"),
+				   as_listitem(::format(_("Animals: %s"),
 				                      i18n::localize_list(critternames, i18n::ConcatenateWith::COMMA)),
 				               font_style);
 			}
 			if (!workernames.empty()) {
 				buf +=
-				   as_listitem(format(_("Workers: %s"),
+				   as_listitem(::format(_("Workers: %s"),
 				                      i18n::localize_list(workernames, i18n::ConcatenateWith::COMMA)),
 				               font_style);
 			}
 			if (!shipnames.empty()) {
 				buf += as_listitem(
-				   format(_("Ships: %s"), i18n::localize_list(shipnames, i18n::ConcatenateWith::COMMA)),
+				   ::format(_("Ships: %s"), i18n::localize_list(shipnames, i18n::ConcatenateWith::COMMA)),
 				   font_style);
 			}
 		}
@@ -219,7 +219,7 @@ void FieldInfoWindow::add_resources_info(std::string& buf) const {
 	if (ramount > 0) {
 		buf += as_heading(_("Resources"), UI::PanelStyle::kWui);
 		buf += as_listitem(
-		   format(pgettext("resources", "%1%× %2%"), static_cast<unsigned int>(ramount),
+		   ::format(pgettext("resources", "%1%× %2%"), static_cast<unsigned int>(ramount),
 		          parent_.egbase().descriptions().get_resource_descr(f_.get_resources())->descname()),
 		   font_style);
 	}
@@ -228,20 +228,20 @@ void FieldInfoWindow::add_resources_info(std::string& buf) const {
 void FieldInfoWindow::add_map_info(std::string& buf) const {
 	buf += as_heading(_("Map"), UI::PanelStyle::kWui);
 	buf += as_listitem(
-	   format(pgettext("map_name", "Name: %s"), richtext_escape(map_->get_name())), font_style);
+	   ::format(pgettext("map_name", "Name: %s"), richtext_escape(map_->get_name())), font_style);
 	buf +=
-	   as_listitem(format(_("Size: %1% × %2%"), map_->get_width(), map_->get_height()), font_style);
+	   as_listitem(::format(_("Size: %1% × %2%"), map_->get_width(), map_->get_height()), font_style);
 
 	if (map_->get_nrplayers() > 0) {
 		buf += as_listitem(
-		   format(_("Players: %u"), static_cast<unsigned int>(map_->get_nrplayers())), font_style);
+		   ::format(_("Players: %u"), static_cast<unsigned int>(map_->get_nrplayers())), font_style);
 	} else {
 		buf += as_listitem(_("Players: –"), font_style);
 	}
 
-	buf += as_listitem(format(_("Author: %s"), richtext_escape(map_->get_author())), font_style);
+	buf += as_listitem(::format(_("Author: %s"), richtext_escape(map_->get_author())), font_style);
 	buf += as_listitem(
-	   format(_("Description: %s"), richtext_escape(map_->get_description())), font_style);
+	   ::format(_("Description: %s"), richtext_escape(map_->get_description())), font_style);
 
 	{
 		std::string addons;
@@ -255,11 +255,11 @@ void FieldInfoWindow::add_map_info(std::string& buf) const {
 					addons = parent_.egbase().enabled_addons()[i]->descname();
 				} else {
 					addons =
-					   format(_("%1$s; %2$s"), addons, parent_.egbase().enabled_addons()[i]->descname());
+					   ::format(_("%1$s; %2$s"), addons, parent_.egbase().enabled_addons()[i]->descname());
 				}
 			}
 		}
-		buf += as_listitem(format(_("Enabled Add-Ons: %s"), richtext_escape(addons)), font_style);
+		buf += as_listitem(::format(_("Enabled Add-Ons: %s"), richtext_escape(addons)), font_style);
 	}
 }
 

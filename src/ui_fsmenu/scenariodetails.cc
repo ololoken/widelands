@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017-2025 by the Widelands Development Team
+ * Copyright (C) 2017-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,7 +43,7 @@ ScenarioDetails::ScenarioDetails(Panel* parent)
 }
 
 void ScenarioDetails::update(const ScenarioData& scenariodata) {
-	name_label_.set_text(format("<rt>%s%s</rt>",
+	name_label_.set_text(::format("<rt>%s%s</rt>",
 	                            as_heading(scenariodata.is_tutorial ? _("Tutorial") : _("Scenario"),
 	                                       UI::PanelStyle::kFsMenu, true),
 	                            as_content(scenariodata.descname, UI::PanelStyle::kFsMenu)));
@@ -57,13 +57,13 @@ void ScenarioDetails::update(const ScenarioData& scenariodata) {
 		            you need plural forms here, please let us know. */
 		         _("Authors");
 		std::string description =
-		   format("%s%s", as_heading(authors_heading, UI::PanelStyle::kFsMenu),
+		   ::format("%s%s", as_heading(authors_heading, UI::PanelStyle::kFsMenu),
 		          as_content(scenariodata.authors.get_names(), UI::PanelStyle::kFsMenu));
 
 		description =
-		   format("%s%s", description, as_heading(_("Description"), UI::PanelStyle::kFsMenu));
+		   ::format("%s%s", description, as_heading(_("Description"), UI::PanelStyle::kFsMenu));
 		description =
-		   format("%s%s", description, as_content(scenariodata.description, UI::PanelStyle::kFsMenu));
+		   ::format("%s%s", description, as_content(scenariodata.description, UI::PanelStyle::kFsMenu));
 
 		// Do we want to show add-on conflicts info for campaigns or scenarios?
 		// The official ones don't use add-ons, and add-on campaigns will tell users
@@ -71,7 +71,7 @@ void ScenarioDetails::update(const ScenarioData& scenariodata) {
 		// Plus, ScenarioData currently does not preload the scenario map, so fetching
 		// add-ons info there would introduce additional complexity.
 
-		description = format("<rt>%s</rt>", description);
+		description = ::format("<rt>%s</rt>", description);
 		descr_.set_text(description);
 	} else {
 		descr_.set_text("");

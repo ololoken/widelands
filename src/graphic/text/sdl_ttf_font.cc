@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,7 +65,7 @@ std::shared_ptr<const Image> SdlTtfFont::render(const std::string& txt,
                                                 int style,
                                                 TextureCache* texture_cache) {
 	const std::string hash =
-	   format("ttf:%s:%i:%s:%02x%02x%02x:%i", font_name_, ptsize_, txt, static_cast<int>(clr.r),
+	   ::format("ttf:%s:%i:%s:%02x%02x%02x:%i", font_name_, ptsize_, txt, static_cast<int>(clr.r),
 	          static_cast<int>(clr.g), static_cast<int>(clr.b), style);
 	std::shared_ptr<const Image> rv = texture_cache->get(hash);
 	if (rv != nullptr) {
@@ -141,7 +141,7 @@ std::shared_ptr<const Image> SdlTtfFont::render(const std::string& txt,
 	}
 
 	if (text_surface == nullptr) {
-		throw RenderError(format("Rendering '%s' gave the error: %s", txt, TTF_GetError()));
+		throw RenderError(::format("Rendering '%s' gave the error: %s", txt, TTF_GetError()));
 	}
 
 	return texture_cache->insert(hash, std::make_shared<Texture>(text_surface));

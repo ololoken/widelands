@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -67,7 +67,7 @@ int32_t GameLoader::load_game(bool const multiplayer) {
 	assert(game_.has_loader_ui());
 	auto set_progress_message = [](const std::string& text, unsigned step) {
 		Notifications::publish(
-		   UI::NoteLoadingMessage(format(_("Loading game: %1$s (%2$u/%3$d)"), text, step, 7)));
+		   UI::NoteLoadingMessage(::format(_("Loading game: %1$s (%2$u/%3$d)"), text, step, 7)));
 	};
 	set_progress_message(_("Elemental data"), 1);
 	verb_log_info("Game: Reading Preload Data ... ");

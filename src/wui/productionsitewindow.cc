@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -230,7 +230,7 @@ void ProductionSiteWindow::update_worker_table(Widelands::ProductionSite* produc
 				// Fill upgrade status
 				/** TRANSLATORS: %1% = the experience a worker has */
 				/** TRANSLATORS: %2% = the experience a worker needs to reach the next level */
-				er.set_string(1, format(_("%1%/%2%"), worker->get_current_experience(),
+				er.set_string(1, ::format(_("%1%/%2%"), worker->get_current_experience(),
 				                        worker->descr().get_needed_experience()));
 				er.set_string(
 				   2, worker->owner().tribe().get_worker_descr(worker->descr().becomes())->descname());
@@ -243,7 +243,7 @@ void ProductionSiteWindow::update_worker_table(Widelands::ProductionSite* produc
 			const Widelands::WorkerDescr* desc =
 			   production_site->owner().tribe().get_worker_descr(request->get_index());
 			er.set_picture(0, desc->icon(),
-			               format(_("%1$s (%2$s)"), request->is_open() ? _("vacant") : _("coming"),
+			               ::format(_("%1$s (%2$s)"), request->is_open() ? _("vacant") : _("coming"),
 			                      desc->descname()));
 
 			er.set_string(1, "");

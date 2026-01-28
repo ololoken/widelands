@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2025 by the Widelands Development Team
+ * Copyright (C) 2012-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,7 +60,7 @@ void fill_parameter_vector() {
 	const std::string lastused_word = _("last");
 
 	const std::string file_or_last_placeholder =
-	   format(alternatives_format, filename_placeholder, lastused_word);
+	   ::format(alternatives_format, filename_placeholder, lastused_word);
 
 	parameters = {
 	   {_("Usage:"), _("widelands <option0>=<value0> ... <optionN>=<valueN>"), "--", "", false},
@@ -69,7 +69,7 @@ void fill_parameter_vector() {
 	   {_("Options:"), "datadir", _("DIRNAME"),
 	    _("Use the specified directory for the Widelands data files."), false},
 	   {"", "homedir", _("DIRNAME"),
-	    format(_("Use the specified directory for Widelands config files, savegames, and replays. "
+	    ::format(_("Use the specified directory for Widelands config files, savegames, and replays. "
 	             "Default is `%s`."),
 	           kDefaultHomedir),
 	    false},
@@ -85,7 +85,7 @@ void fill_parameter_vector() {
 	    true},
 	   /// Game setup
 	   {"", "new_game_from_template", _("FILENAME"),
-	    format(_("Create a new game directly with the settings configured in the given file. "
+	    ::format(_("Create a new game directly with the settings configured in the given file. "
 	             "An example can be found in `%s`."),
 	           "data/templates/new_game_template"),
 	    false},
@@ -94,19 +94,19 @@ void fill_parameter_vector() {
 	   {"", "loadgame", file_or_last_placeholder,
 	    /** TRANSLATORS: %1 is translation for FILENAME,
 	                     %2 is translation for "last" for last used file */
-	    format(_("Load the savegame `%1$s` directly or the last saved game if `=%2$s` is used."),
+	    ::format(_("Load the savegame `%1$s` directly or the last saved game if `=%2$s` is used."),
 	           filename_placeholder, lastused_word),
 	    false},
 	   {"", "replay", file_or_last_placeholder,
 	    /** TRANSLATORS: %1 is translation for FILENAME,
 	                     %2 is translation for "last" for last used file */
-	    format(_("Load the replay `%1$s` directly or the last saved replay if `=%2$s` is used."),
+	    ::format(_("Load the replay `%1$s` directly or the last saved replay if `=%2$s` is used."),
 	           filename_placeholder, lastused_word),
 	    false},
 	   {"", "editor", "",
 	    /** TRANSLATORS: %1 is translation for FILENAME,
 	                     %2 is translation for "last" for last used file */
-	    format(_("Start the Widelands map editor directly. You can add `=%1$s` to directly load the "
+	    ::format(_("Start the Widelands map editor directly. You can add `=%1$s` to directly load the "
 	             "map `FILENAME` in the editor or `=%2$s` to load the last edited map."),
 	           filename_placeholder, lastused_word),
 	    false},
@@ -122,6 +122,7 @@ void fill_parameter_vector() {
 	    _("Start the scenario with difficulty `n`. Only valid with --scenario."), false},
 	   /// Misc
 	   {"", "nosound", "", _("Start the game with sound disabled."), false},
+	   {"", "shuffle", "", _("Start the game with shuffle mode for playback of songs"), true},
 	   /** TRANSLATORS: You may translate true/false, also as on/off or yes/no, but */
 	   /** TRANSLATORS: it HAS TO BE CONSISTENT with the translation in the widelands textdomain. */
 	   /** TRANSLATORS: * marks the default value */
@@ -311,7 +312,7 @@ void show_usage(const std::string& build_ver_details, CmdLineVerbosity verbosity
 	std::cout << std::string(kIndent + kTextWidth, '=')
 	          << std::endl
 	          /** TRANSLATORS: %s = version information */
-	          << format(_("This is Widelands version %s"), build_ver_details) << std::endl;
+	          << ::format(_("This is Widelands version %s"), build_ver_details) << std::endl;
 
 	if (verbosity != CmdLineVerbosity::None) {
 		std::string indent_string = std::string(kIndent, ' ');

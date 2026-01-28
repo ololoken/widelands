@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -119,7 +119,7 @@ void MainMenuLoadMap::set_current_directory(const std::vector<std::string>& file
 		replace_first(display_dir, kDownloadedMapsDir, _("Downloaded Maps"));
 	}
 	/** TRANSLATORS: The folder that a file will be saved to. */
-	directory_info_.set_text(format(_("Current directory: %s"), display_dir));
+	directory_info_.set_text(::format(_("Current directory: %s"), display_dir));
 }
 
 /**

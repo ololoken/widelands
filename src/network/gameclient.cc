@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2025 by the Widelands Development Team
+ * Copyright (C) 2008-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -173,7 +173,7 @@ InteractiveGameBase* GameClientImpl::init_game(GameClient* parent, UI::ProgressW
 	game->set_game_controller(parent->get_pointer());
 	uint8_t const pn = settings.playernum + 1;
 	game->save_handler().set_autosave_filename(
-	   format("%s_netclient%u", kAutosavePrefix, static_cast<unsigned int>(pn)));
+	   ::format("%s_netclient%u", kAutosavePrefix, static_cast<unsigned int>(pn)));
 	InteractiveGameBase* igb;
 	if (pn > 0) {
 		igb = new InteractivePlayer(*game, get_config_section(), pn, true, parent);
@@ -203,7 +203,7 @@ void GameClientImpl::run_game(InteractiveGameBase* igb) {
 	game->run(settings.savegame ? Widelands::Game::StartGameType::kSaveGame :
 	          settings.scenario ? Widelands::Game::StartGameType::kMultiPlayerScenario :
 	                              Widelands::Game::StartGameType::kMap,
-	          "", format("netclient_%d", static_cast<int>(settings.usernum)));
+	          "", ::format("netclient_%d", static_cast<int>(settings.usernum)));
 
 	// if this is an internet game, tell the metaserver that the game is done.
 	if (internet_) {
@@ -273,6 +273,12 @@ GameClient::~GameClient() {
 	}
 
 	delete d;
+
+	// delete pointers from pending_player_commands_
+	for (Widelands::PlayerCommand* pc : pending_player_commands_) {
+		delete pc;
+	}
+	pending_player_commands_.clear();
 }
 
 void GameClient::run() {
@@ -828,13 +834,13 @@ void GameClient::handle_hello(RecvPacket& packet) {
 	}
 	if (!missing_addons.empty() || !wrong_version_addons.empty()) {
 		const size_t nr = missing_addons.size() + wrong_version_addons.size();
-		std::string message = format(
+		std::string message = ::format(
 		   ngettext("%u add-on mismatch detected:\n", "%u add-on mismatches detected:\n", nr), nr);
 		for (const std::string& name : missing_addons) {
-			message = format(_("%1$s\n• ‘%2$s’ required by host not found"), message, name);
+			message = ::format(_("%1$s\n• ‘%2$s’ required by host not found"), message, name);
 		}
 		for (const auto& pair : wrong_version_addons) {
-			message = format(_("%1$s\n• ‘%2$s’ installed at version %3$s but host uses version %4$s"),
+			message = ::format(_("%1$s\n• ‘%2$s’ installed at version %3$s but host uses version %4$s"),
 			                 message, pair.first, pair.second.first, pair.second.second);
 		}
 		throw AddOnsMismatchException(message);
@@ -1366,7 +1372,7 @@ void GameClient::disconnect(const std::string& reason,
 		}
 		capsule_.menu().show_messagebox(
 		   _("Disconnected"),
-		   format(_("The connection with the host was lost for the following reason:\n%s"),
+		   ::format(_("The connection with the host was lost for the following reason:\n%s"),
 		          (arg.empty() ? NetworkGamingMessages::get_message(reason) :
 		                         NetworkGamingMessages::get_message(reason, arg))));
 	}

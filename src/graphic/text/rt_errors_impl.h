@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -31,7 +31,7 @@ struct SyntaxErrorImpl : public SyntaxError {
 	                const std::string& got,
 	                const std::string& next_chars)
 	   : SyntaxError(
-	        format("Syntax error at %1%:%2%: expected %3%, got '%4%'. String continues with: '%5%'",
+	        ::format("Syntax error at %1%:%2%: expected %3%, got '%4%'. String continues with: '%5%'",
 	               line,
 	               col,
 	               expected,

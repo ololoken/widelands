@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -73,25 +73,25 @@ void EncyclopediaWindow::init(std::unique_ptr<LuaTable> table) {
 
 			wrapper_boxes_.insert(std::make_pair(
 			   tab_name, std::unique_ptr<UI::Box>(new UI::Box(&tabs_, UI::PanelStyle::kWui,
-			                                                  format("wrapper_box_%s", tab_name), 0, 0,
+			                                                  ::format("wrapper_box_%s", tab_name), 0, 0,
 			                                                  UI::Box::Horizontal))));
 
 			boxes_.insert(std::make_pair(
 			   tab_name, std::unique_ptr<UI::Box>(new UI::Box(
 			                wrapper_boxes_.at(tab_name).get(), UI::PanelStyle::kWui,
-			                format("content_box_%s", tab_name), 0, 0, UI::Box::Horizontal))));
+			                ::format("content_box_%s", tab_name), 0, 0, UI::Box::Horizontal))));
 
 			lists_.insert(std::make_pair(
 			   tab_name, std::unique_ptr<UI::Listselect<EncyclopediaEntry>>(
 			                new UI::Listselect<EncyclopediaEntry>(
-			                   boxes_.at(tab_name).get(), format("list_%s", tab_name), 0, 0,
+			                   boxes_.at(tab_name).get(), ::format("list_%s", tab_name), 0, 0,
 			                   contents_width, contents_height, UI::PanelStyle::kWui))));
 			lists_.at(tab_name)->selected.connect(
 			   [this, tab_name](unsigned /* index */) { entry_selected(tab_name); });
 
 			contents_.insert(std::make_pair(
 			   tab_name, std::unique_ptr<UI::MultilineTextarea>(new UI::MultilineTextarea(
-			                boxes_.at(tab_name).get(), format("text_%s", tab_name), 0, 0,
+			                boxes_.at(tab_name).get(), ::format("text_%s", tab_name), 0, 0,
 			                contents_width, contents_height, UI::PanelStyle::kWui))));
 
 			boxes_.at(tab_name)->add(lists_.at(tab_name).get());

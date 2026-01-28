@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -81,7 +81,7 @@ void SinglePlayerTribeDropdown::rebuild() {
 				const std::string player_name =
 				   /** TRANSLATORS: This is an option in multiplayer setup for sharing
 				         another player's starting position. */
-				   format(_("Shared in Player %u"), static_cast<unsigned int>(i + 1));
+				   ::format(_("Shared in Player %u"), static_cast<unsigned int>(i + 1));
 				dropdown_.add(player_name, as_string(static_cast<unsigned int>(i + 1)), player_image,
 				              (i + 1) == player_setting.shared_in, player_name);
 			}
@@ -171,7 +171,7 @@ void SinglePlayerPlayerTypeDropdown::fill() {
 	// AIs
 	if (settings.get_tribeinfo(settings.players[id_].tribe).suited_for_ai) {
 		for (const auto* impl : AI::ComputerPlayer::get_implementations()) {
-			dropdown_.add(_(impl->descname), format("%s%s", kAiNamePrefix, impl->name),
+			dropdown_.add(_(impl->descname), ::format("%s%s", kAiNamePrefix, impl->name),
 			              g_image_cache->get(impl->icon_filename), false, _(impl->descname));
 		}
 		/** TRANSLATORS: This is the name of an AI used in the game setup screens */
@@ -194,7 +194,7 @@ void SinglePlayerPlayerTypeDropdown::select_entry() {
 	const PlayerSettings& player_setting = settings.players[id_];
 	if (player_setting.state == PlayerSettings::State::kHuman) {
 		dropdown_.set_image(g_image_cache->get("images/wui/stats/genstats_nrworkers.png"));
-		dropdown_.set_tooltip(format(_("%1%: %2%"), _("Type"), _("Human")));
+		dropdown_.set_tooltip(::format(_("%1%: %2%"), _("Type"), _("Human")));
 		dropdown_.set_enabled(false);
 	} else if (player_setting.state == PlayerSettings::State::kClosed) {
 		dropdown_.select(kClosed);
@@ -207,7 +207,7 @@ void SinglePlayerPlayerTypeDropdown::select_entry() {
 			} else {
 				const AI::ComputerPlayer::Implementation* impl =
 				   AI::ComputerPlayer::get_implementation(player_setting.ai);
-				dropdown_.select(format("%s%s", kAiNamePrefix, impl->name));
+				dropdown_.select(::format("%s%s", kAiNamePrefix, impl->name));
 			}
 		}
 	}
@@ -390,7 +390,7 @@ void SinglePlayerTeamDropdown::rebuild() {
 #endif
 	for (Widelands::TeamNumber t = 1; t <= settings.players.size() / 2; ++t) {
 		assert(t < no_of_team_colors);
-		dropdown_.add(format(_("Team %d"), static_cast<unsigned int>(t)), t,
+		dropdown_.add(::format(_("Team %d"), static_cast<unsigned int>(t)), t,
 		              playercolor_image(kTeamColors[t], "images/players/team.png"));
 	}
 	dropdown_.select(player_setting.team);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -132,7 +132,7 @@ void LaunchSPG::clicked_ok() {
 	if (!preconfigured_ && !g_fs->file_exists(filename)) {
 		UI::WLMessageBox m(
 		   &capsule_.menu(), UI::WindowStyle::kFsMenu, _("File not found"),
-		   format(_("Widelands tried to start a game with a file that could not be "
+		   ::format(_("Widelands tried to start a game with a file that could not be "
 		            "found at the given path.\n"
 		            "The file was: %s\n"
 		            "If this happens in a network game, the host might have selected "

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -71,14 +71,6 @@
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
-// clang-format off
-EM_ASYNC_JS(void, emscripten_do_sync_idbfs, (), {
-	 await new Promise((resolve, reject) => FS.syncfs(err => err ? reject(err) : resolve()))
-});
-// clang-format on
-#else
-inline void emscripten_do_sync_idbfs() {
-}
 #endif
 
 namespace {
@@ -266,7 +258,13 @@ std::string FileSystem::get_homedir() {
 }
 
 void FileSystem::do_sync_idbfs() {
-	emscripten_do_sync_idbfs();
+#ifdef __EMSCRIPTEN__
+	// clang-format off
+	EM_ASM({
+		 await new Promise((resolve, reject) => FS.syncfs(err => err ? reject(err) : resolve()))
+	});
+	// clang-format on
+#endif
 }
 
 #ifdef USE_XDG

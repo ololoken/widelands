@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 by the Widelands Development Team
+ * Copyright (C) 2024-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -227,7 +227,7 @@ private:
 		if (count1 > Widelands::kMaxWaresPerBatch || count2 > Widelands::kMaxWaresPerBatch) {
 			ok_.set_enabled(false);
 			ok_.set_tooltip(
-			   format(ngettext("It is not allowed to exchange more than %d ware per batch.",
+			   ::format(ngettext("It is not allowed to exchange more than %d ware per batch.",
 			                   "It is not allowed to exchange more than %d wares per batch.",
 			                   Widelands::kMaxWaresPerBatch),
 			          Widelands::kMaxWaresPerBatch));
@@ -236,7 +236,7 @@ private:
 
 		if (!conflicts.empty()) {
 			ok_.set_enabled(false);
-			ok_.set_tooltip(format(_("You cannot both send and receive the same ware type (%s)."),
+			ok_.set_tooltip(::format(_("You cannot both send and receive the same ware type (%s)."),
 			                       i18n::localize_list(conflicts, i18n::ConcatenateWith::AND)));
 			return;
 		}
@@ -323,7 +323,7 @@ private:
 
 			for (Widelands::TradeID trade_id : trades) {
 				const Widelands::TradeInstance& trade = ibase_.game().get_trade(trade_id);
-				UI::Box* box = new UI::Box(this, UI::PanelStyle::kWui, format("proposal_%u", trade_id),
+				UI::Box* box = new UI::Box(this, UI::PanelStyle::kWui, ::format("proposal_%u", trade_id),
 				                           0, 0, UI::Box::Horizontal);
 
 				box->add(new UI::MultilineTextarea(
@@ -453,7 +453,7 @@ private:
 		} else {
 			for (Widelands::TradeID trade_id : trades) {
 				const Widelands::TradeInstance& trade = iplayer_.game().get_trade(trade_id);
-				UI::Box* box = new UI::Box(this, UI::PanelStyle::kWui, format("proposal_%u", trade_id),
+				UI::Box* box = new UI::Box(this, UI::PanelStyle::kWui, ::format("proposal_%u", trade_id),
 				                           0, 0, UI::Box::Horizontal);
 
 				box->add(new UI::MultilineTextarea(
@@ -513,7 +513,7 @@ public:
 	                  BuildingWindow::CollapsedState* collapsed)
 	   : UI::Box(&parent,
 	             UI::PanelStyle::kWui,
-	             format("trade_agreement_%u", trade_id),
+	             ::format("trade_agreement_%u", trade_id),
 	             0,
 	             0,
 	             UI::Box::Vertical),
@@ -565,10 +565,10 @@ public:
 			   action_box_, "extend", 0, 0, kButtonSize, kButtonSize, UI::ButtonStyle::kWuiSecondary,
 			   g_image_cache->get("images/wui/buildings/menu_tab_trade.png"),
 			   can_extend ?
-			      format("<p>%s%s%s</p>",
+			      ::format("<p>%s%s%s</p>",
 			             g_style_manager->font_style(UI::FontStyle::kWuiTooltipHeader)
 			                .as_font_tag(_("Propose extending this trade")),
-			             as_listitem(format(ngettext("Hold down Ctrl to extend it by %d batch",
+			             as_listitem(::format(ngettext("Hold down Ctrl to extend it by %d batch",
 			                                         "Hold down Ctrl to extend it by %d batches",
 			                                         trade_instance.num_batches),
 			                                trade_instance.num_batches),
@@ -700,9 +700,9 @@ private:
 				   new UI::Textarea(
 				      box, UI::PanelStyle::kWui, "description", UI::FontStyle::kWuiInfoPanelHeading,
 				      te.batches == Widelands::kInfiniteTrade ?
-				         format(_("%1$s proposed to extend this trade indefinitely."),
+				         ::format(_("%1$s proposed to extend this trade indefinitely."),
 				                ibase_.egbase().player(te.proposer).get_name()) :
-				         format(
+				         ::format(
 				            ngettext("%1$s proposed to extend this trade by %2$d batch.",
 				                     "%1$s proposed to extend this trade by %2$d batches.", te.batches),
 				            ibase_.egbase().player(te.proposer).get_name(), te.batches),
@@ -755,7 +755,7 @@ private:
 
 				if (can_act_) {
 					if (te.batches != Widelands::kInfiniteTrade) {
-						description->set_text(format(
+						description->set_text(::format(
 						   ngettext("You proposed to extend this trade by %d batch.",
 						            "You proposed to extend this trade by %d batches.", te.batches),
 						   te.batches));
@@ -780,13 +780,13 @@ private:
 
 				} else {
 					if (te.batches != Widelands::kInfiniteTrade) {
-						description->set_text(format(
+						description->set_text(::format(
 						   ngettext("%1$s proposed to extend this trade by %2$d batch.",
 						            "%1$s proposed to extend this trade by %2$d batches.", te.batches),
 						   market->owner().get_name(), te.batches));
 					} else {
 						description->set_text(
-						   format(_("%1$s proposed to extend this trade indefinitely."),
+						   ::format(_("%1$s proposed to extend this trade indefinitely."),
 						          market->owner().get_name()));
 					}
 				}
@@ -992,7 +992,7 @@ void MarketWindow::init(bool avoid_fastclick, bool workarea_preview_wanted) {
 
 	for (const auto& pair : market->trade_orders()) {
 		get_tabs()->add(
-		   format("trade_%u", pair.first),
+		   ::format("trade_%u", pair.first),
 		   ibase()->egbase().descriptions().get_ware_descr(pair.second->items.front().first)->icon(),
 		   new TradeAgreementTab(
 		      *get_tabs(), *ibase(), *market, pair.first, can_act, priority_collapsed()),

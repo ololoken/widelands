@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -150,7 +150,7 @@ std::string Market::market_census_string() const {
 
 void Market::update_statistics_string(std::string* str) {
 	const unsigned nr_trades = trade_orders_.size();
-	*str = StyleManager::color_tag(format(ngettext("%u trade", "%u trades", nr_trades), nr_trades),
+	*str = StyleManager::color_tag(::format(ngettext("%u trade", "%u trades", nr_trades), nr_trades),
 	                               g_style_manager->building_statistics_style().neutral_color());
 }
 
@@ -275,7 +275,7 @@ void Market::cancel_trade(Game& game,
 			   reached_regular_end ? _("Trade Complete") : _("Trade Cancelled"),
 			   descr().icon_filename(),
 			   reached_regular_end ? _("Trade agreement complete") : _("Trade agreement cancelled"),
-			   format(reached_regular_end ? _("Your trade agreement at %s has been completed.") :
+			   ::format(reached_regular_end ? _("Your trade agreement at %s has been completed.") :
 			                                _("Your trade agreement at %s has been cancelled."),
 			          get_market_name()),
 			   false);
@@ -690,16 +690,16 @@ void Market::log_general_info(const EditorGameBase& egbase) const {
 
 std::string TradeInstance::check_illegal() const {
 	if (num_batches > kMaxWaresPerBatch) {
-		return format("Too many batches (found %d, limit %d)", num_batches, kMaxWaresPerBatch);
+		return ::format("Too many batches (found %d, limit %d)", num_batches, kMaxWaresPerBatch);
 	}
 	if (num_batches < 1 && num_batches != kInfiniteTrade) {
-		return format("Bad number of batches %d", num_batches);
+		return ::format("Bad number of batches %d", num_batches);
 	}
 
 	int32_t c = 0;
 	for (const WareAmount& pair : items_to_send) {
 		if (pair.second < 1 || pair.second > kMaxWaresPerBatch) {
-			return format("Sending %u items of ware %d", pair.second, pair.first);
+			return ::format("Sending %u items of ware %d", pair.second, pair.first);
 		}
 		c += pair.second;
 	}
@@ -707,13 +707,13 @@ std::string TradeInstance::check_illegal() const {
 		return "Not sending any items";
 	}
 	if (c > kMaxWaresPerBatch) {
-		return format("Sending too many items (found %d, limit %d)", c, kMaxWaresPerBatch);
+		return ::format("Sending too many items (found %d, limit %d)", c, kMaxWaresPerBatch);
 	}
 
 	c = 0;
 	for (const WareAmount& pair : items_to_receive) {
 		if (pair.second < 1 || pair.second > kMaxWaresPerBatch) {
-			return format("Receiving %u items of ware %d", pair.second, pair.first);
+			return ::format("Receiving %u items of ware %d", pair.second, pair.first);
 		}
 		c += pair.second;
 	}
@@ -721,7 +721,7 @@ std::string TradeInstance::check_illegal() const {
 		return "Not receiving any items";
 	}
 	if (c > kMaxWaresPerBatch) {
-		return format("Receiving too many items (found %d, limit %d)", c, kMaxWaresPerBatch);
+		return ::format("Receiving too many items (found %d, limit %d)", c, kMaxWaresPerBatch);
 	}
 
 	return std::string();
@@ -773,7 +773,7 @@ std::string TradeInstance::format_richtext(const TradeID id,
 		      egbase.player(receiving_player).get_name()));
 	}
 
-	infotext += format("</p><div padding_l=%d padding_b=%d><p>",
+	infotext += ::format("</p><div padding_l=%d padding_b=%d><p>",
 	                   g_style_manager->styled_size(UI::StyledSize::kUIDefaultIndent),
 	                   g_style_manager->styled_size(UI::StyledSize::kWuiTextDefaultGap));
 	if (num_batches != kInfiniteTrade) {

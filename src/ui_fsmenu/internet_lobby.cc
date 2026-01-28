@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2025 by the Widelands Development Team
+ * Copyright (C) 2004-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -176,7 +176,7 @@ InternetLobby::InternetLobby(MenuCapsule& fsmm,
 	});
 
 	// Prepare the lists
-	const std::string t_tip = format(
+	const std::string t_tip = ::format(
 	   "<rt padding=2><p align=center spacing=3>%s</p>"
 	   "<p valign=bottom><img src=images/wui/overlays/road_building_green.png> %s"
 	   "<br><img src=images/wui/overlays/road_building_yellow.png> %s"
@@ -437,7 +437,7 @@ void InternetLobby::change_servername() {
 				hostgame_.set_enabled(false);
 				servername_.set_warning(true);
 				servername_.set_tooltip(
-				   format(_("The game %s is already running. Please choose a different name."),
+				   ::format(_("The game %s is already running. Please choose a different name."),
 				          g_style_manager->font_style(UI::FontStyle::kWarning).as_font_tag(game.name)));
 			}
 		}
@@ -510,7 +510,7 @@ void InternetLobby::clicked_hostgame() {
 				do {
 					/** TRANSLATORS: This is shown for multiplayer games when no host */
 					/** TRANSLATORS: server to connect to has been specified yet. */
-					servername_ui = format(_("unnamed %u"), i++);
+					servername_ui = ::format(_("unnamed %u"), i++);
 				} while (servername_ui == game.name);
 			} else if (game.name == servername_ui) {
 				change_servername();

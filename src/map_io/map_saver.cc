@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -82,7 +82,7 @@ void MapSaver::save() {
 
 	auto set_progress_message = [](std::string text, int step) {
 		Notifications::publish(UI::NoteLoadingMessage(
-		   step < 0 ? text : format(_("Saving map: %1$s (%2$d/%3$d)"), text, step, 22)));
+		   step < 0 ? text : ::format(_("Saving map: %1$s (%2$d/%3$d)"), text, step, 22)));
 	};
 	set_progress_message(_("Autosaving map…"), -1);
 

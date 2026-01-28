@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2025 by the Widelands Development Team
+ * Copyright (C) 2020-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -631,9 +631,9 @@ AddOnsCtrl::AddOnsCtrl(FsMenu::MainMenu& fsmm, UI::UniqueWindow::Registry& reg)
 	dev_box_.add_space(kRowButtonSize);
 	dev_box_.add(new UI::MultilineTextarea(
 	                &dev_box_, "message_links", 0, 0, 100, 100, UI::PanelStyle::kFsMenu,
-	                format("<rt><p>%1$s</p></rt>",
+	                ::format("<rt><p>%1$s</p></rt>",
 	                       g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
-	                          .as_font_tag(format(
+	                          .as_font_tag(::format(
 	                             _("For more information regarding how to develop and package your "
 	                               "own add-ons, please visit %s."),
 	                             g_style_manager->font_style(UI::FontStyle::kFsTooltip)
@@ -646,10 +646,10 @@ AddOnsCtrl::AddOnsCtrl(FsMenu::MainMenu& fsmm, UI::UniqueWindow::Registry& reg)
 	dev_box_.add(
 	   new UI::MultilineTextarea(
 	      &dev_box_, "message_detailed_info", 0, 0, 100, 100, UI::PanelStyle::kFsMenu,
-	      format(
+	      ::format(
 	         "<rt><p>%s</p><p>%s</p><p>%s</p><p>%s</p></rt>",
 	         g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
-	            .as_font_tag(format(
+	            .as_font_tag(::format(
 	               _("Here, you can upload your add-ons to the server to make them available to "
 	                 "other players. By uploading, you agree to publish your creation under the "
 	                 "terms of the GNU General Public License (GPL) version 2 or any later version "
@@ -698,10 +698,10 @@ AddOnsCtrl::AddOnsCtrl(FsMenu::MainMenu& fsmm, UI::UniqueWindow::Registry& reg)
 	dev_box_.add(
 	   new UI::MultilineTextarea(
 	      &dev_box_, "message_contact_public", 0, 0, 100, 100, UI::PanelStyle::kFsMenu,
-	      format("<rt><p>%1$s</p></rt>",
+	      ::format("<rt><p>%1$s</p></rt>",
 	             g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
 	                .as_font_tag(
-	                   format(_("Technical problems? Unclear documentation? Advanced needs such "
+	                   ::format(_("Technical problems? Unclear documentation? Advanced needs such "
 	                            "as deletion of an add-on or collaborating with another add-on "
 	                            "designer? Please visit our forums at %s, explain your needs, and "
 	                            "the Widelands Development Team will be happy to help."),
@@ -715,7 +715,7 @@ AddOnsCtrl::AddOnsCtrl(FsMenu::MainMenu& fsmm, UI::UniqueWindow::Registry& reg)
 	dev_box_.add(
 	   new UI::MultilineTextarea(
 	      &dev_box_, "message_contact_private", 0, 0, 100, 100, UI::PanelStyle::kFsMenu,
-	      format("<rt><p>%1$s</p></rt>",
+	      ::format("<rt><p>%1$s</p></rt>",
 	             g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
 	                .as_font_tag(
 	                   _("Alternatively you can also send a message to the Widelands Development "
@@ -808,9 +808,9 @@ AddOnsCtrl::AddOnsCtrl(FsMenu::MainMenu& fsmm, UI::UniqueWindow::Registry& reg)
 			}
 			UI::Checkbox* c =
 			   new UI::Checkbox(&browse_addons_buttons_box_category_box_, UI::PanelStyle::kFsMenu,
-			                    format("category_%s", pair.second.internal_name), Vector2i(0, 0),
+			                    ::format("category_%s", pair.second.internal_name), Vector2i(0, 0),
 			                    g_image_cache->get(pair.second.icon),
-			                    format(_("Toggle category ‘%s’"), pair.second.descname()));
+			                    ::format(_("Toggle category ‘%s’"), pair.second.descname()));
 			filter_browse_category_[pair.first] = c;
 			c->set_state(true);
 			c->changed.connect([this, &pair]() { category_filter_browse_changed(pair.first); });
@@ -832,9 +832,9 @@ AddOnsCtrl::AddOnsCtrl(FsMenu::MainMenu& fsmm, UI::UniqueWindow::Registry& reg)
 		uint8_t index = 0;
 		for (const Widelands::Map::OldWorldInfo& world : worlds) {
 			UI::Checkbox* c = new UI::Checkbox(&filter_maps_lhbox_, UI::PanelStyle::kFsMenu,
-			                                   format("world_%s", world.old_name), Vector2i(0, 0),
+			                                   ::format("world_%s", world.old_name), Vector2i(0, 0),
 			                                   g_image_cache->get(world.icon),
-			                                   format(_("Toggle world ‘%s’"), world.descname()));
+			                                   ::format(_("Toggle world ‘%s’"), world.descname()));
 			filter_maps_world_[world.old_name] = c;
 			c->set_state(true);
 			c->changed.connect([this, world]() { world_filter_maps_changed(world.old_name); });
@@ -1069,14 +1069,14 @@ AddOnsCtrl::AddOnsCtrl(FsMenu::MainMenu& fsmm, UI::UniqueWindow::Registry& reg)
 
 		if (nr_full_updates > 0 && (!all_verified || !matches_keymod(SDL_GetModState(), KMOD_CTRL))) {
 			// We ask for confirmation only for real upgrades. i18n-only upgrades are done silently.
-			std::string text = format(
+			std::string text = ::format(
 			   ngettext("Are you certain that you want to upgrade this %u add-on?",
 			            "Are you certain that you want to upgrade these %u add-ons?", nr_full_updates),
 			   nr_full_updates);
 			text += '\n';
 			for (const auto& pair : upgrades) {
 				if (pair.second) {
-					text += format(_("\n• %1$s (%2$s) by %3$s"), pair.first->descname(),
+					text += ::format(_("\n• %1$s (%2$s) by %3$s"), pair.first->descname(),
 					               (pair.first->verified ? _("verified") : _("NOT VERIFIED")),
 					               pair.first->author());
 				}
@@ -1256,7 +1256,7 @@ void AddOnsCtrl::update_login_button(UI::Button* b) {
 	} else {
 		upload_addon_accept_.set_enabled(true);
 		if (b != nullptr) {
-			b->set_title(format(
+			b->set_title(::format(
 			   net().is_admin() ? _("Logged in as %s (admin)") : _("Logged in as %s"), username_));
 			b->set_tooltip(_("Click to log out"));
 		}
@@ -1294,7 +1294,7 @@ void AddOnsCtrl::set_login(const std::string& username,
 			if (show_error) {
 				UI::WLMessageBox m(
 				   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Server Error"),
-				   format(_("Unable to connect to the server.\nError message:\n%s"), e.what()),
+				   ::format(_("Unable to connect to the server.\nError message:\n%s"), e.what()),
 				   UI::WLMessageBox::MBoxType::kOk);
 				m.run<UI::Panel::Returncodes>();
 			}
@@ -1303,7 +1303,7 @@ void AddOnsCtrl::set_login(const std::string& username,
 			if (show_error) {
 				UI::WLMessageBox m(
 				   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Wrong Password"),
-				   format(_("The entered username or password is invalid:\n%s"), e.what()),
+				   ::format(_("The entered username or password is invalid:\n%s"), e.what()),
 				   UI::WLMessageBox::MBoxType::kOk);
 				m.run<UI::Panel::Returncodes>();
 			}
@@ -1432,7 +1432,7 @@ void AddOnsCtrl::refresh_remotes(const bool showall) {
 		remotes_.resize(nr_addons);
 
 		for (int64_t i = 0, counter = 0; i < nr_addons; ++i, ++counter) {
-			progress.step(format_l(step_message, (100.0 * counter / nr_orig_entries)));
+			progress.step(::format_l(step_message, (100.0 * counter / nr_orig_entries)));
 
 			try {
 				remotes_[i] = std::make_shared<AddOns::AddOnInfo>(net().fetch_one_remote(names[i]));
@@ -1449,7 +1449,7 @@ void AddOnsCtrl::refresh_remotes(const bool showall) {
 		std::string title = _("Server Connection Error");
 		/** TRANSLATORS: This will be inserted into the string "Server Connection Error <br> by %s" */
 		std::string bug = _("a networking bug");
-		std::string err = format(_("Unable to fetch the list of available add-ons from "
+		std::string err = ::format(_("Unable to fetch the list of available add-ons from "
 		                           "the server!<br>Error Message: %s"),
 		                         richtext_escape(e.what()));
 		std::shared_ptr<AddOns::AddOnInfo> i = std::make_shared<AddOns::AddOnInfo>();
@@ -1466,7 +1466,7 @@ void AddOnsCtrl::refresh_remotes(const bool showall) {
 		remotes_ = {i};
 	}
 
-	progress.step(format(step_message, 100));
+	progress.step(::format(step_message, 100));
 
 	for (auto& pair : cached_browse_rows_) {
 		pair.second->die();
@@ -1606,7 +1606,7 @@ void AddOnsCtrl::rebuild_installed() {
 		upload_screenshot_.add(
 		   pair.first->internal_name, pair.first, pair.first->icon, false, pair.first->descname());
 	}
-	tabs_.tabs()[0]->set_title(format(_("Installed (%u)"), index));
+	tabs_.tabs()[0]->set_title(::format(_("Installed (%u)"), index));
 
 	if ((installed_addons_inner_wrapper_.get_scrollbar() != nullptr) && (scrollpos_i != 0u)) {
 		installed_addons_inner_wrapper_.get_scrollbar()->set_scrollpos(scrollpos_i);
@@ -1659,23 +1659,23 @@ void AddOnsCtrl::rebuild_browse() {
 		has_upgrades.emplace_back(_("Translations for website maps"));
 	}
 
-	upgrade_all_.set_title(format(_("Upgrade all (%u)"), has_upgrades.size()));
+	upgrade_all_.set_title(::format(_("Upgrade all (%u)"), has_upgrades.size()));
 	upgrade_all_.set_enabled(!has_upgrades.empty());
 	if (has_upgrades.empty()) {
 		upgrade_all_.set_tooltip(_("No upgrades are available for your installed add-ons"));
 	} else {
-		std::string text = format(ngettext("Upgrade the following %u add-on:",
+		std::string text = ::format(ngettext("Upgrade the following %u add-on:",
 		                                   "Upgrade the following %u add-ons:", has_upgrades.size()),
 		                          has_upgrades.size());
 		for (const std::string& name : has_upgrades) {
 			text += "<br>";
-			text += format(_("• %s"), name);
+			text += ::format(_("• %s"), name);
 		}
 		upgrade_all_.set_tooltip(text);
 	}
 
 	tabs_.tabs()[1]->set_title(total_count == 0 ? _("Browse") :
-	                                              format(_("Browse (%u)"), total_count));
+	                                              ::format(_("Browse (%u)"), total_count));
 
 	browse_pagination_.set_nr_items(total_count);
 }
@@ -1740,7 +1740,7 @@ void AddOnsCtrl::rebuild_maps() {
 	const size_t total_count = maps_to_show_.size();
 
 	tabs_.tabs()[2]->set_title(total_count == 0 ? _("Website Maps") :
-	                                              format(_("Website Maps (%u)"), total_count));
+	                                              ::format(_("Website Maps (%u)"), total_count));
 
 	maps_pagination_.set_nr_items(total_count);
 }
@@ -1814,19 +1814,19 @@ void AddOnsCtrl::update_dependency_errors() {
 			}
 			if (search_result == AddOns::g_addons.end()) {
 				warn_requirements.push_back(
-				   format(_("• ‘%1$s’ requires ‘%2$s’ which could not be found"),
+				   ::format(_("• ‘%1$s’ requires ‘%2$s’ which could not be found"),
 				          addon->first->descname(), requirement));
 			} else {
 				if (!search_result->second &&
 				    AddOns::require_enabled(addon->first->category, search_result->first->category)) {
-					warn_requirements.push_back(format(_("• ‘%1$s’ requires ‘%2$s’ which is disabled"),
+					warn_requirements.push_back(::format(_("• ‘%1$s’ requires ‘%2$s’ which is disabled"),
 					                                   addon->first->descname(),
 					                                   search_result->first->descname()));
 				}
 				if (too_late &&
 				    AddOns::order_matters(addon->first->category, search_result->first->category)) {
 					warn_requirements.push_back(
-					   format(_("• ‘%1$s’ requires ‘%2$s’ which is listed below the requiring add-on"),
+					   ::format(_("• ‘%1$s’ requires ‘%2$s’ which is listed below the requiring add-on"),
 					          addon->first->descname(), search_result->first->descname()));
 				}
 			}
@@ -1853,7 +1853,7 @@ void AddOnsCtrl::update_dependency_errors() {
 				if (prev != nullptr) {
 					assert(!too_late || next != nullptr);
 					if (too_late && AddOns::order_matters(prev->category, next->category)) {
-						warn_requirements.push_back(format(
+						warn_requirements.push_back(::format(
 						   _("• ‘%1$s’ requires first ‘%2$s’ and then ‘%3$s’, but they are "
 						     "listed in the wrong order"),
 						   addon->first->descname(), prev->descname(), search_result->first->descname()));
@@ -1870,7 +1870,7 @@ void AddOnsCtrl::update_dependency_errors() {
 			game.descriptions();
 		} catch (const std::exception& e) {
 			warn_requirements_.set_text(
-			   format(_("An enabled add-on is defective. No games can be started with the "
+			   ::format(_("An enabled add-on is defective. No games can be started with the "
 			            "current configuration.\nError message:\n%s"),
 			          e.what()));
 		}
@@ -1883,10 +1883,10 @@ void AddOnsCtrl::update_dependency_errors() {
 			}
 			list += msg;
 		}
-		warn_requirements_.set_text(format(
+		warn_requirements_.set_text(::format(
 		   "<rt><p>%s</p><p>%s</p></rt>",
 		   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelHeading)
-		      .as_font_tag(format(
+		      .as_font_tag(::format(
 		         ngettext("%u Dependency Error", "%u Dependency Errors", nr_warnings), nr_warnings)),
 		   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph).as_font_tag(list)));
 		warn_requirements_.set_tooltip(_("Add-Ons with dependency errors may work incorrectly or "
@@ -2018,7 +2018,7 @@ void AddOnsCtrl::upload_addon(std::shared_ptr<AddOns::AddOnInfo> addon) {
 		if (!AddOns::is_newer_version(remote->version, addon->version)) {
 			UI::WLMessageBox w(
 			   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Error"),
-			   format(_("The add-on ‘%1$s’ can not be uploaded because its version (%2$s) is not "
+			   ::format(_("The add-on ‘%1$s’ can not be uploaded because its version (%2$s) is not "
 			            "newer than the version present on the server (%3$s)."),
 			          addon->internal_name, AddOns::version_to_string(addon->version, true),
 			          AddOns::version_to_string(remote->version, true)),
@@ -2029,7 +2029,7 @@ void AddOnsCtrl::upload_addon(std::shared_ptr<AddOns::AddOnInfo> addon) {
 		if (remote->category != addon->category) {
 			UI::WLMessageBox w(
 			   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Error"),
-			   format(_("The add-on ‘%1$s’ can not be uploaded because its category (%2$s) does not "
+			   ::format(_("The add-on ‘%1$s’ can not be uploaded because its category (%2$s) does not "
 			            "match the category of the version present on the server (%3$s)."),
 			          addon->internal_name, AddOns::kAddOnCategories.at(addon->category).descname(),
 			          AddOns::kAddOnCategories.at(remote->category).descname()),
@@ -2041,7 +2041,7 @@ void AddOnsCtrl::upload_addon(std::shared_ptr<AddOns::AddOnInfo> addon) {
 
 	{
 		UI::WLMessageBox w(&get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Upload"),
-		                   format(_("Do you really want to upload the add-on ‘%s’ to the server?"),
+		                   ::format(_("Do you really want to upload the add-on ‘%s’ to the server?"),
 		                          addon->internal_name),
 		                   UI::WLMessageBox::MBoxType::kOkCancel);
 		if (w.run<UI::Panel::Returncodes>() != UI::Panel::Returncodes::kOk) {
@@ -2051,14 +2051,14 @@ void AddOnsCtrl::upload_addon(std::shared_ptr<AddOns::AddOnInfo> addon) {
 
 	ProgressIndicatorWindow w(
 	   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, addon->descname());
-	w.set_message_1(format(_("Uploading ‘%s’…"), addon->descname()));
+	w.set_message_1(::format(_("Uploading ‘%s’…"), addon->descname()));
 	try {
 		int64_t nr_files = 0;
 		net().upload_addon(
 		   addon->internal_name,
 		   [this, &w, &nr_files](const std::string& f, const int64_t l) {
 			   w.set_message_2(f);
-			   w.set_message_3(format(_("%1% / %2%"), l, nr_files));
+			   w.set_message_3(::format(_("%1% / %2%"), l, nr_files));
 			   w.progressbar().set_state(l);
 			   do_redraw_now();
 			   if (w.is_dying()) {
@@ -2082,15 +2082,15 @@ void AddOnsCtrl::upload_addon(std::shared_ptr<AddOns::AddOnInfo> addon) {
 		std::string message;
 		for (const std::string& name : illegal.illegal_names) {
 			log_warn("\t- %s", name.c_str());
-			message += as_listitem(format(_("‘%s’"), name), UI::FontStyle::kFsMenuInfoPanelParagraph);
+			message += as_listitem(::format(_("‘%s’"), name), UI::FontStyle::kFsMenuInfoPanelParagraph);
 		}
 
-		message = format(
+		message = ::format(
 		   "<rt>%1$s</rt>",
 		   g_style_manager->font_style(UI::FontStyle::kFsMenuInfoPanelParagraph)
-		      .as_font_tag(format(
+		      .as_font_tag(::format(
 		         "<p>%s</p><vspace gap=%d><p>%s</p><vspace gap=%d><p>%s</p>",
-		         format(_("The add-on ‘%s’ may not be uploaded to the server because the following "
+		         ::format(_("The add-on ‘%s’ may not be uploaded to the server because the following "
 		                  "filenames contained in the add-on are not allowed:"),
 		                addon->internal_name),
 		         kRowButtonSize, message, kRowButtonSize,
@@ -2109,7 +2109,7 @@ void AddOnsCtrl::upload_addon(std::shared_ptr<AddOns::AddOnInfo> addon) {
 		w.set_visible(false);
 		UI::WLMessageBox m(
 		   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Error"),
-		   format(_("The add-on ‘%1$s’ could not be uploaded to the server.\n\nError Message:\n%2$s"),
+		   ::format(_("The add-on ‘%1$s’ could not be uploaded to the server.\n\nError Message:\n%2$s"),
 		          addon->internal_name, e.what()),
 		   UI::WLMessageBox::MBoxType::kOk);
 		m.run<UI::Panel::Returncodes>();
@@ -2134,7 +2134,7 @@ void AddOnsCtrl::install_map(std::shared_ptr<AddOns::AddOnInfo> remote) {
 		log_err("install map %s: %s", remote->internal_name.c_str(), e.what());
 		UI::WLMessageBox m(
 		   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Error"),
-		   format(
+		   ::format(
 		      _("The map ‘%1$s’ could not be downloaded from the server.\n\nError Message:\n%2$s"),
 		      remote->internal_name, e.what()),
 		   UI::WLMessageBox::MBoxType::kOk);
@@ -2168,7 +2168,7 @@ void AddOnsCtrl::install_or_upgrade(std::shared_ptr<AddOns::AddOnInfo> remote,
                                     const bool only_translations) {
 	ProgressIndicatorWindow w(
 	   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, remote->descname());
-	w.set_message_1(format(_("Downloading ‘%s’…"), remote->descname()));
+	w.set_message_1(::format(_("Downloading ‘%s’…"), remote->descname()));
 
 	g_fs->ensure_directory_exists(kAddOnDir);
 
@@ -2189,7 +2189,7 @@ void AddOnsCtrl::install_or_upgrade(std::shared_ptr<AddOns::AddOnInfo> remote,
 			net().download_addon(remote->internal_name, temp_dir,
 			                     [this, &w, size](const std::string& f, const int64_t l) {
 				                     w.set_message_2(f);
-				                     w.set_message_3(format(_("%1% / %2%"), filesize_string(l), size));
+				                     w.set_message_3(::format(_("%1% / %2%"), filesize_string(l), size));
 				                     w.progressbar().set_state(l);
 				                     do_redraw_now();
 				                     if (w.is_dying()) {
@@ -2204,7 +2204,7 @@ void AddOnsCtrl::install_or_upgrade(std::shared_ptr<AddOns::AddOnInfo> remote,
 			w.set_visible(false);
 			UI::WLMessageBox m(
 			   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Error"),
-			   format(
+			   ::format(
 			      _("The add-on ‘%1$s’ could not be downloaded from the server. Installing/upgrading "
 			        "this add-on will be skipped.\n\nError Message:\n%2$s"),
 			      remote->internal_name, e.what()),
@@ -2278,7 +2278,7 @@ bool AddOnsCtrl::install_translations(const std::string& name,
 		   name, temp_dir,
 		   [this, &progress, &nr_translations](const std::string& f, const int64_t l) {
 			   progress.set_message_2(f);
-			   progress.set_message_3(format(_("%1% / %2%"), l, nr_translations));
+			   progress.set_message_3(::format(_("%1% / %2%"), l, nr_translations));
 			   progress.progressbar().set_state(l);
 			   do_redraw_now();
 			   if (progress.is_dying()) {
@@ -2314,7 +2314,7 @@ bool AddOnsCtrl::install_translations(const std::string& name,
 		progress.set_visible(false);
 		UI::WLMessageBox m(
 		   &get_topmost_forefather(), UI::WindowStyle::kFsMenu, _("Error"),
-		   format(_("The translations for the add-on ‘%1$s’ could not be downloaded from the "
+		   ::format(_("The translations for the add-on ‘%1$s’ could not be downloaded from the "
 		            "server. Installing/upgrading "
 		            "the translations will be skipped.\n\nError Message:\n%2$s"),
 		          name, e.what()),

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -206,7 +206,7 @@ int32_t WidelandsMapLoader::load_map_complete(EditorGameBase& egbase,
 	// PRELOAD DATA BEGIN
 	auto set_progress_message = [is_editor](const std::string& text, unsigned step) {
 		Notifications::publish(UI::NoteLoadingMessage(
-		   format(_("Loading map: %1$s (%2$u/%3$d)"), text, step, (is_editor ? 9 : 24))));
+		   ::format(_("Loading map: %1$s (%2$u/%3$d)"), text, step, (is_editor ? 9 : 24))));
 	};
 
 	set_progress_message(_("Elemental data"), 1);

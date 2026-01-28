@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2025 by the Widelands Development Team
+ * Copyright (C) 2004-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -261,7 +261,7 @@ void FieldDebugWindow::think() {
 
 	// Immovable information
 	if (Widelands::BaseImmovable* const imm = coords_.field->get_immovable()) {
-		ui_immovable_.set_title(format("%s (%u)", imm->descr().name(), imm->serial()));
+		ui_immovable_.set_title(::format("%s (%u)", imm->descr().name(), imm->serial()));
 		ui_immovable_.set_enabled(true);
 	} else {
 		ui_immovable_.set_title("no immovable");
@@ -302,7 +302,7 @@ void FieldDebugWindow::think() {
 	// Add remaining
 	for (const Widelands::Bob* temp_bob : bobs) {
 		ui_bobs_.add(
-		   format("%s (%u)", temp_bob->descr().name(), temp_bob->serial()), temp_bob->serial());
+		   ::format("%s (%u)", temp_bob->descr().name(), temp_bob->serial()), temp_bob->serial());
 	}
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2025 by the Widelands Development Team
+ * Copyright (C) 2023-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ namespace UI {
 
 std::string ParagraphStyleInfo::as_paragraph(const std::string& text,
                                              const std::string& attrib) const {
-	return format("%s%s%s", open_paragraph(attrib), text, close_paragraph());
+	return ::format("%s%s%s", open_paragraph(attrib), text, close_paragraph());
 }
 
 std::string ParagraphStyleInfo::open_paragraph(const std::string& attrib) const {
@@ -37,19 +37,19 @@ std::string ParagraphStyleInfo::open_paragraph(const std::string& attrib) const 
 		attribs_out += " valign=" + valign_;
 	}
 	if (indent_ > 0) {
-		attribs_out += format(" indent=%d", indent_);
+		attribs_out += ::format(" indent=%d", indent_);
 	}
 	if (spacing_ > 0) {
-		attribs_out += format(" spacing=%d", spacing_);
+		attribs_out += ::format(" spacing=%d", spacing_);
 	}
 	if (!attrib.empty()) {
 		attribs_out += " " + attrib;
 	}
-	return format("<p%s>%s%s", attribs_out, as_vspace(space_before_), font_->as_font_open());
+	return ::format("<p%s>%s%s", attribs_out, as_vspace(space_before_), font_->as_font_open());
 }
 
 std::string ParagraphStyleInfo::close_paragraph() const {
-	return format("</font>%s</p>", as_vspace(space_after_));
+	return ::format("</font>%s</p>", as_vspace(space_after_));
 }
 
 }  // namespace UI

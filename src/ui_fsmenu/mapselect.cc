@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -365,7 +365,7 @@ UI::Checkbox* MapSelect::add_tag_checkbox(UI::Box* box, const std::string& tag) 
 	tags_ordered_.push_back(tag);
 
 	const TagTexts l = localize_tag(tag);
-	UI::Checkbox* cb = new UI::Checkbox(box, UI::PanelStyle::kFsMenu, format("tag_checkbox_%s", tag),
+	UI::Checkbox* cb = new UI::Checkbox(box, UI::PanelStyle::kFsMenu, ::format("tag_checkbox_%s", tag),
 	                                    Vector2i::zero(), l.displayname);
 	cb->set_tooltip(l.tooltip);
 

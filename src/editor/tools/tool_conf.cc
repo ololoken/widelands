@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,7 +30,7 @@ std::string ToolConf::to_key() const {
 		mapobj_ids += std::to_string(static_cast<int>(id));
 	}
 
-	return format("tool:%d, change_by:%d, interval:%d..%d, map_objs:%s, resource:%d, set_to:%d",
+	return ::format("tool:%d, change_by:%d, interval:%d..%d, map_objs:%s, resource:%d, set_to:%d",
 	              static_cast<int>(primary->get_window_id()), change_by,
 	              static_cast<int>(interval.min), static_cast<int>(interval.max), mapobj_ids,
 	              static_cast<int>(resource), static_cast<int>(set_to));

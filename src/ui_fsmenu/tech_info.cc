@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2025 by the Widelands Development Team
+ * Copyright (C) 2016-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -93,14 +93,14 @@ TechInfo::TechInfo(const TechInfo::Type t) {
 #endif
 	add_plain_entry(gettext_noop("Operating System:"), os, true);
 	add_plain_entry(gettext_noop("Compiled with SDL version:"),
-	                format("%d.%d.%d", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL), false);
+	                ::format("%d.%d.%d", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL), false);
 
 	SDL_version sdl_current = {0, 0, 0};
 	SDL_GetVersion(&sdl_current);
 	if (sdl_current.major != SDL_MAJOR_VERSION || sdl_current.minor != SDL_MINOR_VERSION ||
 	    sdl_current.patch != SDL_PATCHLEVEL) {
 		add_plain_entry(gettext_noop("Using SDL version:"),
-		                format("%d.%d.%d", sdl_current.major, sdl_current.minor, sdl_current.patch),
+		                ::format("%d.%d.%d", sdl_current.major, sdl_current.minor, sdl_current.patch),
 		                false);
 	}
 
@@ -138,7 +138,7 @@ inline void TechInfo::add_plain_entry(const std::string& label,
 std::string TechInfo::get_markdown() const {
 	std::string report;
 	for (const Entry& entry : entries_) {
-		report += format("> %s %s  \n", entry.label, merge_list(entry.values, ", ", false));
+		report += ::format("> %s %s  \n", entry.label, merge_list(entry.values, ", ", false));
 	}
 	return report;
 }
@@ -170,7 +170,7 @@ std::string TechInfo::get_richtext() const {
 
 		// Put the label in a floating box, aligned according to the writing direction.
 		// Paragraph alignment is mirrored by the richtext renderer for RTL.
-		report += format("<div float=%1$s><p align=left>%2$s</p></div>", label_alignment,
+		report += ::format("<div float=%1$s><p align=left>%2$s</p></div>", label_alignment,
 		                 label_font.as_font_tag(localized_label));
 
 		// Check for long first values
@@ -193,7 +193,7 @@ std::string TechInfo::get_richtext() const {
 
 		// The content is a plain paragraph that can flow around the label.
 		report +=
-		   format("<p align=right>%s<vspace gap=%d></p>", value_font.as_font_tag(values), kSpacing);
+		   ::format("<p align=right>%s<vspace gap=%d></p>", value_font.as_font_tag(values), kSpacing);
 
 		// End the <div> of the entry
 		report += "</div>\n";

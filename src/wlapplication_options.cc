@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2025 by the Widelands Development Team
+ * Copyright (C) 2012-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -422,6 +422,16 @@ static std::map<KeyboardShortcut, KeyboardShortcutInfo> shortcuts_ = {
                          keysym(SDLK_MINUS, kDefaultCtrlModifier),
                          "zoom_out",
                          gettext_noop("Zoom Out"))},
+   {KeyboardShortcut::kCommonZoomMax,
+    KeyboardShortcutInfo({KeyboardShortcutScope::kGame, KeyboardShortcutScope::kEditor},
+                         keysym(SDLK_PLUS, kDefaultCtrlModifier | KMOD_SHIFT),
+                         "zoom_max",
+                         gettext_noop("Maximum Zoom"))},
+   {KeyboardShortcut::kCommonZoomMin,
+    KeyboardShortcutInfo({KeyboardShortcutScope::kGame, KeyboardShortcutScope::kEditor},
+                         keysym(SDLK_MINUS, kDefaultCtrlModifier | KMOD_SHIFT),
+                         "zoom_min",
+                         gettext_noop("Minimum Zoom"))},
    {KeyboardShortcut::kCommonZoomReset,
     KeyboardShortcutInfo({KeyboardShortcutScope::kGame, KeyboardShortcutScope::kEditor},
                          keysym(SDLK_0, kDefaultCtrlModifier),
@@ -463,6 +473,10 @@ static std::map<KeyboardShortcut, KeyboardShortcutInfo> shortcuts_ = {
                                                         keysym(SDLK_y, kDefaultCtrlModifier),
                                                         "editor_redo",
                                                         gettext_noop("Redo"))},
+   {KeyboardShortcut::kEditorPicker, KeyboardShortcutInfo({KeyboardShortcutScope::kEditor},
+                                                          keysym(SDLK_k),
+                                                          "editor_picker",
+                                                          gettext_noop("Pick From Map"))},
    {KeyboardShortcut::kEditorTools,
     KeyboardShortcutInfo({KeyboardShortcutScope::kEditor},
                          keysym(SDLK_t),
@@ -980,7 +994,7 @@ std::string get_related_hotkeys_help(const KeyboardShortcut first,
 		if (i == 0) {
 			keys_list = current;
 		} else {
-			keys_list = format(separator_format, keys_list, current);
+			keys_list = ::format(separator_format, keys_list, current);
 		}
 	}
 	return as_definition_line(keys_list, description);
@@ -1126,13 +1140,13 @@ namespace {
 std::string toolsize_descr(const KeyboardShortcut id) {
 	assert(id >= KeyboardShortcut::kEditorToolsize1 && id <= KeyboardShortcut::kEditorToolsize10);
 	const uint16_t i = id - KeyboardShortcut::kEditorToolsize1 + 1;
-	return format(_(shortcuts_.at(id).descname), i);
+	return ::format(_(shortcuts_.at(id).descname), i);
 }
 
 std::string toolgap_descr(const KeyboardShortcut id) {
 	assert(id >= KeyboardShortcut::kEditorToolgap0 && id <= KeyboardShortcut::kEditorToolgap90);
 	const uint16_t i = id - KeyboardShortcut::kEditorToolgap0;
-	return format(_(shortcuts_.at(id).descname), 10 * i);
+	return ::format(_(shortcuts_.at(id).descname), 10 * i);
 }
 
 std::string quicknav_descr(const KeyboardShortcut id) {
@@ -1146,14 +1160,14 @@ std::string quicknav_descr(const KeyboardShortcut id) {
 		// id is Goto Quicknav
 		i = (i + 1) / 2;
 	}
-	return format(_(shortcuts_.at(id).descname), i);
+	return ::format(_(shortcuts_.at(id).descname), i);
 }
 
 std::string fastplace_descr(const KeyboardShortcut id) {
 	assert(id >= KeyboardShortcut::kFastplace_Begin + kFastplaceDefaults.size() &&
 	       id <= KeyboardShortcut::kFastplace_End);
 	const uint16_t i = id - KeyboardShortcut::kFastplace_Begin - kFastplaceDefaults.size() + 1;
-	return format(_(shortcuts_.at(id).descname), i);
+	return ::format(_(shortcuts_.at(id).descname), i);
 }
 
 }  // namespace
@@ -1173,12 +1187,12 @@ std::string to_string(const KeyboardShortcut id) {
 	if (id >= KeyboardShortcut::kInGameMessages_Begin &&
 	    id <= KeyboardShortcut::kInGameMessages_End) {
 		/** TRANSLATORS: prefix for message window shortcuts in keyboard options */
-		return format(pgettext("hotkey", "Messages: %s"), _(shortcuts_.at(id).descname));
+		return ::format(pgettext("hotkey", "Messages: %s"), _(shortcuts_.at(id).descname));
 	}
 	if (id >= KeyboardShortcut::kInGameSeafaringstats_Begin &&
 	    id <= KeyboardShortcut::kInGameSeafaringstats_End) {
 		/** TRANSLATORS: prefix for seafaring statistics window shortcuts in keyboard options */
-		return format(pgettext("hotkey", "Seafaring: %s"), _(shortcuts_.at(id).descname));
+		return ::format(pgettext("hotkey", "Seafaring: %s"), _(shortcuts_.at(id).descname));
 	}
 	if (id >= KeyboardShortcut::kFastplace_Begin + kFastplaceDefaults.size() &&
 	    id <= KeyboardShortcut::kFastplace_End) {
@@ -1398,7 +1412,7 @@ std::string keymod_string_for(const uint16_t modstate, const bool rt_escape) {
 	// because all current uses need it anyway, and extra checks can
 	// be avoided both here and in the users this way
 	for (const std::string& m : mods) {
-		result = format(_("%1$s+%2$s"), m, result);
+		result = ::format(_("%1$s+%2$s"), m, result);
 	}
 
 	return rt_escape ? richtext_escape(result) : result;
@@ -1495,7 +1509,7 @@ std::string shortcut_string_for(const SDL_Keysym sym, const bool rt_escape) {
 		return _("(disabled)");
 	}
 
-	std::string result = format(_("%1$s%2$s"), keymod_string_for(sym.mod, false), key_name(sym.sym));
+	std::string result = ::format(_("%1$s%2$s"), keymod_string_for(sym.mod, false), key_name(sym.sym));
 
 	return rt_escape ? richtext_escape(result) : result;
 }
@@ -1548,7 +1562,7 @@ static void init_fastplace_shortcuts(const bool force_defaults) {
 			++counter;
 			shortcuts_.emplace(
 			   k, KeyboardShortcutInfo({KeyboardShortcutScope::kGame}, keysym(SDLK_UNKNOWN),
-			                           format("%scustom_%i", kFastplaceGroupPrefix, counter),
+			                           ::format("%scustom_%i", kFastplaceGroupPrefix, counter),
 			                           // fastplace_descr() uses this format string and adds the
 			                           // fastplace number
 			                           gettext_noop("Fastplace #%i")));

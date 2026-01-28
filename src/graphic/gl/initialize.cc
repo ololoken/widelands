@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -173,7 +173,7 @@ SDL_GLContext initialize(
 		show_opengl_error_and_exit(
 		   "Widelands won't work because we were unable to detect the shading language version.\n"
 		   "There is an unknown problem with reading the information from the graphics driver.",
-		   format("%s\n%s",
+		   ::format("%s\n%s",
 		          /** TRANSLATORS: Basic error message when we can't handle the graphics driver. Font
 		             support is limited here, so do not use advanced typography **/
 		          _("Widelands won't work because we were unable to detect the shading language "
@@ -187,7 +187,7 @@ SDL_GLContext initialize(
 		show_opengl_error_and_exit(
 		   "Widelands won't work because we were unable to detect the OpenGL version.\n"
 		   "There is an unknown problem with reading the information from the graphics driver.",
-		   format("%s\n%s",
+		   ::format("%s\n%s",
 		          /** TRANSLATORS: Basic error message when we can't handle the graphics driver. Font
 		             support is limited here, so do not use advanced typography **/
 		          _("Widelands won't work because we were unable to detect the OpenGL version."),
@@ -215,16 +215,16 @@ SDL_GLContext initialize(
 			if (major_version < required_major_version ||
 			    (major_version == required_major_version && minor_version < required_minor_version)) {
 				show_opengl_error_and_exit(
-				   format("Widelands won’t work because your graphics driver is too old.\n"
+				   ::format("Widelands won’t work because your graphics driver is too old.\n"
 				          "The %s version needs to be version %u.%u or newer.",
 				          name, required_major_version, required_minor_version),
-				   format("%s\n%s",
+				   ::format("%s\n%s",
 				          /** TRANSLATORS: Basic error message when we can't handle the graphics driver.
 				             Font support is limited here, so do not use advanced typography **/
 				          _("Widelands won’t work because your graphics driver is too old."),
 				          /** TRANSLATORS: Basic error message when we can't handle the graphics driver.
 				             Font support is limited here, so do not use advanced typography **/
-				          format(_("The %1$s version needs to be version %2$u.%3$u or newer."),
+				          ::format(_("The %1$s version needs to be version %2$u.%3$u or newer."),
 				                 descname, required_major_version, required_minor_version)));
 			}
 		} else {
@@ -234,17 +234,17 @@ SDL_GLContext initialize(
 			if (std::regex_match(version_string, re)) {
 				if (std::stol(version_string) < required_major_version + 1) {
 					show_opengl_error_and_exit(
-					   format("Widelands won’t work because your graphics driver is too old.\n"
+					   ::format("Widelands won’t work because your graphics driver is too old.\n"
 					          "The %s needs to be version %u.%u or newer.",
 					          name, required_major_version, required_minor_version),
-					   format(
+					   ::format(
 					      "%s\n%s",
 					      /** TRANSLATORS: Basic error message when we can't handle the graphics driver.
 					         Font support is limited here, so do not use advanced typography **/
 					      _("Widelands won’t work because your graphics driver is too old."),
 					      /** TRANSLATORS: Basic error message when we can't handle the graphics driver.
 					         Font support is limited here, so do not use advanced typography **/
-					      format(_("The %1$s needs to be version %2$u.%3$u or newer."), descname,
+					      ::format(_("The %1$s needs to be version %2$u.%3$u or newer."), descname,
 					             required_major_version, required_minor_version)));
 				}
 			} else {

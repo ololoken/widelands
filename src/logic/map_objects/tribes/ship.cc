@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2025 by the Widelands Development Team
+ * Copyright (C) 2010-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -819,7 +819,7 @@ bool Ship::ship_update_expedition(Game& game, Bob::State& /* state */) {
 					if (send_message_at_destination_) {
 						send_message(
 						   game, _("Destination Unreachable"), _("Ship Destination Unreachable"),
-						   format(_("Your ship could not find a path to its destination port ‘%s’."),
+						   ::format(_("Your ship could not find a path to its destination port ‘%s’."),
 						          dest->get_warehouse()->get_warehouse_name()),
 						   descr().icon_filename());
 					}
@@ -1334,7 +1334,7 @@ void Ship::start_battle(Game& game, Battle new_battle, bool immediately) {
 	// Summon someone to the defence
 	if (enemy_ship != nullptr) {
 		enemy_ship->send_message(game, _("Naval Attack"), _("Enemy Ship Attacking"),
-		                         format(_("Your ship ‘%s’ is under attack from an enemy warship."),
+		                         ::format(_("Your ship ‘%s’ is under attack from an enemy warship."),
 		                                enemy_ship->get_shipname()),
 		                         "images/wui/ship/ship_attack.png");
 		enemy_ship->start_battle(game, Battle(this, Coords::null(), {}, false), true);
@@ -2488,7 +2488,7 @@ void Ship::draw(const EditorGameBase& egbase,
 				case (ShipStates::kTransport): {
 					const MapObject* dest = destination_object_.get(egbase);
 					if (destination_coords_ != nullptr) {
-						format(pgettext("ship_state", "Sailing to %s"),
+						::format(pgettext("ship_state", "Sailing to %s"),
 						       destination_coords_->to_long_string(egbase));
 					} else if (dest == nullptr) {
 						/** TRANSLATORS: This is a ship state. The ship is ready
@@ -2498,13 +2498,13 @@ void Ship::draw(const EditorGameBase& egbase,
 						statistics_string =
 						   /** TRANSLATORS: This is a ship state. The ship is
 						    * currently sailing to a specific destination ship. */
-						   format(pgettext("ship_state", "Sailing to %s"),
+						   ::format(pgettext("ship_state", "Sailing to %s"),
 						          dynamic_cast<const Ship*>(dest)->get_shipname());
 					} else if (dest->descr().type() == MapObjectType::PINNED_NOTE) {
 						statistics_string =
 						   /** TRANSLATORS: This is a ship state. The ship is
 						    * currently sailing to a specific destination note. */
-						   format(pgettext("ship_state", "Sailing to %s"),
+						   ::format(pgettext("ship_state", "Sailing to %s"),
 						          dynamic_cast<const PinnedNote*>(dest)->get_text());
 					} else {
 						const std::string& wh_name =
@@ -2513,12 +2513,12 @@ void Ship::draw(const EditorGameBase& egbase,
 							statistics_string =
 							   /** TRANSLATORS: This is a ship state. The ship is currently
 							    * transporting wares to a specific destination port. */
-							   format(pgettext("ship_state", "Shipping to %s"), wh_name);
+							   ::format(pgettext("ship_state", "Shipping to %s"), wh_name);
 						} else {
 							statistics_string =
 							   /** TRANSLATORS: This is a ship state. The ship is currently sailing
 							    * to a specific destination port without transporting wares. */
-							   format(pgettext("ship_state", "Sailing to %s"), wh_name);
+							   ::format(pgettext("ship_state", "Sailing to %s"), wh_name);
 						}
 					}
 					break;
@@ -2653,14 +2653,14 @@ void Ship::log_general_info(const EditorGameBase& egbase) const {
 	molog(egbase.get_gametime(), "Ship belongs to fleet %u\nlastdock: %s\nrequestdock: %s\n",
 	      fleet_ != nullptr ? fleet_->serial() : 0,
 	      (lastdock_.is_set() ?
-	          format("%u (%s at %3dx%3d)", lastdock_.serial(),
+	          ::format("%u (%s at %3dx%3d)", lastdock_.serial(),
 	                 lastdock_.get(egbase)->get_warehouse()->get_warehouse_name().c_str(),
 	                 lastdock_.get(egbase)->get_positions(egbase)[0].x,
 	                 lastdock_.get(egbase)->get_positions(egbase)[0].y)
 	             .c_str() :
 	          "-"),
 	      (requestdock_.is_set() ?
-	          format("%u (%s at %3dx%3d)", requestdock_.serial(),
+	          ::format("%u (%s at %3dx%3d)", requestdock_.serial(),
 	                 requestdock_.get(egbase)->get_warehouse()->get_warehouse_name().c_str(),
 	                 requestdock_.get(egbase)->get_positions(egbase)[0].x,
 	                 requestdock_.get(egbase)->get_positions(egbase)[0].y)
@@ -2698,7 +2698,7 @@ void Ship::log_general_info(const EditorGameBase& egbase) const {
 		molog(egbase.get_gametime(), "  * %u (%s), destination: %s\n", shipping_item.object_.serial(),
 		      shipping_item.object_.get(egbase)->descr().name().c_str(),
 		      (shipping_item.destination_dock_.is_set()) ?
-		         format("%u (%d x %d)", shipping_item.destination_dock_.serial(),
+		         ::format("%u (%d x %d)", shipping_item.destination_dock_.serial(),
 		                shipping_item.destination_dock_.get(egbase)->get_positions(egbase)[0].x,
 		                shipping_item.destination_dock_.get(egbase)->get_positions(egbase)[0].y)
 

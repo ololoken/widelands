@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -53,7 +53,7 @@ bool Attr::get_bool() const {
 
 RGBColor Attr::get_color() const {
 	if (value_.size() != 6) {
-		throw InvalidColor(format("Could not parse '%s' as a color.", value_));
+		throw InvalidColor(::format("Could not parse '%s' as a color.", value_));
 	}
 
 	uint32_t clrn = strtol(value_.c_str(), nullptr, 16);
@@ -117,7 +117,7 @@ void Tag::parse_closing_tag(TextStream& ts) {
 void Tag::parse_attribute(TextStream& ts, std::unordered_set<std::string>& allowed_attrs) {
 	std::string aname = ts.till_any("=");
 	if (allowed_attrs.count(aname) == 0u) {
-		const std::string error_info = format("an allowed attribute for '%s' tag", name_);
+		const std::string error_info = ::format("an allowed attribute for '%s' tag", name_);
 		throw SyntaxErrorImpl(ts.line(), ts.col(), error_info, aname, ts.peek(100));
 	}
 
@@ -164,7 +164,7 @@ void Tag::parse_content(TextStream& ts, TagConstraints& tcs, const TagSet& allow
 
 				Tag* child = new Tag();
 				std::string url = text.substr(match_start, match_len);
-				TextStream linktext(format(
+				TextStream linktext(::format(
 				   "<link type=url target=%1$s mouseover=\"%2$s\"><font underline=1>%3$s</font></link>",
 				   url, url, url));
 				child->parse(linktext, tcs, allowed_tags);

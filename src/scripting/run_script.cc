@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2025 by the Widelands Development Team
+ * Copyright (C) 2006-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,7 +32,7 @@ std::string get_file_content(FileSystem* fs, const std::string& filename) {
 		throw LuaScriptNotExistingError(filename);
 	}
 	if (fs->is_directory(filename)) {
-		throw LuaScriptNotExistingError(format("%s is a directory", filename));
+		throw LuaScriptNotExistingError(::format("%s is a directory", filename));
 	}
 	size_t length;
 	void* input_data = fs->load(filename, length);

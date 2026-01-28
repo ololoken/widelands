@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002-2025 by the Widelands Development Team
+ * Copyright (C) 2002-2026 by the Widelands Development Team
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -128,12 +128,12 @@ bool MapDetails::update(const MapData& mapdata, bool localize_mapname, bool rend
 	bool loadable = true;
 	// Show directory information
 	if (mapdata.maptype == MapData::MapType::kDirectory) {
-		name_label_.set_text(format("<rt>%s%s</rt>", as_heading(_("Directory"), style_, true),
+		name_label_.set_text(::format("<rt>%s%s</rt>", as_heading(_("Directory"), style_, true),
 		                            as_content(mapdata.localized_name, style_)));
 		main_box_.set_size(main_box_.get_w(), get_h());
 
 	} else {  // Show map information
-		name_label_.set_text(format(
+		name_label_.set_text(::format(
 		   "<rt>%s%s</rt>",
 		   as_heading(mapdata.maptype == MapData::MapType::kScenario ? _("Scenario") : _("Map"),
 		              style_, true),
@@ -145,13 +145,13 @@ bool MapDetails::update(const MapData& mapdata, bool localize_mapname, bool rend
 				   /** TRANSLATORS: Tooltip in map description when translated map names are being
 				      displayed. */
 				   /** TRANSLATORS: %s is the English name of the map. */
-				   (format(_("The original name of this map: %s"), mapdata.name));
+				   (::format(_("The original name of this map: %s"), mapdata.name));
 			} else {
 				name_label_.set_tooltip
 				   /** TRANSLATORS: Tooltip in map description when map names are being displayed in
 				      English. */
 				   /** TRANSLATORS: %s is the localized name of the map. */
-				   (format(_("The name of this map in your language: %s"), mapdata.localized_name));
+				   (::format(_("The name of this map in your language: %s"), mapdata.localized_name));
 			}
 		} else {
 			name_label_.set_tooltip("");
@@ -239,8 +239,8 @@ bool MapDetails::update(const MapData& mapdata, bool localize_mapname, bool rend
 					}
 				} catch (const Widelands::GameDataError& e) {
 					// Put error message on top for better visibility
-					description = format("%s%s", as_content(e.what(), style_), description);
-					description = format("%s%s", as_heading(_("Game data error"), style_), description);
+					description = ::format("%s%s", as_content(e.what(), style_), description);
+					description = ::format("%s%s", as_heading(_("Game data error"), style_), description);
 					loadable = false;
 				}
 			}
