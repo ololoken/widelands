@@ -119,7 +119,7 @@ endif()
 find_package (Python3 REQUIRED)
 
 if (EMSCRIPTEN)
-  set(USE_FLAGS "-pthread \
+  set(USE_FLAGS " \
   --use-port=sdl2 \
   --use-port=sdl2_image:formats=png,jpg --use-port=libpng --use-port=libjpeg \
   --use-port=sdl2_mixer -sSDL2_MIXER_FORMATS=ogg \
@@ -133,14 +133,14 @@ if (EMSCRIPTEN)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${USE_FLAGS} \
   -sASYNCIFY -sASYNCIFY_STACK_SIZE=32768 \
   -sALLOW_MEMORY_GROWTH -sINITIAL_MEMORY=512mb -sMEMORY_GROWTH_LINEAR_STEP=256mb \
-  -sENVIRONMENT=web,worker \
+  -sENVIRONMENT=web \
   -sMODULARIZE \
   -lidbfs.js \
   -lwebsocket.js \
   -sEXPORTED_RUNTIME_METHODS=callMain,addRunDependency,removeRunDependency \
   -sEXPORT_ALL \
   -sEXIT_RUNTIME \
-  -Wno-pthreads-mem-growth")
+  -Wno-pthreads-mem-growth -sASSERTIONS=2 --profiling-funcs")
 else()
   find_package(OpenGL REQUIRED)
   find_package(PNG 1.6 REQUIRED)
